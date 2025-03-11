@@ -1,2 +1,2 @@
 # Neoland
-Projecto para fullstack 
+Projecto para fullstack web developer
