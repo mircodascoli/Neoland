@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi práctica de HTML</title>
+    <link rel="stylesheet" href="./css/style.reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style.mobile.css">
+    <link rel="stylesheet" href="./css/style.desktop.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Taviraj:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  </head>
+<header>
+  <h1>La Revista de Neoland</h1>
+  <nav>
+    <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./noticia.html">Hoy</a></li>
+        <li><a href="#">ciencia</a></li>
+        <li><a href="#">geopolitica</a></li>
+        <li><a href="#">tecnologia</a></li>
+        <li><a href="./formulario.html">Formulario</a></li>
+    </ul>
+</nav>
+  
+</header>
+<main>
+  <h1>Nuestro Formulario</h1>
+  <form action="get">
+    <h3>
+      Alta de abono VIP Platinum NEOLAND:
+    </h3>
+    <fieldset>
+      <label for="name">Nombre:</label><input type="text" placeholder="ej:Marc" id="nombre" minlength="3">
+    </fieldset>
+    <fieldset>
+      <label for="email">Email</label><input type="email" name="email" id="email"placeholder="ej: ejemplo@ej.com" >
+    </fieldset>
+    <fieldset> 
+      <label for="sexo">Soy:</label><input type="radio" name="radio" value="M">M<input type="radio" name="radio" value="F "minlength="7">
+    </fieldset>
+    <fieldset>
+        <label for="opciones">Quiero noticias de:</label><select name="opciones" id="opciones">
+          <option value="">Mi ciudad</option>
+          <option value="">Mi Pais</option>
+          <option value="">De el mundo</option>
+          <option value="">Cualquiera</option>
+        </select>
+    </fieldset>
+    <fieldset>
+      <label for="edad">Tu edad es:</label><input type="number" min="18" max="99" placeholder="18">
+    </fieldset>
+    <fieldset>
+      <label for="">Cuentanos algo sobre ti:</label>   <textarea name="area-de-texto" id="textarea" maxlength="200"placeholder="tu historia"> </textarea>
+    </fieldset>
+    <fieldset>
+      <label for="file">Esta será tu nueva imagen de perfil: </label><input type="file" name="file" id="file">
+   </fieldset>
+   <fieldset>
+    <label for="password">Tu nueva password: </label><input type="password" minlength="8">
+  </fieldset>
+  <fieldset>
+    <label for="checkbox">Acepto los terminos y condiciones</label> <input type="checkbox">
+  </fieldset>
+     <label for="submit"></label><input type="submit" value="Enviar">
+     <label for="reset"></label><input type="reset">
+    
+
+    
+  </form>
+  <aside>
+    <h1>continua a leer : </h1>
+      <ol>
+          <li><article><a href="#" title="enlace a otra noticia">Novedades desde el espacio!</a><img src="./img/download (1).jpg" alt="galeria 1" title="galeria 1"></article></li>
+          <li><article><a href="#" title="enlace a otra noticia">Momentos de miedo en Kentucky</a><img src="./img/kentucky.jpg" alt="galeria 2" title="galeria 2"></article></li>
+          <li><article><a href="#" title="enlace a otra noticia">Descubierto en Atapuerca el primer rostro humano de Europa Occidental</a><img src="./img/umano.jpg" alt="galeria 3" title="galeria 3"></a></article></li>
+      
+        </ol>    
+  </aside>
+
+</main>
+     
+      <footer>
+        <h2>Páginas relacionadas</h2>
+        <ul>
+          <li><a href="/404.html" title="otra noticia relacionada">¿Qué ocurrirá en marzo? Comienza la cuenta atrás para los grandes acontecimientos astronómicos</a></li>
+          <li><a href="/404.html" title="otra noticia relacionada">Intrigas Vaticanas en este articulo deMarzo 2025</a></li>
+          <li><a href="/404.html" title="otra noticia relacionada">Sorpréndete con la piel de los monumentos: las pátinas y su impacto en la conservación de la arquitectura histórica</a></li>
+          <li><a href="/404.html" title="otra noticia relacionada">Un coche 'made in Spain' domina el mercado: así ha conseguido ser el más vendido</a></li>
+        </ul>
+      </footer>
+</body>
+</html>

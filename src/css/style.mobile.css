@@ -1,0 +1,8 @@
+tr:last-child{
+    display: none;
+}
+thead{
+    display: none;
+}
+tfoot{display: none;
+}
