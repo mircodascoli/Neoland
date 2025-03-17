@@ -6,12 +6,12 @@
     <title>Mi práctica de HTML</title>
     <link rel="stylesheet" href="./css/style.reset.css">
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/style.mobile.css">
-    <link rel="stylesheet" href="./css/style.desktop.css">
+    <link rel="stylesheet" href="./css/style.mobile.css" media="screen and (max-width: 480px)">
+    <link rel="stylesheet" href="./css/style.desktop.css"media="screen and (min-width: 481px)">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Taviraj:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-  </head>
+ </head>
 <header>
   <h1>La Revista de Neoland</h1>
   <nav>
@@ -26,47 +26,43 @@
 </nav>
   
 </header>
-<main>
+<main class="container-formulario">
   <h1>Nuestro Formulario</h1>
-  <form action="get">
-    <h3>
-      Alta de abono VIP Platinum NEOLAND:
-    </h3>
+  <form method="" >
     <fieldset>
-      <label for="name">Nombre:</label><input type="text" placeholder="ej:Marc" id="nombre" minlength="3">
+      <label for="nombre">Nombre: <input id="nombre" name="nombre" type="text" minlength="3" /></label>
+      <label for="apellido">Apellido: <input id="apellido" name="apellido" type="text" minlength="3" /></label>
+      <label for="email"> Email: <input id="email" name="email" type="email" minlength="3"/></label>
+      <label for="password"> Password: <input id="password" name="password" type="password" pattern="[a-z0-5]{8,}"/></label>
     </fieldset>
     <fieldset>
-      <label for="email">Email</label><input type="email" name="email" id="email"placeholder="ej: ejemplo@ej.com" >
-    </fieldset>
-    <fieldset> 
-      <label for="sexo">Soy:</label><input type="radio" name="radio" value="M">M<input type="radio" name="radio" value="F "minlength="7">
+      <legend>Soy:</legend>
+      <label for="sexo"><input id="personal-account" type="radio" name="sexo"  checked /> M</label>
+      <label for="sexo"><input id="business-account" type="radio" name="sexo" /> F</label>
     </fieldset>
     <fieldset>
-        <label for="opciones">Quiero noticias de:</label><select name="opciones" id="opciones">
-          <option value="">Mi ciudad</option>
-          <option value="">Mi Pais</option>
-          <option value="">De el mundo</option>
-          <option value="">Cualquiera</option>
+      <label for="profile-picture">Tu imagen de perfil: <input id="profile-picture" type="file" name="file" /></label>
+      <label for="age">Tu edad: <input id="age" type="number" name="age" min="13" max="120" /></label>
+      <label for="referrer">Que tipo de noticias te interesan?
+        <select id="referrer" name="referrer">
+          <option value="">(select one)</option>
+          <option value="1">Solo de mi barrio</option>
+          <option value="2">Solo de mi ciudad</option>
+          <option value="3">solo de mi pais</option>
+          <option value="4">De todo el mundo</option>
         </select>
+      </label>
+      <label for="bio">Tu bio:
+        <textarea id="bio" name="bio" rows="3" cols="30" placeholder="Me gusta programar..."></textarea>
+      </label>
     </fieldset>
-    <fieldset>
-      <label for="edad">Tu edad es:</label><input type="number" min="18" max="99" placeholder="18">
-    </fieldset>
-    <fieldset>
-      <label for="">Cuentanos algo sobre ti:</label>   <textarea name="area-de-texto" id="textarea" maxlength="200"placeholder="tu historia"> </textarea>
-    </fieldset>
-    <fieldset>
-      <label for="file">Esta será tu nueva imagen de perfil: </label><input type="file" name="file" id="file">
-   </fieldset>
-   <fieldset>
-    <label for="password">Tu nueva password: </label><input type="password" minlength="8">
-  </fieldset>
-  <fieldset>
-    <label for="checkbox">Acepto los terminos y condiciones</label> <input type="checkbox">
-  </fieldset>
-     <label for="submit"></label><input type="submit" value="Enviar">
-     <label for="reset"></label><input type="reset">
-    
+    <label for="terms-and-conditions">
+      <input class="inline" id="terms-and-conditions" type="checkbox" required name="terms-and-conditions" /> Acepto los <a href="https://www.freecodecamp.org/news/terms-of-service/">terminos y condiciones</a>
+    </label>
+    <input type="submit" value="Submit" />
+    <input type="reset" value="Reset" />
+  </form>
+</main> 
 
     
   </form>
@@ -80,7 +76,7 @@
         </ol>    
   </aside>
 
-</main>
+
      
       <footer>
         <h2>Páginas relacionadas</h2>

@@ -1,8 +1,24 @@
 tr:last-child{
     display: none;
 }
+
 thead{
     display: none;
 }
 tfoot{display: none;
 }
+header{
+    height:60vh;
+
+    nav{
+      
+        ul{
+            display: flex;
+            flex-direction: column;
+    
+        }
+    }
+
+    }
+    
+ 

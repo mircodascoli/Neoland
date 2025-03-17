@@ -1,20 +1,20 @@
 footer{
-    padding: 2%;
+
    li{
-        margin: 2%;
+ 
         
     }
 }
 header{
-    padding: 2%;
+
 
     li{
-       width:20%;
+
 }
 }
 cite{
-    text-align:right;
-    margin: 2% auto;
+
+
 }
 
 h1{
@@ -26,20 +26,20 @@ h1{
 =================*/
 form{
     width: 80%;
-    margin: 0 auto;
+
     input,
     textarea {
-      padding: 5px 10px;
+
     }
   }
  
 
 aside *{
     display: block;
-    margin: 0 auto;
+
 }
 aside img{
-    margin-bottom: 10%;
+
 }
 aside a{
      text-align: center;
