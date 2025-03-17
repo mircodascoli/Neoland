@@ -12,7 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Taviraj:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
  </head>
-<header>
+ <body>
+
+  <header>
   <h1>La Revista de Neoland</h1>
   <nav>
     <ul>
@@ -23,19 +25,22 @@
         <li><a href="#">tecnologia</a></li>
         <li><a href="./formulario.html">Formulario</a></li>
     </ul>
-</nav>
+  </nav>
   
-</header>
-<main class="container-formulario">
+  </header>
+
+  <main class="container-formulario">
+
   <h1>Nuestro Formulario</h1>
   <form method="" >
+
     <fieldset>
       <label for="nombre">Nombre: <input id="nombre" name="nombre" type="text" minlength="3" /></label>
       <label for="apellido">Apellido: <input id="apellido" name="apellido" type="text" minlength="3" /></label>
       <label for="email"> Email: <input id="email" name="email" type="email" minlength="3"/></label>
       <label for="password"> Password: <input id="password" name="password" type="password" pattern="[a-z0-5]{8,}"/></label>
     </fieldset>
-    <fieldset>
+    <fieldset class="inline-fieldset">
       <legend>Soy:</legend>
       <label for="sexo"><input id="personal-account" type="radio" name="sexo"  checked /> M</label>
       <label for="sexo"><input id="business-account" type="radio" name="sexo" /> F</label>
@@ -59,13 +64,14 @@
     <label for="terms-and-conditions">
       <input class="inline" id="terms-and-conditions" type="checkbox" required name="terms-and-conditions" /> Acepto los <a href="https://www.freecodecamp.org/news/terms-of-service/">terminos y condiciones</a>
     </label>
-    <input type="submit" value="Submit" />
-    <input type="reset" value="Reset" />
-  </form>
-</main> 
 
-    
+    <button type="submit" value="Submit">Submit</button>
+    <button type="reset" value="Reset">Reset</button>
+
   </form>
+
+  </main> 
+
   <aside>
     <h1>continua a leer : </h1>
       <ol>
@@ -76,9 +82,8 @@
         </ol>    
   </aside>
 
+  <footer>
 
-     
-      <footer>
         <h2>Páginas relacionadas</h2>
         <ul>
           <li><a href="/404.html" title="otra noticia relacionada">¿Qué ocurrirá en marzo? Comienza la cuenta atrás para los grandes acontecimientos astronómicos</a></li>
@@ -86,6 +91,8 @@
           <li><a href="/404.html" title="otra noticia relacionada">Sorpréndete con la piel de los monumentos: las pátinas y su impacto en la conservación de la arquitectura histórica</a></li>
           <li><a href="/404.html" title="otra noticia relacionada">Un coche 'made in Spain' domina el mercado: así ha conseguido ser el más vendido</a></li>
         </ul>
-      </footer>
+
+  </footer>
+
 </body>
 </html>
