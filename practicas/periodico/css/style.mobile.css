@@ -1,0 +1,34 @@
+/* TO DO: FIX TAB FOR  MOBILE
+ */
+ body{
+
+    header{
+
+        ul {
+            flex-direction: column;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            align-items: center;
+            row-gap: 5px;
+        }
+    }
+    main{
+
+        table{
+
+            thead{
+                display: none;
+            }
+
+            tbody{
+
+                td:last-of-type{
+                    display: none;
+                }
+            }
+            tfoot{
+                display: none;
+            }
+        }
+    }
+ }

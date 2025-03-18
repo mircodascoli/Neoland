@@ -16,10 +16,7 @@ body{
         flex-direction: column;
         justify-content: space-around;
         font-family: Bungee, sans-serif;
-        background-color: brown;
-    
-
-        /*TO DO: CENTER NAV IN THE HEADER*/               
+        background-color: brown;             
 
         h1{
             letter-spacing: 1.5;
@@ -57,13 +54,33 @@ body{
         background-color: bisque;
         border-bottom:2px solid brown;
         
+        &.container-formulario{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 40px;
+            justify-items: center; ;
+
+            h1{
+                text-align: center;
+            }
+           
+        }
+
+        
+        
         
         h1{
             font-family: bungee, sans-serif;
             font-size: 2em;
         }
+        
+        
         h2{
             font-size: 2.5em;
+            animation: fadeInLeft; 
+            animation-duration: 2s ; 
+            
         }
         h3{
             font-size: 1.5em;
@@ -71,7 +88,11 @@ body{
             
         }
         article{
-            padding:10%
+            padding:10%;
+
+            &.main-article{
+                animation: aparecer 2s ease-in-out ;
+            }
 
         }
         figure img, figure figcaption{
@@ -98,8 +119,9 @@ body{
             border-bottom: 1px solid brown;
         }
         .mini-form{
-            padding:15%;
-            background: linear-gradient(bisque,brown)
+
+            background: linear-gradient(bisque,brown);
+            /* padding: 10%; */
 
         }
        
@@ -123,20 +145,21 @@ body{
       /*================================================================
        =====================FORM====================================
        ===================================================================*/
-    /*TO DO: IMPROVE FORM, ADD DESCRIPTION IN A H3*/
+
     form {
         max-width: 60%;
             
           
-          fieldset {
+           fieldset {
             border: none;
 
-          }
+           }
           
           fieldset:last-of-type {
             border-bottom: none;
 
           }
+
           &.inline-fieldset{
             display: flex;
             flex-direction: row;
@@ -144,7 +167,7 @@ body{
           }
           
           label {
-            display: block;
+           display: block;
             
           }
           
@@ -222,29 +245,45 @@ body{
     /*================================================================
     =====================FOOOTER==================================
     ===================================================================*/
+   
     footer{
         background-color: brown;
         color: bisque;
-        padding:15%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        row-gap: 20px;
+        padding: 5%;
+
+        h2{
+            font-family: bungee, sans-serif;
+            font-size: 2em;
+            }
 
         ul{
           display:flex;
           flex-direction:column ;
-          justify-content: space-evenly;
-          min-height: 300px;
+          justify-content: space-between; 
+          gap: 15px ;
 
-        }
-        a{
+          a{
             text-decoration: none;
             color: white;
-       }
-       
-       h2{
-        font-family: bungee, sans-serif;
-        font-size: 2em;
+           }
+           a:hover{
+            color:black
+           }
         }
+
     }
 
-  
-
 }
+@keyframes aparecer {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+     opacity: 1;
+    }
+ }
