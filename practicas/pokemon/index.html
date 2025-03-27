@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pokedex</title>
+        <link rel="stylesheet" href="./css/reset.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="//fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link rel="stylesheet" href="./css/styles.css">
+        <link rel="stylesheet" href="./css/styles.mobile.css" media="screen and (max-width: 480px)">
+        <link rel="stylesheet" href="./css/styles.desktop.css" media="screen and (min-width: 481px)">
+        <script src="./js/pokemon.js" defer type="module" ></script>
+      </head>
+<body>
+    <header>
+        <nav>
+            <menu>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Pokédex</a></li>
+                <li><a href="#">Videojuegos y aplicaciones</a></li>
+                <li><a href="#">juegos de cartas collecionables</a></li>
+                <li><a href="#">Dibujos animados</a></li>
+                <li><a href="#">Eventos de Play! Pokémon</a></li>
+                <li><a href="#">Noticias</a></li>
+            </menu>
+        </nav>
+        <h1>Pokédex</h1>
+    </header>
+
+    <main>
+
+        <form id="formulario" action="/api">
+            <div class="div-busqueda">
+            <label for="busqueda">Nombre o número</label>
+            <input type="text" name="busqueda" id="busqueda">
+            <button type="button" id="botonBuscar">Buscar</button>
+           <p class="subtitulo">¡Usa la búsqueda avanzada para encontrar Pokémon por su tipo, debilidad, habilidad y demás datos!</p>
+
+            </div>
+            
+            <p class="ayuda">Busca un Pokémon por su nombre o usando su número de la Pokédex Nacional.</p>
+        </form>
+
+        <div class="favorites">
+            <p>Tus pokemons favoritos:</p>
+            <ul id="listaFavoritos">
+            </ul>
+        </div>
+
+        <div class="Lugares">
+            <ul id="regiones">
+                <p>Hoy guardaste pokemons nativos de los siguentes lugares:</p>
+            </ul>
+
+        </div>
+       
+
+        <ul class="lista-pokemons">
+ 
+
+        </ul>
+
+
+
+    </main>
+
+    <footer>
+
+    </footer>
+
+</body>
+</html>

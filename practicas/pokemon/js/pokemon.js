@@ -1,16 +1,6 @@
 
 import pokedex from '/pokedex/pokedex.json' with { type: "json" }
 
-/*
-# Tarea: buscar un pokemon
-
-1. Escribo en el formulario el nombre o el número del pokemon
-2. Pincho en el botón de buscar
-3. Usando Javascript, busco en la base de datos un pokemon que coincida con la búsqueda
-4. Devuelvo los datos de ese pokemon a la página web
-5. Limpio la tabla de pokemons para dejarla preparada
-6. Añado un LI a la lista ordenada de pokemons con los datos del pokemon y la estructura HTML
-*/
 
 window.addEventListener("DOMContentLoaded", onDOMContentLoaded)
 
@@ -26,8 +16,70 @@ function onDOMContentLoaded() {
   botonBuscar.addEventListener('click', buscarPokemon)
   formulario.addEventListener('submit', buscarPokemon)
   campoBusqueda.addEventListener('keyup', onInputKeyUp) // aqui hemos creados eventos. los eventos funionan con(accion,funcion)
-
+  mostrarFavoritos()
   leerListaPokemons() // llama la funcion abajo donde creo la lista.
+}
+
+//se localstorage mi da un favorito,lo faccio vedere
+// altrimenti no
+//local storage assorbe i dati presenti nella listafavoritos
+// li immagazzina nella memoria del browser
+function guardarFavorito(event) {
+  let listaFavoritos = []
+
+  if (localStorage.getItem('favoritos')) {
+    listaFavoritos = JSON.parse(localStorage.getItem('favoritos'))
+  }
+  fetch (`https://pokeapi.co/api/v2/location/${this.dataset.id}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data) 
+    let localizacion = document.createElement('li')
+    let regiones = document.getElementById('regiones')
+    localizacion.innerText = data.areas[0].name
+    localizacion.classList.add('localizacion') 
+    regiones.appendChild(localizacion)
+      
+      console.log(localizacion)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+
+    // if (regiones ?.length > 0) {
+    //   regiones.closest('.lugares').classList.add('visible')
+    //   localizacion.forEach((id) => let 
+
+    // if (favoritos?.length > 0) {
+    //   listaFavoritos.closest('.favorites').classList.add('visible')
+    //   favoritos.forEach((id) => {
+    //     let pokemon = pokedex.find((pokemon) => String(pokemon.id) === id)
+    //     // con sus datos, construimos la ficha o lo que necesitemos
+    //     let li = document.createElement('li')
+    //     li.textContent = pokemon.name.english
+    //     listaFavoritos.appendChild(li)
+    //   })
+    // } else {
+    //   listaFavoritos.closest('.favorites').classList.remove('visible')
+    // }
+
+  // this se corresponde con el figure, ya que es la etiqueta que tiene asignado el evento
+  // console.log('Ficha pokemon', this.dataset.id, listaFavoritos)
+
+  // ¿Está guardado mi id en favoritos?
+  if (listaFavoritos.includes(this.dataset.id)) {
+    // Si lo estaba, lo saco
+    listaFavoritos = listaFavoritos.filter(id => id !== this.dataset.id)
+    this.classList.remove('favorite')
+  } else {
+    // Si no lo estaba, lo guardo
+    listaFavoritos.push(this.dataset.id)
+    this.classList.add('favorite')
+  }
+  // Actualizo local storage
+  localStorage.setItem('favoritos', JSON.stringify(listaFavoritos))
+  mostrarFavoritos()
+  
 }
 
 /**
@@ -37,10 +89,16 @@ function onDOMContentLoaded() {
  * @param {Number} [maxPokemons=10] Número máximo de pokemons a mostrar
  */
 function leerListaPokemons(maxPokemons = 10) {
-  let listaPokemons = document.getElementsByClassName('lista-pokemons')
-
- while (listaPokemons.firstChild) {
-  listaPokemons.removeChild(listaPokemons.firstChild)// este es un while que nececitamos para limpiar la lista
+  let listaPokemons = document.getElementsByClassName('lista-pokemons')[0]
+  let liElement = document.createElement('li') // creo el li
+  let FigureElement = document.createElement('figure')// creo el figure
+  FigureElement.classList.add('fichaPokemon')
+  liElement.classList.add('pokemon')
+  for (let i = 0; i < liElement.length; i++) {
+    liElement[i].removeEventListener('click', guardarFavorito)
+  }
+  while (listaPokemons.firstChild) {
+    listaPokemons.removeChild(listaPokemons.firstChild)
   }
  
   for (let i = 0; i < maxPokemons; i++) { //il for 
@@ -49,7 +107,36 @@ function leerListaPokemons(maxPokemons = 10) {
   }
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
+/**
+ * Muestra la lista de favoritos en el HTML.
+ *
+ * @private
+ */
+
+function mostrarFavoritos() {
+  let listaFavoritos = document.getElementById('listaFavoritos')
+  let favoritos = JSON.parse(localStorage.getItem('favoritos'))
+
+  while (listaFavoritos.firstChild) {
+    listaFavoritos.removeChild(listaFavoritos.firstChild)
+  }
+
+  if (favoritos?.length > 0) {
+    listaFavoritos.closest('.favorites').classList.add('visible')
+    favoritos.forEach((id) => {
+      // Buscamos los datos del pokemon a partir de su id
+      let pokemon = pokedex.find((pokemon) => String(pokemon.id) === id)
+      
+      let li = document.createElement('li')
+      li.textContent = pokemon.name.english
+      listaFavoritos.appendChild(li)
+    })
+  } else {
+    listaFavoritos.closest('.favorites').classList.remove('visible')
+  }
+
+}
+
 /**
  * Handles the search of a Pokémon based on user input from the search form.
  * Prevents the form from submitting, retrieves the search input, and 
@@ -61,7 +148,6 @@ function leerListaPokemons(maxPokemons = 10) {
  * @param {Event} event - The event triggered by the search form submission.
  */
 
-/******  03fd1677-cc04-420c-8c25-b3724667f1c2  *******/
 function buscarPokemon(event) {
   //paramos el envio del formulario
   event.preventDefault()
@@ -100,7 +186,18 @@ function addPokemonToList(pokemon) {
   let liElement = document.createElement('li') // creo el li
   let FigureElement = document.createElement('figure')// creo el figure
   FigureElement.classList.add('fichaPokemon')
+  //lee local storage
+  let listaFavoritos = []
+
+ if(localStorage.getItem('favoritos')) {
+ listaFavoritos = JSON.parse(localStorage.getItem('favoritos'))
+ }
+   if(listaFavoritos.includes(String(pokemon.id))) {
+    liElement.classList.add('favorite')
+   }
   liElement.classList.add('pokemon')
+  liElement.dataset.id = pokemon.id
+  liElement.addEventListener('click', guardarFavorito)
 
   let nombrePokemon = document.createElement('p') // creo el p
   nombrePokemon.innerText = pokemon.name.english // busco el nombre en ingles en la base de datos
@@ -126,6 +223,7 @@ function addPokemonToList(pokemon) {
      parrafoTipo.appendChild(spanTipo)// agrego el span al p
 
    }
+
  
   listaPokemons.appendChild(liElement)//añadir pokemon a la lista
   liElement.appendChild(FigureElement)// añadir figure a li
@@ -143,8 +241,9 @@ function onInputKeyUp(event) {// Keyup: mirar teclas pulsadas
   }
   
 }
+function errorPokemon(event){
+  let campoBusqueda = document.getElementById('busqueda')
+  if(campoBusqueda.value  !==  ''){
 
-/**
- * Busco un pokemon determinado usando el formulario de búsqueda
- */
-
+}
+}
