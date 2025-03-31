@@ -1,26 +1,50 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/reset.css"/>
-  <link rel="stylesheet" href="/css/styles.css"/>
-  <link rel="stylesheet" href="/css/styles.mobile.css" media="screen and (max-width: 768px)"/>
-  <link rel="stylesheet" href="/css/styles.desktop.css" media="screen and (min-width: 769px)"/>
-  <title>Lista de la compra</title>
-  <script type="module" src="./js/index.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projecto 1</title>
+    <script type="module" src="./js/main.js"></script>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Lista de la compra</h1>
-  </header>
-  <main>
-    <form id="signInForm">
-      <h1>Registro</h1>
-      <input type="text" id="name" placeholder="Nombre de usuario" required>
-      <input type="email" id="email" placeholder="Email" required>
-      <button type="submit">Sign In</button>
-    </form>
-  </main>
+<header>
+    <h1>party<br>time</h1>
+    <nav>
+      <menu>
+        <li id="userLink" class="hidden"><a href="/user.html">Datos de usuario</a></li>
+        <li>
+          <form id="FormLogOut" class="hidden">
+            <button type="submit">Cerrar sesión</button">
+          </form>
+        </li>
+      </menu>
+    </nav>
+</header>
+<main>
+<form action="/" id="formSign">
+    <h2>Insert your data to continue:</h2>
+<label for="nameSign">Name:</label><input type="text" id="nameSign"placeholder="Your name">
+<label for="emailSign">Email:</label><input type="email" id="emailSign"placeholder="Your email">
+<input type="submit" value="Sign">
+</form>
+<p id="AlreadyRegistered" class="hidden">Already Registred? Please Login here below</p>
+<p id="Registered" class="hidden">Thanks for registering</p>
+<p id="Logged" class="hidden">Login correct</p>
+<p id="Rejected" class="hidden">Incorrect combination of Username and password</p>
+<form action="/" id="formLog">
+    <h2>Or log in:</h2>
+    <label for="nameLog">Name:</label><input type="text" id="nameLog" placeholder="Your name">
+    <label for="emailLog">Email:</label><input type="email" id="emailLog" placeholder="Your email">
+    <input type="submit" value="Login">
+
+
+</form>
+  
+</main>
+<footer>
+
+</footer>
+    
 </body>
 </html>
