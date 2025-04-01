@@ -1,0 +1,23 @@
+{
+  "name": "neoland",
+  "version": "1.0.0",
+  "description": "par practicas",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mircodascoli/Neoland.git"
+  },
+  "author": "Mirco",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mircodascoli/Neoland/issues"
+  },
+  "homepage": "https://github.com/mircodascoli/Neoland#readme",
+  "devDependencies": {
+    "jsdoc": "^4.0.4",
+    "typescript": "^5.8.2"
+  }
+}
