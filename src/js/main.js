@@ -1,3 +1,4 @@
+// @ts-check
 import {User} from './clases/user.js'
 import {SingletonDB} from './clases/SingletonDB.js'
 
@@ -28,31 +29,32 @@ function DomContentLoaded() {
  * retrieves user input values, creates a new User instance, and adds it to
  * the USER_DB array. Finally, logs the updated USER_DB to the console.
  * @param {Event} event - The event object associated with the form submission.
+ * 
  */
 function SignIn(event) {
     event.preventDefault()
 
     let nameSign = document.getElementById('nameSign').value
-    let emailSign = document.getElementById('emailSign').value
+   let emailSign = document.getElementById('emailSign').value
     let NewUser = new User(nameSign, emailSign)
 
     if (USER_DB.get().findIndex((user) =>  user.email === emailSign )>= 0) {
-        document.getElementById('AlreadyRegistered').classList.remove('hidden')
+        document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
 
         window.setTimeout(() => {
-          document.getElementById('AlreadyRegistered').classList.add('hidden')
+          document.getElementById('AlreadyRegistered')?.classList.add('hidden')
         },2000)
     return
     }else {
 
-    document.getElementById('AlreadyRegistered').classList.add('hidden')
+    document.getElementById('AlreadyRegistered')?.classList.add('hidden')
     
    USER_DB.push(NewUser)
    updateUserDB()
 
-    document.getElementById('Registered').classList.remove('hidden')
+    document.getElementById('Registered')?.classList.remove('hidden')
     setTimeout(() => {
-    document.getElementById('Registered').classList.add('hidden');
+    document.getElementById('Registered')?.classList.add('hidden');
 
     }, 2000)
   }
@@ -80,18 +82,18 @@ function LogIn(event) {
         document.body.classList.add('loading')
         // Actualizo el interfaz
         setTimeout(() => {
-            document.getElementById('userLink').classList.remove('hidden')
-            document.getElementById('Logged').classList.remove('hidden')
-            document.getElementById('Rejected').classList.add('hidden')
-            document.getElementById('formSign').classList.add('hidden')
-            document.getElementById('formLog').classList.add('hidden')
-            document.getElementById('FormLogOut').classList.remove('hidden')
-            document.getElementById('Logged').classList.add('hidden')
+            document.getElementById('userLink')?.classList.remove('hidden')
+            document.getElementById('Logged')?.classList.remove('hidden')
+            document.getElementById('Rejected')?.classList.add('hidden')
+            document.getElementById('formSign')?.classList.add('hidden')
+            document.getElementById('formLog')?.classList.add('hidden')
+            document.getElementById('FormLogOut')?.classList.remove('hidden')
+            document.getElementById('Logged')?.classList.add('hidden')
             document.body.classList.remove('loading')
           }, 1000)
         } else {
-          document.getElementById('Rejected').classList.remove('hidden')
-          document.getElementById('Logged').classList.add('hidden')
+          document.getElementById('Rejected')?.classList.remove('hidden')
+          document.getElementById('Logged')?.classList.add('hidden')
         }
 }
 
@@ -120,7 +122,7 @@ function readUserDB(){
   if (localStorage.getItem('USER_DB')) {
   savedUsers = JSON.parse(localStorage.getItem('USER_DB'))
         // Usamos la clase User también para montar la BBDD al cargar la página
-      .map((user) => new User(user.name, user.email))
+      .map((/**  @type {User} */user) => new User(user.name, user.email))
     }
     if (USER_DB.get() === undefined) {
       // console.log('inicializo el singleton de la base de datos')
