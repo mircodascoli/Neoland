@@ -1,9 +1,13 @@
 // @ts-check
-import {User} from './clases/user.js'
-import {SingletonDB} from './clases/SingletonDB.js'
+import {User} from './clases/User.js'
+// import {SingletonDB} from './clases/SingletonDB.js'
+import { Botellas } from './clases/Botellas.js'
+import {store} from './store/redux.js'
+import {INITIAL_STATE} from './store/redux.js'
+
 
 window.addEventListener('DOMContentLoaded', DomContentLoaded)
-const USER_DB = new SingletonDB()
+// const USER_DB = new SingletonDB()
 /**
  * Evento que se lanza cuando el contenido de la página ha sido cargado en memoria
  * y se puede acceder a él.
@@ -20,10 +24,20 @@ function DomContentLoaded() {
     formLogOut?.addEventListener('submit', onLogOut)
     formSignout?.addEventListener('submit', onSignOut)
 
-    readUserDB()
-    checkLoggedIn()
+    readUsersFromLocalStorage()
+  //  checkLoggedIn()
+    //debug
+    console.log('contenido redux a cargar la pagina', store.getState())
+    window.addEventListener('stateChanged', onStateChanged)
 }
-
+/**
+ * Handles a state change event from the store
+ * @param {Event} event - The event object associated with the state change
+ * @listens stateChanged
+ */
+function onStateChanged(event) {
+  console.log('onStateChanged', /** @type {CustomEvent} */(event).detail)
+}
 /**
  * Handles the sign-in form submission, prevents the default form behavior,
  * retrieves user input values, creates a new User instance, and adds it to
@@ -34,28 +48,39 @@ function DomContentLoaded() {
 function SignIn(event) {
     event.preventDefault()
 
-    let nameSign = document.getElementById('nameSign').value
-   let emailSign = document.getElementById('emailSign').value
-    let NewUser = new User(nameSign, emailSign)
+    let nameSignElement =document.getElementById('nameSign')
+    let nameSign = /** @type {HTMLInputElement} */(nameSignElement)?.value
+    let emailSignElement = document.getElementById('emailSign')
+    let emailSign = /** @type {HTMLInputElement} */(emailSignElement)?.value
+    let NewUser = new User(nameSign, emailSign, 'user')
+    /**
+   * @callback filterUserCallback
+   * @param {User} user
+   * @returns number
+   */
+  /** @type {filterUserCallback} */
+    console.log('busco en la BBDD el email ' + emailSign, store.user.getByEmail?.(emailSign))
+    if(store.user.getByEmail?.(emailSign)!==undefined){
+      document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
+      return
+    }
+    // if (USER_DB.get().findIndex((user) =>  user.email === emailSign )>= 0) {
+    //     document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
 
-    if (USER_DB.get().findIndex((user) =>  user.email === emailSign )>= 0) {
-        document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
-
-        window.setTimeout(() => {
-          document.getElementById('AlreadyRegistered')?.classList.add('hidden')
-        },2000)
-    return
-    }else {
-
+    //     window.setTimeout(() => {
+    //       document.getElementById('AlreadyRegistered')?.classList.add('hidden')
+    //     },2000)
+    // return}
+    else {
     document.getElementById('AlreadyRegistered')?.classList.add('hidden')
     
-   USER_DB.push(NewUser)
-   updateUserDB()
+      store.user.create(NewUser)
+      updateUserDB()
 
     document.getElementById('Registered')?.classList.remove('hidden')
     setTimeout(() => {
     document.getElementById('Registered')?.classList.add('hidden');
-
+      console.log(store.getState())
     }, 2000)
   }
 }
@@ -71,26 +96,22 @@ function SignIn(event) {
 function LogIn(event) {
     event.preventDefault()
 
-    let nameLog = document.getElementById('nameLog').value
-    let emailLog = document.getElementById('emailLog').value
+    let nameLogElement = document.getElementById('nameLog')
+    let nameLog =  /** @type {HTMLInputElement} */(nameLogElement)?.value
+    let emailLogElement = document.getElementById('emailLog')
+    let emailLog =  /** @type {HTMLInputElement} */(emailLogElement)?.value
+    
 
-    let userExists = USER_DB.get().findIndex((user) => user.name === nameLog && user.email === emailLog)
+    let userExists = store.user.getAll().findIndex((/**@type {User}*/user) => user.name === nameLog && user.email === emailLog)
 
     if (userExists >= 0) {
         // Guardamos los datos del usuario en la sesión
-        sessionStorage.setItem('user', JSON.stringify(USER_DB.get()[userExists]))
+        let userFromREDUX = store.user.getByEmail?.(emailLog)
+        sessionStorage.setItem('user', JSON.stringify(userFromREDUX))
         document.body.classList.add('loading')
         // Actualizo el interfaz
         setTimeout(() => {
-            document.getElementById('userLink')?.classList.remove('hidden')
-            document.getElementById('Logged')?.classList.remove('hidden')
-            document.getElementById('Rejected')?.classList.add('hidden')
-            document.getElementById('formSign')?.classList.add('hidden')
-            document.getElementById('formLog')?.classList.add('hidden')
-            document.getElementById('FormLogOut')?.classList.remove('hidden')
-            document.getElementById('Logged')?.classList.add('hidden')
-            document.body.classList.remove('loading')
-          }, 1000)
+           location.href = './user.html'}, 1000)
         } else {
           document.getElementById('Rejected')?.classList.remove('hidden')
           document.getElementById('Logged')?.classList.add('hidden')
@@ -104,9 +125,12 @@ function LogIn(event) {
  */
 
 function updateUserDB() {
-    localStorage.setItem('USER_DB', JSON.stringify(USER_DB.get()))
-  }
+let localStoredString = localStorage.getItem('REDUX_DB')
+let localStoredData = JSON.parse(localStoredString || '')
 
+localStoredData.users = [...store.user.getAll()]
+  localStorage.setItem('REDUX_DB', JSON.stringify(localStoredData))
+}
 /**
  * Reads the USER_DB array from local storage and updates the global USER_DB
  * array with the retrieved data. If no data is found in local storage, the 
@@ -116,19 +140,29 @@ function updateUserDB() {
  * @returns {void}
  */
 
-function readUserDB(){
+function readUsersFromLocalStorage(){
   let savedUsers = []
 
-  if (localStorage.getItem('USER_DB')) {
-  savedUsers = JSON.parse(localStorage.getItem('USER_DB'))
+  if (localStorage.getItem('REDUX_DB')) {
+    let localStoredREDUX_DB = localStorage.getItem('REDUX_DB')
+    // Si no existe la clave 'user' en local store, localStoredUSER_DB es null
+    if (localStoredREDUX_DB ===null){
+      localStoredREDUX_DB  =' '
+    }
+  savedUsers = JSON.parse(localStoredREDUX_DB)
         // Usamos la clase User también para montar la BBDD al cargar la página
       .map((/**  @type {User} */user) => new User(user.name, user.email))
-    }
-    if (USER_DB.get() === undefined) {
+    
       // console.log('inicializo el singleton de la base de datos')
-    }else{
-      USER_DB.push(...savedUsers)
+    } else{
+          // REDUX_DB no existe en local storage, tenemos que crear el valor por defecto
+    console.log('Iniciamos local storage porque está vacío')
+    localStorage.setItem('REDUX_DB', JSON.stringify(INITIAL_STATE))
     }
+    // Replicamos lo mismo en REDUX
+  savedUsers.forEach((/** @type {User} */newUser) => {
+    store.user.create(newUser, () => {console.log('usuario creado')})
+  })
     
     }
   
@@ -154,15 +188,25 @@ function onLogOut(event) {
  */
   function onSignOut(event) {
     event.preventDefault()
+   
     // Borro el usuario, si está identificado
     if (sessionStorage.getItem('user') && confirm('¿Estás seguro de borrar tu usuario?')) {
-      USER_DB.get().splice(USER_DB.get().findIndex((user) => user.email === JSON.parse(sessionStorage.getItem('user')).email), 1)
+      let sessionStorageData = sessionStorage.getItem('user')
+       if(sessionStorageData === null){
+        sessionStorageData = ''
+       }
+       let userList = USER_DB.get()
+       let sessionMail = JSON.parse(sessionStorageData).email
+     
+      userList.splice(userList.findIndex((user) => user.email === sessionMail), 1)
+
       updateUserDB()
       // Eliminar la sesión del usuario
       sessionStorage.removeItem('user')
       alert('Usuario borrado correctamente')
       location.href = './index.html'
     }
+
   }
 /**
  * Checks if a user is logged in by verifying session storage for user data.

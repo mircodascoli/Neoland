@@ -5,43 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projecto 1</title>
     <script type="module" src="./js/main.js"></script>
+    <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet">
+    
 </head>
-<body>
+<body class="container-logo-and-buttons">
 <header>
+
+  <div>
     <h1>party<br>time</h1>
-    <nav>
-      <menu>
-        <li id="userLink" class="hidden">
-          <a href="/user.html">Datos de usuario</a>
-        </li>
-        <li>
-          <form id="FormLogOut" class="hidden">
-            <button type="submit">Cerrar sesión</button">
-          </form>
-        </li>
-      </menu>
-    </nav>
+  </div>
+    
+   
 </header>
-<main>
-<form action="/" id="formSign">
-    <h2>Insert your data to continue:</h2>
-<label for="nameSign">Name:</label><input type="text" id="nameSign"placeholder="Your name">
-<label for="emailSign">Email:</label><input type="email" id="emailSign"placeholder="Your email">
-<input type="submit" value="Sign">
-</form>
-<p id="AlreadyRegistered" class="hidden">Already Registred? Please Login here below</p>
-<p id="Registered" class="hidden">Thanks for registering</p>
-<p id="Logged" class="hidden">Login correct</p>
-<p id="Rejected" class="hidden">Incorrect combination of Username and password</p>
-<form action="/" id="formLog">
-    <h2>Or log in:</h2>
-    <label for="nameLog">Name:</label><input type="text" id="nameLog" placeholder="Your name">
-    <label for="emailLog">Email:</label><input type="email" id="emailLog" placeholder="Your email">
-    <input type="submit" value="Login">
+<p>Landing page of the app!<br> you can now log or sign :)</p>
+<main class="index-buttons-container"></mainclass>
 
-
-</form>
+ <button class="index-buttons index-login"><a href="./login.html" >login</a></button> 
+ <button class="index-buttons index-sign"><a href="./sign.html" >sign</a></button>
   
 </main>
 <footer>

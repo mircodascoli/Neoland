@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <script type="module" src="./js/main.js"></script>
+        <link rel="stylesheet" href="./css/reset.css">
+        <link rel="stylesheet" href="./css/styles.css">
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet">
+      
+    </head>
+<body>
+    <main>
+        <form action="/" id="formLog">
+            <h2>Log in to PARTYTIME</h2>
+            <label for="nameLog">Name:</label><input type="text" id="nameLog" placeholder="Your name">
+            <label for="emailLog">Email:</label><input type="email" id="emailLog" placeholder="Your email">
+            <input type="submit" value="Login">
+            <a href="./sign.html">Or sign up</a>
+        
+        <div id="g_id_onload"
+        data-client_id="603925518600-e39763s1s30qkbrbgiifms7jtc4tujdt.apps.googleusercontent.com"
+        data-callback="handleGoogleLogin"
+        data-auto_prompt="false"></div>
+
+        <div class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="signin_with"
+        data-shape="rectangular"
+        data-logo_alignment="left">
+         </div>
+        </form>
+         
+        <p id="Logged" class="hidden">Logged succesfuly!</p>
+        <p id="Rejected" class="hidden">incorrect login</p>
+
+    </main>
+    <footer>
+        <p>PARTYTIME was made for fun, thank fors using it</p>
+        <p>2025 Mirco D'Ascoli</p>
+    </footer>
+    <script type="module" src="./js/googleOAuth.js"></script>
+</body>
+</html>
