@@ -30,7 +30,7 @@ export const INITIAL_STATE = {
     // CRUD
     // USER
     CREATE_USER: 'CREATE_USER',
-    READ_LIST: 'READ_LIST',
+    // READ_LIST: 'READ_LIST',
     UPDATE_USER: 'UPDATE_USER',
     DELETE_USER: 'DELETE_USER',
     DELETE_ALL_USERS: 'DELETE_ALL_USERS',
@@ -46,13 +46,19 @@ export const INITIAL_STATE = {
   const appReducer = (state = INITIAL_STATE, action) => {
     
     const actionWithUser = /** @type {ActionTypeUser} */(action)
-    switch (action.type) { case ACTION_TYPES.CREATE_USER:
+    switch (action.type) { 
+      case ACTION_TYPES.CREATE_USER:
       return {
         ...state,
         users: [
           ...state.users,
           actionWithUser.user// Equivalente a USER_DB.push(newUser)
         ]
+      };
+      case ACTION_TYPES.DELETE_USER:
+      return {
+        ...state,
+        users: state.users.filter((/** @type {User} */user) => user._id !== actionWithUser?.user?._id)
       };
       default:
         return {...state};
@@ -87,7 +93,7 @@ export const INITIAL_STATE = {
     // Private methods
     /**
      *
-     * @param {ActionTypeArticle} action
+     * @param {ActionTypeUser} action
      * @param {function | undefined} [onEventDispatched]
      */
     const _dispatch = (action, onEventDispatched) => {
@@ -148,16 +154,15 @@ export const INITIAL_STATE = {
      /**
    * Returns all the users
    * @returns {User[]}
+   * 
    */
     const getAllUsers = () => { return currentState.users };
-   
-  /**
+   /**
    * Returns the user with the specified id
    * @param {string} id
    * @returns {User | undefined}
    */
   const getUserById = (id) => { return currentState.users.find((/** @type {User} */user) => user._id === id) };
-
   /**
    * Returns the user with the specified email
    * @param {string} email
@@ -171,7 +176,8 @@ export const INITIAL_STATE = {
    * @returns void
    */
    const deleteUser = (user, onEventDispatched) => _dispatch({ type: ACTION_TYPES.DELETE_USER, user }, onEventDispatched);
-    // Public methods
+   
+   // Public methods
     /**
      *
      * @returns {State}

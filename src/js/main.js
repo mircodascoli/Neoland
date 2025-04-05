@@ -2,9 +2,7 @@
 import {User} from './clases/User.js'
 // import {SingletonDB} from './clases/SingletonDB.js'
 import { Botellas } from './clases/Botellas.js'
-import {store} from './store/redux.js'
-import {INITIAL_STATE} from './store/redux.js'
-
+import { store, INITIAL_STATE } from './store/redux.js'
 
 window.addEventListener('DOMContentLoaded', DomContentLoaded)
 // const USER_DB = new SingletonDB()
@@ -25,7 +23,7 @@ function DomContentLoaded() {
     formSignout?.addEventListener('submit', onSignOut)
 
     readUsersFromLocalStorage()
-  //  checkLoggedIn()
+    checkLoggedIn()
     //debug
     console.log('contenido redux a cargar la pagina', store.getState())
     window.addEventListener('stateChanged', onStateChanged)
@@ -191,14 +189,12 @@ function onLogOut(event) {
    
     // Borro el usuario, si está identificado
     if (sessionStorage.getItem('user') && confirm('¿Estás seguro de borrar tu usuario?')) {
-      let sessionStorageData = sessionStorage.getItem('user')
-       if(sessionStorageData === null){
-        sessionStorageData = ''
+      let localStoredUser = sessionStorage.getItem('user')
+      if (localStoredUser === null) {
+        localStoredUser= ''
        }
-       let userList = USER_DB.get()
-       let sessionMail = JSON.parse(sessionStorageData).email
-     
-      userList.splice(userList.findIndex((user) => user.email === sessionMail), 1)
+
+       store.user.delete(JSON.parse(localStoredUser))
 
       updateUserDB()
       // Eliminar la sesión del usuario
