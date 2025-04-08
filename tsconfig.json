@@ -1,5 +1,5 @@
 {
-  "include": ["./src/js/**/*.js"],
+  "include": ["./src/js/**/*.js", "src/jest.config.js"],
   "exclude": ["./**/_hidden/**/*"],
   "compilerOptions": {
     "paths": {

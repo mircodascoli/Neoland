@@ -21,10 +21,6 @@ export class Botellas{
     
     }
 
-    class Destilado{
-      constructor()
-    }
-    
 
 
 //     /**

@@ -1,5 +1,6 @@
 // @ts-check
 /**  @import {User} from '../clases/User.js'*/
+/**  @import {Botellas} from '../clases/Botellas.js'*/
 
 /**
  * @module redux/store
@@ -8,6 +9,7 @@
 /**
  * @typedef {Object.<(string), any>} State
  * @property {User[] | []} users
+ * @property {Botellas[] | []} botellas
  * @property {boolean} isLoading
  * @property {boolean} error
  */
@@ -16,14 +18,20 @@
  */
 export const INITIAL_STATE = {
     users: [],// PASO 1
+    botellas: [],
     isLoading: false,// Podría usarse para controlar cuando estamos realizando un fetch
     error: false,// Podría usarse para controlar cuando sucede un error
   }
   
   /**
-   * @typedef {Object} ActionTypeUser
+   * @typedef {Object} ActionTypeUser 
    * @property {string} type
    * @property {User} [user]
+   */
+  /** 
+   * @typedef {Object} ActionTypeBotellas 
+   * @property {string} type
+   * @property {Botellas} [botella]
    */
  
   const ACTION_TYPES = {
@@ -34,19 +42,28 @@ export const INITIAL_STATE = {
     UPDATE_USER: 'UPDATE_USER',
     DELETE_USER: 'DELETE_USER',
     DELETE_ALL_USERS: 'DELETE_ALL_USERS',
+
+    // BOTELLAS
+    CREATE_BOTELLA: 'CREATE_BOTELLA',
+    //READ_LIST: 'READ_LIST',
+    UPDATE_BOTELLA: 'UPDATE_BOTELLA',
+    DELETE_BOTELLA: 'DELETE_BOTELLA',
+    //DELETE_ALL_BOTELLAS: 'DELETE_ALL_BOTELLAS',
   }
   
   /**
    * Reducer for the app state.
    *
    * @param {State} state - The current state
-   * @param {ActionTypeUser} action - The action to reduce
+   * @param {ActionTypeUser | ActionTypeBotellas} action - The action to reduce
    * @returns {State} The new state
    */
-  const appReducer = (state = INITIAL_STATE, action) => {
+    const appReducer = (state = INITIAL_STATE, action) => {
     
     const actionWithUser = /** @type {ActionTypeUser} */(action)
+    const actionWithBotella =/** @type {ActionTypeBotellas} */(action)
     switch (action.type) { 
+      // User
       case ACTION_TYPES.CREATE_USER:
       return {
         ...state,
@@ -61,6 +78,16 @@ export const INITIAL_STATE = {
         ...state,
         users: state.users.filter((/** @type {User} */user) => user._id !== actionWithUser?.user?._id)
       };
+
+      //botella
+      case ACTION_TYPES.CREATE_BOTELLA:
+        return {
+          ...state,
+          botellas: [
+            ...state.botellas,
+            actionWithBotella.botella// Equivalente a USER_DB.push(newUser)
+          ]
+        };
       default:
         return {...state};
     }
@@ -69,17 +96,16 @@ export const INITIAL_STATE = {
   /**
    * @typedef {Object} PublicMethods
    * @property {function} create
-   * @property {function} read
    * @property {function} update
    * @property {function} delete
    * @property {function} getById
    * @property {function} getAll
-   * @property {function} deleteAll
    * @property {function} [getByEmail]
    */
   /**
    * @typedef {Object} Store
    * @property {PublicMethods} user
+   * @property {PublicMethods} botella
    * @property {function} getState
    */
   /**
@@ -94,7 +120,7 @@ export const INITIAL_STATE = {
     // Private methods
     /**
      *
-     * @param {ActionTypeUser} action
+     * @param {ActionTypeUser | ActionTypeBotellas} action
      * @param {function | undefined} [onEventDispatched]
      */
     const _dispatch = (action, onEventDispatched) => {
@@ -146,12 +172,26 @@ export const INITIAL_STATE = {
     /**
      * Creates a new user inside the store
      * @param {User} user
+     
+     * 
      * @param {function | undefined} [onEventDispatched]
      * @returns void
      */
     const createUser = (user, onEventDispatched) => _dispatch({ type: ACTION_TYPES.CREATE_USER, user }, onEventDispatched);
-  
+  /**
+     * Creates a new user inside the store
+     * @param {Botellas} botella
+     * @param {function | undefined} [onEventDispatched]
+     * @returns void
+     */
+    const createBotella = (botella, onEventDispatched) => _dispatch({ type: ACTION_TYPES.CREATE_BOTELLA, botella }, onEventDispatched);
     // Getters
+     /**
+   * Returns all the users
+   * @returns {Botellas[]}
+   * 
+   */
+    const getAllBotellas = () => { return currentState.botellas };
      /**
    * Returns all the users
    * @returns {User[]}
@@ -187,21 +227,35 @@ export const INITIAL_STATE = {
   
     // Namespaced actions
     /** @type {PublicMethods} */
+    //user
     const user = {
       create: createUser,
-      read:function (){console.log('read')},
+      //
       update:function (){console.log('update')},
       delete: deleteUser,
       getById: getUserById,
       getByEmail: getUserByEmail,
       getAll: getAllUsers,
-   
-      deleteAll:function (){console.log('deleteAll')}
-
+      //deleteAll:function (){console.log('deleteAll')}
     }
+
+      //botella
+       /** @type {PublicMethods} */
+       const botella = {
+        create: createBotella,
+        //read:function (){console.log('read')},
+        update:function (){console.log('update')},
+        delete:function (){console.log('delete')},
+        getById:function (){console.log('getById')},
+        getAll: getAllBotellas,
+        //deleteAll:function (){console.log('deleteAll')}
+      }
+    
+
     return {
       // Actions
       user,
+      botella,
       // Public methods
       getState
     }

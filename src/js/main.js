@@ -204,21 +204,7 @@ function onLogOut(event) {
     }
 
   }
-/**
- * Checks if a user is logged in by verifying session storage for user data.
- * If a user is logged in, it updates the UI to show the user link and log out form,
- * while hiding the sign-in and log-in forms. If no user is logged in and the current
- * page is not the home page, it redirects to the home page.
- */
-  //   function checkLoggedIn() {
-  //       if (sessionStorage.getItem('user')) {
-  //         document.getElementById('userLink')?.classList.remove('hidden')
-  //         document.getElementById('logOutForm')?.classList.remove('hidden')
-  //         document.getElementById('signInForm')?.classList.add('hidden')
-  //         document.getElementById('logInForm')?.classList.add('hidden')
-  //       } else if (location.pathname !== '/index.html') {
-  //         // Redirigimos a la home si el usuario no está identificado
-  //         location.href = './index.html'
-  //       }
-  //     }
-  // //  
+  export function getDataFromLocalStorage() {
+    const defaultValue = JSON.stringify(INITIAL_STATE)
+    return JSON.parse(localStorage.getItem('REDUX_DB') || defaultValue)
+  }

@@ -5,9 +5,10 @@ const config = {
     verbose: true,
     testEnvironment: 'jsdom',
     moduleNameMapper: {
-      '^classes/(.*)': '<rootDir>/src/js/classes/$1.js',
-      '^decorators/(.*)': '<rootDir>/src/js/decorators/$1.js',
-      '^utils/(.*)': '<rootDir>/src/js/utils/$1.js',
+      '^clases/(.*)': '<rootDir>/src/js/clases/*.js',
+      '^libreria/(.*)': '<rootDir>/src/js/libreria/*.js',
+      
+     
     }
   }
   
