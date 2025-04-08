@@ -9,11 +9,11 @@ export class Botellas{
      * @param {string} _id
     */
 
-      constructor(brand, destilado, mls = 700, range = 'recomended', _id) {
+      constructor(name, spirit, mls = 700, range = 'recomended', _id) {
         
     
-      this.brand = brand// makers-mark, cocchi, Patron
-      this.destilado = destilado// whisky, vermouth, gin, tequila ....
+      this.name = name// makers-mark, cocchi, Patron
+      this.spirit = spirit// whisky, vermouth, gin, tequila ....
       this.range = range // basic, recomended, premium
       this._id = _id// 1, 2, 3...
       this.mls = mls// 700 casi siempre

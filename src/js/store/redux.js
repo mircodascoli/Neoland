@@ -88,6 +88,11 @@ export const INITIAL_STATE = {
             actionWithBotella.botella// Equivalente a USER_DB.push(newUser)
           ]
         };
+        case ACTION_TYPES.DELETE_BOTELLA:
+        return {
+          ...state,
+          botellas: state.botellas.filter((/** @type {Botellas} */botella) => botella._id !== actionWithBotella?.botella?._id)
+        };
       default:
         return {...state};
     }
@@ -101,6 +106,8 @@ export const INITIAL_STATE = {
    * @property {function} getById
    * @property {function} getAll
    * @property {function} [getByEmail]
+   * @property {function} [getByName]
+   * @property {function} [getBySpirit]
    */
   /**
    * @typedef {Object} Store
@@ -198,12 +205,31 @@ export const INITIAL_STATE = {
    * 
    */
     const getAllUsers = () => { return currentState.users };
+     /**
+   * Returns the botella with the specified id
+   * @param {string} id
+   * @returns {Botellas | undefined}
+   */
+  const getBotellaById = (id) => { return currentState.botellas.find((/** @type {Botellas} */botella) => botella._id === id) };
+  /**
+  * Returns the user with the specified name
+   * @param {string} name
+   * @returns {Botellas | undefined}
+   */
+  const getBotellaByName = (name) => { return currentState.botellas.find((/** @type {Botellas} */botella) => botella.name === name) };
+   /**
+  * Returns the user with the specified spirit
+   * @param {string} spirit
+   * @returns {Botellas | undefined}
+   */
+   const getBotellaBySpirit = (spirit) => { return currentState.botellas.find((/** @type {Botellas} */botella) => botella.spirit === spirit) };
    /**
    * Returns the user with the specified id
    * @param {string} id
    * @returns {User | undefined}
    */
   const getUserById = (id) => { return currentState.users.find((/** @type {User} */user) => user._id === id) };
+
   /**
    * Returns the user with the specified email
    * @param {string} email
@@ -217,7 +243,12 @@ export const INITIAL_STATE = {
    * @returns void
    */
    const deleteUser = (user, onEventDispatched) => _dispatch({ type: ACTION_TYPES.DELETE_USER, user }, onEventDispatched);
-   
+   /** Deletes an user
+   * @param {Botellas} botella
+   * @param {function | undefined} [onEventDispatched]
+   * @returns void
+   */
+   const deleteBotella = (botella, onEventDispatched) => _dispatch({ type: ACTION_TYPES.DELETE_BOTELLA, botella }, onEventDispatched);
    // Public methods
     /**
      *
@@ -241,12 +272,14 @@ export const INITIAL_STATE = {
 
       //botella
        /** @type {PublicMethods} */
-       const botella = {
+        const botella = {
         create: createBotella,
         //read:function (){console.log('read')},
         update:function (){console.log('update')},
-        delete:function (){console.log('delete')},
-        getById:function (){console.log('getById')},
+        delete: deleteBotella,
+        getById:getBotellaById,
+        getByName: getBotellaByName,
+        getBySpirit: getBotellaBySpirit,
         getAll: getAllBotellas,
         //deleteAll:function (){console.log('deleteAll')}
       }
