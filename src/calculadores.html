@@ -21,27 +21,46 @@
         <li><a href="./user.html">user area</a></li>
        </menu>
     </header>
-    <main>
-        <p>This is the heart of party time, where the calculation of cocktails begins</p>
+    <main class="container-calculador">
+        <select name="coktails" id="">
+            <option value="1">Negroni</option>
+            <option value="2">Manhattan</option>
+            <option value="3">Dry Martini</option>
+            <option value="4">Old Fashioned</option>
+            <option value="5">Paloma</option>
+            <option value="6">Ron cooler</option>
+            <option value="7">Tom Collins</option>
+            <option value="8">Berry Hiball</option>
+            <option value="1"><a href="#">MORE, with Premium!</a></option>
+        </select>
     <label for="range">how many ml would you like to have for your party?<input type="range" min="200" max="2000"></label>
         <div>
-            <select name="coktails" id="">
-                <option value="1">Negroni</option>
-                <option value="2">Manhattan</option>
-                <option value="3">Dry Martini</option>
-                <option value="4">Old Fashioned</option>
-                <option value="5">Paloma</option>
-                <option value="6">Ron cooler</option>
-                <option value="7">Tom Collins</option>
-                <option value="8"></option>
-                <option value="1"><a href="#">MORE, with Premium!</a></option>
-            </select>
-            <ul>
-                <li>Ingedients</li>
-                <li>Ingedients</li>
-                <li>Ingedients</li>
-            </ul>
-            <button>calculate</button>
+
+
+       
+           <table>
+            <tr>
+                <th>ingredient</th>
+                <th>quantity</th>
+            </tr>
+            <tr>
+                <td>gin</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>vermouth</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>vermouth</td>
+                <td>30</td>
+            </tr>
+
+           </table>
+            <button>calculate and save</button>
+            
+        <p>This is the heart of party time, where the calculation of cocktails begins</p>
+         
             
         </div>
     </main>

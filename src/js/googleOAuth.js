@@ -11,7 +11,9 @@ function handleGoogleLogin(response){
         _id: payload.sub,
         name: payload.name,
         email: payload.email,
-        rol: 
+        rol: payload.rol,
+        token: jwt
+    }
 
 
         // this.name = name
@@ -20,4 +22,3 @@ function handleGoogleLogin(response){
         // this.password = password
         // // this.token= token
     }
-}

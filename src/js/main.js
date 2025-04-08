@@ -1,7 +1,7 @@
 // @ts-check
 import {User} from './clases/User.js'
 // import {SingletonDB} from './clases/SingletonDB.js'
-import { Botellas } from './clases/Botellas.js'
+// import { Botellas } from './clases/Botellas.js'
 import { store, INITIAL_STATE } from './store/redux.js'
 
 window.addEventListener('DOMContentLoaded', DomContentLoaded)
@@ -14,8 +14,8 @@ window.addEventListener('DOMContentLoaded', DomContentLoaded)
 function DomContentLoaded() {
     let formSign = document.getElementById('formSign')
     let formLog = document.getElementById('formLog')
-    let formLogOut = document.getElementById('FormLogOut')
-    let formSignout = document.getElementById('FormSignOut')
+    let formLogOut = document.getElementById('logOutForm')
+    let formSignout = document.getElementById('signOutForm')
 
     formSign?.addEventListener('submit', SignIn)
     formLog?.addEventListener('submit', LogIn)
@@ -23,7 +23,7 @@ function DomContentLoaded() {
     formSignout?.addEventListener('submit', onSignOut)
 
     readUsersFromLocalStorage()
-    checkLoggedIn()
+    // checkLoggedIn()
     //debug
     console.log('contenido redux a cargar la pagina', store.getState())
     window.addEventListener('stateChanged', onStateChanged)
@@ -148,8 +148,8 @@ function readUsersFromLocalStorage(){
       localStoredREDUX_DB  =' '
     }
   savedUsers = JSON.parse(localStoredREDUX_DB)
-        // Usamos la clase User también para montar la BBDD al cargar la página
-      .map((/**  @type {User} */user) => new User(user.name, user.email))
+    ?.users
+  .map((/**  @type {User} */user) => new User(user.name, user.email, user.rol, user.password, user.token, user._id))
     
       // console.log('inicializo el singleton de la base de datos')
     } else{
@@ -193,9 +193,9 @@ function onLogOut(event) {
       if (localStoredUser === null) {
         localStoredUser= ''
        }
-
+       console.log('usuario antes de borrar', JSON.parse(localStoredUser))
        store.user.delete(JSON.parse(localStoredUser))
-
+       console.log('usuario borrado', store.user.getAll())  
       updateUserDB()
       // Eliminar la sesión del usuario
       sessionStorage.removeItem('user')
@@ -210,15 +210,15 @@ function onLogOut(event) {
  * while hiding the sign-in and log-in forms. If no user is logged in and the current
  * page is not the home page, it redirects to the home page.
  */
-    function checkLoggedIn() {
-        if (sessionStorage.getItem('user')) {
-          document.getElementById('userLink')?.classList.remove('hidden')
-          document.getElementById('logOutForm')?.classList.remove('hidden')
-          document.getElementById('signInForm')?.classList.add('hidden')
-          document.getElementById('logInForm')?.classList.add('hidden')
-        } else if (location.pathname !== '/index.html') {
-          // Redirigimos a la home si el usuario no está identificado
-          location.href = './index.html'
-        }
-      }
-  //  
+  //   function checkLoggedIn() {
+  //       if (sessionStorage.getItem('user')) {
+  //         document.getElementById('userLink')?.classList.remove('hidden')
+  //         document.getElementById('logOutForm')?.classList.remove('hidden')
+  //         document.getElementById('signInForm')?.classList.add('hidden')
+  //         document.getElementById('logInForm')?.classList.add('hidden')
+  //       } else if (location.pathname !== '/index.html') {
+  //         // Redirigimos a la home si el usuario no está identificado
+  //         location.href = './index.html'
+  //       }
+  //     }
+  // //  

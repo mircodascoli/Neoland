@@ -56,6 +56,7 @@ export const INITIAL_STATE = {
         ]
       };
       case ACTION_TYPES.DELETE_USER:
+        console.log(actionWithUser.user)
       return {
         ...state,
         users: state.users.filter((/** @type {User} */user) => user._id !== actionWithUser?.user?._id)
