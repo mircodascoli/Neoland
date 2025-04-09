@@ -19,6 +19,7 @@ background-color: white;
         align-items: center;
         justify-content: space-around
     }
+
 }
 
     main{
@@ -37,6 +38,12 @@ background-color: white;
             width:40px;
             height: 40px;
             background: #ee6b2f;
+          }
+
+          &.container-calculador{
+            margin: 0 auto;
+            padding: 10%;
+            
           }
     }
 

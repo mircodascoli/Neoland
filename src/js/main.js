@@ -16,11 +16,13 @@ function DomContentLoaded() {
     let formLog = document.getElementById('formLog')
     let formLogOut = document.getElementById('logOutForm')
     let formSignout = document.getElementById('signOutForm')
+    let rangeCalculador = document.getElementById('range')
 
     formSign?.addEventListener('submit', SignIn)
     formLog?.addEventListener('submit', LogIn)
     formLogOut?.addEventListener('submit', onLogOut)
     formSignout?.addEventListener('submit', onSignOut)
+    rangeCalculador?.addEventListener('change',onChangeRange)
 
     readUsersFromLocalStorage()
     // checkLoggedIn()
@@ -207,4 +209,14 @@ function onLogOut(event) {
   export function getDataFromLocalStorage() {
     const defaultValue = JSON.stringify(INITIAL_STATE)
     return JSON.parse(localStorage.getItem('REDUX_DB') || defaultValue)
+  }
+
+  function onChangeRange(event){
+    console.log(event.target.value)
+    let valorRange = event.target.value
+    let inputCalculador = document.getElementById('inputs-calculador')
+    let pElement = document.createElement('p')
+    pElement.innerText = valorRange
+    inputCalculador.appendChild(pElement)
+// todo esto
   }

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet">
     </head>
-<body>
+<body id="body-calculadores">
     <header>
         <h1>calculadores</h1>
        <menu>
@@ -22,23 +22,27 @@
        </menu>
     </header>
     <main class="container-calculador">
-        <select name="coktails" id="seleccionador">
-            <option value="1">Negroni</option>
-            <option value="2">Manhattan</option>
-            <option value="3">Dry Martini</option>
-            <option value="4">Old Fashioned</option>
-            <option value="5">Paloma</option>
-            <option value="6">Ron cooler</option>
-            <option value="7">Tom Collins</option>
-            <option value="8">Berry Hiball</option>
-            <option value="1"><a href="#">MORE, with Premium!</a></option>
-        </select>
-    <label for="range">how many ml would you like to have for your party?<input type="range" min="200" max="2000"></label>
+        <div id="inputs-caclculador">
+            <select name="coktails" id="seleccionador">
+                <option value="1">Negroni</option>
+                <option value="2">Manhattan</option>
+                <option value="3">Dry Martini</option>
+                <option value="4">Old Fashioned</option>
+                <option value="5">Paloma</option>
+                <option value="6">Ron cooler</option>
+                <option value="7">Tom Collins</option>
+                <option value="8">Berry Hiball</option>
+                <option value="1"><a href="#">MORE, with Premium!</a></option>
+            </select>
+        <label for="range" id="range">how many ml would you like to have for your party?<input type="range" min="200" max="2000" step="10"></label>
+
+        </div>
+       
         <div>
 
 
        
-           <table>
+           <table id="tabla-calculos" cellspacing="1px">
             <tr>
                 <th>ingredient</th>
                 <th>quantity</th>
