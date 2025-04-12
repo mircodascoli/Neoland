@@ -2,9 +2,12 @@
   "name": "neoland",
   "version": "1.0.0",
   "description": "par practicas",
-  "main": "index.js",
+  "main": "server/server.basic.js",
   "type": "module",
   "scripts": {
+    "server:basic:start": "node --env-file=.env --watch server/server.basic.js",
+    "server:statics:start": "node --env-file=.env --watch server/server.static.js",
+    "server:api:start": "node --env-file=.env --watch server/server.api.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll",
     "docs": "jsdoc ./src -r"

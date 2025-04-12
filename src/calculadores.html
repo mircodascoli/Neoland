@@ -22,51 +22,53 @@
        </menu>
     </header>
     <main class="container-calculador">
-        <div id="inputs-caclculador">
-            <select name="coktails" id="seleccionador">
-                <option value="1">Negroni</option>
-                <option value="2">Manhattan</option>
-                <option value="3">Dry Martini</option>
-                <option value="4">Old Fashioned</option>
-                <option value="5">Paloma</option>
-                <option value="6">Ron cooler</option>
-                <option value="7">Tom Collins</option>
-                <option value="8">Berry Hiball</option>
-                <option value="1"><a href="#">MORE, with Premium!</a></option>
-            </select>
-        <label for="range" id="range">how many ml would you like to have for your party?<input type="range" min="200" max="2000" step="10"></label>
+        <div id="inputs-calculador">
+      
+          <label for="range" id="range" ><input type="range" min="200" max="2000" step="100" value="1000"></label>
+          <label for="seleccionador">of: </label><select name="coktails" id="seleccionador">
 
+            <option value="Negroni" selected>Negroni</option>
+            <option value="Manhattan">Manhattan</option>
+            <option value="Dry Martini">Dry Martini</option>
+            <option value="Old Fashioned">Old Fashioned</option>
+            <option value="Paloma">Paloma</option>
+            <option value="Dark & Stormy">Dark & Stormy</option>
+            <option value="Tom Collins">Tom Collins</option>
+            <option value="Berry Hiball">Berry Hiball</option>
+           
+        </select>
         </div>
        
-        <div>
+        <div id="resultados">
+           <table id="tabla-calculos" cellspacing="1px" cellpadding="">
+            <thead>
+                <th>ingredients:</th>
+                <th id>quantity:</th>
+            </thead>
+            <tbody>
+                <tr id="row-ingrediente-1">
+                    <td id="ingrediente-1">undf</td>
+                    <td id="mls-ingrediente-1">00</td>
+                </tr>
+                <tr id="row-ingrediente-2">
+                    <td id="ingrediente-2">undf</td>
+                    <td id="mls-ingrediente-2">00</td>
+                </tr>
+                <tr id="row-ingrediente-3">
+                    <td id="ingrediente-3">undf</td>
+                    <td id="mls-ingrediente-3">00</td>
+                </tr>
+                <tr id="row-ingrediente-4">
+                    <td id="ingrediente-4">undf</td>
+                    <td id="mls-ingrediente-4">00</td>
+                </tr>
+              
 
-
-       
-           <table id="tabla-calculos" cellspacing="1px">
-            <tr>
-                <th>ingredient</th>
-                <th>quantity</th>
-            </tr>
-            <tr>
-                <td>gin</td>
-                <td>30</td>
-            </tr>
-            <tr>
-                <td>vermouth</td>
-                <td>30</td>
-            </tr>
-            <tr>
-                <td>vermouth</td>
-                <td>30</td>
-            </tr>
-
+             </tbody>
            </table>
-            <button>calculate and save</button>
-            
-        <p>This is the heart of party time, where the calculation of cocktails begins</p>
-         
-            
+            <button id="save"> save and party!</button>
         </div>
+
     </main>
 
     <footer>

@@ -17,12 +17,14 @@ function DomContentLoaded() {
     let formLogOut = document.getElementById('logOutForm')
     let formSignout = document.getElementById('signOutForm')
     let rangeCalculador = document.getElementById('range')
+    let selector = document.getElementById('seleccionador')
 
     formSign?.addEventListener('submit', SignIn)
     formLog?.addEventListener('submit', LogIn)
     formLogOut?.addEventListener('submit', onLogOut)
     formSignout?.addEventListener('submit', onSignOut)
     rangeCalculador?.addEventListener('change',onChangeRange)
+    selector?.addEventListener('change', onChangeSelector)
 
     readUsersFromLocalStorage()
     // checkLoggedIn()
@@ -211,12 +213,83 @@ function onLogOut(event) {
     return JSON.parse(localStorage.getItem('REDUX_DB') || defaultValue)
   }
 
+/**
+ * Handles the input range change event, appending a <p> element to the
+ * #inputs-calculador container with the current value of the range.
+ *
+ * @param {Event} event - The event object associated with the input range change.
+ */
   function onChangeRange(event){
-    console.log(event.target.value)
-    let valorRange = event.target.value
     let inputCalculador = document.getElementById('inputs-calculador')
+    let valorRange = event.target.value
+    console.log(event.target.value)
     let pElement = document.createElement('p')
-    pElement.innerText = valorRange
+    while (inputCalculador.querySelector('p')) {
+      inputCalculador.querySelector('p').remove();
+    }
+    pElement.innerText = `${valorRange} mls`
     inputCalculador.appendChild(pElement)
+    
+  }
+    function onChangeSelector(event) {
+      let selector = document.getElementById('seleccionador')
+      let ingrediente1 = document.getElementById('ingrediente-1')
+      let ingrediente2 = document.getElementById('ingrediente-2')
+      let ingrediente3 = document.getElementById('ingrediente-3')
+      let ingrediente4 = document.getElementById('ingrediente-4')
+      let selectedValue = selector.value
+      
+      switch (selectedValue) {
+        case 'Negroni':
+          ingrediente1.innerText = 'Gin'
+          ingrediente2.innerText = 'Campari'
+          ingrediente3.innerText = 'Sweet Vermouth'
+          ingrediente4.innerText = 'Water'
+          break;
+        case 'Manhattan':
+          ingrediente1.innerText = 'Rye whiskey'
+          ingrediente2.innerText = 'Sweet Vermouth'
+          ingrediente3.innerText = 'Angostura bitters'
+          ingrediente4.innerText = 'Water'
+          break;
+        case 'Dry Martini':
+          ingrediente1.innerText = 'Gin'
+          ingrediente2.innerText = 'Dry Vermouth'
+          ingrediente3.innerText = 'Water'
+          break;
+        case 'Old Fashioned':
+          ingrediente1.innerText = 'Bourbon whiskey'
+          ingrediente2.innerText = 'Sugar syrup'
+          ingrediente3.innerText = 'Angostura bitters'
+          ingrediente4.innerText = 'Water'
+          break;
+        case 'Paloma':
+          ingrediente1.innerText = 'Tequila'
+          ingrediente2.innerText = 'Lime juice'
+          ingrediente3.innerText = 'Agave syrup'
+          ingrediente4.innerText = 'Grapefruit soda'
+          break;
+        case 'Dark & Stormy':
+          ingrediente1.innerText = 'Dark spiced rum'
+          ingrediente2.innerText = 'Lime juice'
+          ingrediente3.innerText = 'Ginger beer'
+          break;
+        case 'Tom Collins':
+          ingrediente1.innerText = 'Vodka'
+          ingrediente2.innerText = 'Lemon juice'
+          ingrediente3.innerText = 'Raspberry syrup'
+          ingrediente4.innerText = 'Ginger Ale'
+          break;
+        case 'Berry Hiball':
+          ingrediente1.innerText = 'Vodka'
+          ingrediente2.innerText = 'Lemon juice'
+          ingrediente3.innerText = 'Raspberry syrup'
+          ingrediente4.innerText = 'Ginger Ale'
+          break;
+        default:
+          break;
+      }
+  
+
 // todo esto
   }
