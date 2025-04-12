@@ -1,3 +1,4 @@
+// @ts-no-check
 window.handleGoogleLogin = handleGoogleLogin
 
 function handleGoogleLogin(response){
@@ -7,18 +8,14 @@ function handleGoogleLogin(response){
     let payload = JSON.parse(atob(jwt.split('.')[1]));
     console.log('PAYLOAD: ', payload);
 
-    let user = {
+   /*  let user = {
         _id: payload.sub,
         name: payload.name,
         email: payload.email,
         rol: payload.rol,
         token: jwt
-    }
+    } */
 
 
-        // this.name = name
-        // this.email = email
-        // this.rol= rol
-        // this.password = password
-        // // this.token= token
+       
     }

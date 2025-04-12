@@ -1,5 +1,10 @@
+
 *{
     box-sizing: border-box;
+}
+
+.hidden{
+    display: none;
 }
 
 html{
@@ -46,7 +51,7 @@ background-color: white;
             
           }
 
-          #inputs-calculador{
+          #inputscalculador{
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -66,12 +71,13 @@ background-color: white;
             height: 300px;
             text-align: center;
             line-height: 40px;
-            background-color: rgba(255, 217, 0, 0.242);
+            background-color: rgba(255 217 0 );
 
             th{
                 text-transform: uppercase;
             }
           }
+
           #save{
             width: 100px;
             height: 40px;
@@ -100,13 +106,18 @@ background-color: white;
                 font-weight: 700;
                 color: black;
 
+            }
+
+            li{
+                text-decoration: none;
+            }
         }
 
        
 
     }
     
-}
+
 
 #seleccionador{
     max-width: 200px;
@@ -125,7 +136,7 @@ background-color: white;
         .carrito,
          .productos{ 
             h3{
-                color:rgb(175, 195, 110);
+                color:rgb(175 195 110);
                font-weight: 300;
              }
 
@@ -152,9 +163,8 @@ background-color: white;
 
     .to-choose{
         display: flex;
-        flex-direction: row;
         justify-content: center;
-        flex-wrap: wrap;
+        flex-flow:row wrap;
         gap: 10px;
     }
    
@@ -197,7 +207,7 @@ form{
     row-gap: 20px;
     padding: 10%;
    
-    a{
+    .login-or-sign{
         color:white;
         text-decoration: none;
     }
@@ -218,38 +228,26 @@ form{
   
 }
 
-.hidden{
-    display: none;
-}
-
-
-
 h1{
-    font-family: 'Boldonse', sans-serif;
+    font-family: Boldonse, sans-serif;
     color: slategray;
     margin: 0 auto;
     text-align: center;
     text-transform: uppercase;
     font-size: 4em
 }
+
 h2{
-    font-family: 'Boldonse', sans-serif;
+    font-family: Boldonse, sans-serif;
     color: #8ae30c;
     text-transform: uppercase;
     font-size: 2em
 }
 
-menu{
-    list-style: none;
 
-    li{
-        text-decoration: none;
-    }
-}
 
-#AlreadyRegistered, #Rejected{
-
-    background-color: rgb(237, 160, 60);
+#alreadyRegistered, #rejected{
+    background-color: rgb(237 160 60);
     color: red;
     max-width: 600px;
     font-weight: bold;
@@ -258,10 +256,9 @@ menu{
 
 }
 
-#Registered, #Logged{
-
-    background-color: rgb(130, 207, 74);
-    color: rgb(255, 255, 255);
+#registered, #logged{
+    background-color: rgb(130 207 74);
+    color: rgb(255 255 255);
     max-width: 600px;
     font-weight: bold;
     margin: 10px auto;
@@ -272,7 +269,7 @@ menu{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(192, 119, 55);
+    background-color: rgb(192 119 55);
     color: black;
 
 }
@@ -282,7 +279,7 @@ menu{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(52, 77, 77);
+    background-color: rgb(52 77 77);
     color: white;
 }
 

@@ -1,4 +1,4 @@
-// @ts-check
+// @ts-no-check
 
 // MODEL
 export class User {

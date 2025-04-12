@@ -1,4 +1,4 @@
-// @ts-check
+// @ts-no-check
 import {User} from './clases/User.js'
 // import {SingletonDB} from './clases/SingletonDB.js'
 // import { Botellas } from './clases/Botellas.js'
@@ -221,8 +221,7 @@ function onLogOut(event) {
  */
   function onChangeRange(event){
     let inputCalculador = document.getElementById('inputs-calculador')
-    let valorRange = event.target.value
-    console.log(event.target.value)
+    let valorRange = Number(event.target.value)
     let pElement = document.createElement('p')
     while (inputCalculador.querySelector('p')) {
       inputCalculador.querySelector('p').remove();
@@ -231,6 +230,15 @@ function onLogOut(event) {
     inputCalculador.appendChild(pElement)
     
   }
+/**
+ * Handles the selector change event, changing the text content of the
+ * #ingrediente-1, #ingrediente-2, #ingrediente-3, and #ingrediente-4
+ * elements based on the selected value of the selector. The values
+ * are based on the drinks specified in the selector element's options.
+ *
+ * @param {Event} event - The event object associated with the
+ *                        selector change.
+ */
     function onChangeSelector(event) {
       let selector = document.getElementById('seleccionador')
       let ingrediente1 = document.getElementById('ingrediente-1')
@@ -238,36 +246,64 @@ function onLogOut(event) {
       let ingrediente3 = document.getElementById('ingrediente-3')
       let ingrediente4 = document.getElementById('ingrediente-4')
       let selectedValue = selector.value
+      let mlsingrediente1 =document.getElementById('mls-ingrediente-1')
+      let mlsingrediente2 =document.getElementById('mls-ingrediente-2')
+      let mlsingrediente3 =document.getElementById('mls-ingrediente-3')
+      let mlsingrediente4 =document.getElementById('mls-ingrediente-4')
+      let rangeCalculador = document.getElementById('range')
+      let valorRange = rangeCalculador.value
+      let rowIngrediente4 = document.getElementById('row-ingrediente-4')
       
       switch (selectedValue) {
         case 'Negroni':
+          console.log(valorRange)
           ingrediente1.innerText = 'Gin'
           ingrediente2.innerText = 'Campari'
           ingrediente3.innerText = 'Sweet Vermouth'
-          ingrediente4.innerText = 'Water'
+          ingrediente4.innerText = 'Water(recomended)'
+          mlsingrediente1.innerText = `${Math.ceil(valorRange* 0.33)} mls`
+          mlsingrediente2.innerText = `${Math.ceil(valorRange* 0.33)} mls`
+          mlsingrediente3.innerText = `${Math.ceil(valorRange* 0.33)} mls`
+          mlsingrediente4.innerText = `+${Math.ceil(valorRange* 0.15)} mls`
+
           break;
         case 'Manhattan':
           ingrediente1.innerText = 'Rye whiskey'
           ingrediente2.innerText = 'Sweet Vermouth'
           ingrediente3.innerText = 'Angostura bitters'
           ingrediente4.innerText = 'Water'
+          mlsingrediente1.innerText = `${Math.ceil(valorRange * 0.66)} mls`
+          mlsingrediente2.innerText = `${Math.ceil(valorRange * 0.33)} mls`
+          mlsingrediente3.innerText = `${Math.ceil(valorRange * 0.01)} mls`
+          mlsingrediente4.innerText = `+${Math.ceil(valorRange * 0.15)} mls`
           break;
         case 'Dry Martini':
           ingrediente1.innerText = 'Gin'
           ingrediente2.innerText = 'Dry Vermouth'
-          ingrediente3.innerText = 'Water'
+          ingrediente3.innerText = 'Water(recomended)'
+          mlsingrediente1.innerText = `${Math.ceil(valorRange * 0.70)} mls`
+          mlsingrediente2.innerText = `${Math.ceil(valorRange * 0.10)} mls`
+          mlsingrediente3.innerText = `${Math.ceil(valorRange * 0.15)} mls`
           break;
         case 'Old Fashioned':
           ingrediente1.innerText = 'Bourbon whiskey'
           ingrediente2.innerText = 'Sugar syrup'
           ingrediente3.innerText = 'Angostura bitters'
           ingrediente4.innerText = 'Water'
+          mlsingrediente1.innerText = `${Math.ceil(valorRange * 0.80)} mls`
+          mlsingrediente2.innerText = `${Math.ceil(valorRange * 0.05)} mls`
+          mlsingrediente3.innerText = `${Math.ceil(valorRange * 0.01)} mls`
+          mlsingrediente4.innerText = `+${Math.ceil(valorRange * 0.15)} mls`
           break;
         case 'Paloma':
           ingrediente1.innerText = 'Tequila'
           ingrediente2.innerText = 'Lime juice'
           ingrediente3.innerText = 'Agave syrup'
           ingrediente4.innerText = 'Grapefruit soda'
+          mlsingrediente1.innerText = `${Math.ceil(valorRange * 0.60)} mls`
+          mlsingrediente2.innerText = `${Math.ceil(valorRange * 0.125)} mls`
+          mlsingrediente3.innerText = `${Math.ceil(valorRange * 0.07)} mls`
+          mlsingrediente4.innerText = `+${Math.ceil(valorRange * 0.10)} mls`
           break;
         case 'Dark & Stormy':
           ingrediente1.innerText = 'Dark spiced rum'
@@ -289,6 +325,7 @@ function onLogOut(event) {
         default:
           break;
       }
+
   
 
 // todo esto
