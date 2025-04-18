@@ -1,0 +1,18 @@
+.to-choose{
+     display: flex;
+     justify-content: center;
+     flex-flow:column;
+     gap: 10px;
+ 
+     .strong-list, .light-list{
+        display: flex;
+        flex-flow:column wrap;
+        justify-content: space-between;
+        width:90%;
+       }
+
+    .img-list-cocktails{
+        width: 100px;
+        height: 100px;
+     }
+}

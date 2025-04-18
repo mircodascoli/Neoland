@@ -18,6 +18,8 @@ function DomContentLoaded() {
     let formSignout = document.getElementById('signOutForm')
     let rangeCalculador = document.getElementById('range')
     let selector = document.getElementById('seleccionador')
+    let openPopUpLink = document.querySelectorAll('[data-modal-target]')
+    let closePopUpButton = document.querySelectorAll('[data-close-button]')
 
     formSign?.addEventListener('submit', SignIn)
     formLog?.addEventListener('submit', LogIn)
@@ -25,12 +27,25 @@ function DomContentLoaded() {
     formSignout?.addEventListener('submit', onSignOut)
     rangeCalculador?.addEventListener('change',onChangeRange)
     selector?.addEventListener('change', onChangeSelector)
-
+    openPopUpLink.forEach((link) => {
+      link.addEventListener('click', () => {
+        let popUp = document.querySelector(`${link.dataset.modalTarget}`);
+        openPopup(popUp);
+      });
+    });
+    closePopUpButton.forEach((button) => {
+      button.addEventListener('click', () => {
+        let popUp =button.closest('.description');
+        closePopup(popUp);
+      });
+    });
     readUsersFromLocalStorage()
     // checkLoggedIn()
     //debug
     console.log('contenido redux a cargar la pagina', store.getState())
     window.addEventListener('stateChanged', onStateChanged)
+    onChangeSelector()
+  
 }
 /**
  * Handles a state change event from the store
@@ -66,13 +81,6 @@ function SignIn(event) {
       document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
       return
     }
-    // if (USER_DB.get().findIndex((user) =>  user.email === emailSign )>= 0) {
-    //     document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
-
-    //     window.setTimeout(() => {
-    //       document.getElementById('AlreadyRegistered')?.classList.add('hidden')
-    //     },2000)
-    // return}
     else {
     document.getElementById('AlreadyRegistered')?.classList.add('hidden')
     
@@ -102,8 +110,6 @@ function LogIn(event) {
     let nameLog =  /** @type {HTMLInputElement} */(nameLogElement)?.value
     let emailLogElement = document.getElementById('emailLog')
     let emailLog =  /** @type {HTMLInputElement} */(emailLogElement)?.value
-    
-
     let userExists = store.user.getAll().findIndex((/**@type {User}*/user) => user.name === nameLog && user.email === emailLog)
 
     if (userExists >= 0) {
@@ -220,16 +226,20 @@ function onLogOut(event) {
  * @param {Event} event - The event object associated with the input range change.
  */
   function onChangeRange(event){
-    let inputCalculador = document.getElementById('inputs-calculador')
     let valorRange = Number(event.target.value)
-    let pElement = document.createElement('p')
-    while (inputCalculador.querySelector('p')) {
-      inputCalculador.querySelector('p').remove();
+    if (valorRange == undefined) {
+      valorRange = 1000
     }
-    pElement.innerText = `${valorRange} mls`
-    inputCalculador.appendChild(pElement)
-    
-  }
+    console.log(valorRange)
+    let labRange = document.getElementById('label-range')
+    // while (labRange.innerHTML){ {
+    //   labRange.innerHTML = ''
+    // }
+    labRange.innerText = `${valorRange} mls`
+    onChangeSelector()
+   
+  } 
+  
 /**
  * Handles the selector change event, changing the text content of the
  * #ingrediente-1, #ingrediente-2, #ingrediente-3, and #ingrediente-4
@@ -241,6 +251,7 @@ function onLogOut(event) {
  */
     function onChangeSelector(event) {
       let selector = document.getElementById('seleccionador')
+      let tabla = document.getElementById('tabla-calculos')
       let ingrediente1 = document.getElementById('ingrediente-1')
       let ingrediente2 = document.getElementById('ingrediente-2')
       let ingrediente3 = document.getElementById('ingrediente-3')
@@ -252,11 +263,16 @@ function onLogOut(event) {
       let mlsingrediente4 =document.getElementById('mls-ingrediente-4')
       let rangeCalculador = document.getElementById('range')
       let valorRange = rangeCalculador.value
+      let labRange = document.getElementById('label-range')
       let rowIngrediente4 = document.getElementById('row-ingrediente-4')
+   
+      switch (selectedValue ) {
       
-      switch (selectedValue) {
         case 'Negroni':
-          console.log(valorRange)
+          labRange.innerText = `${valorRange} mls`
+          tabla.classList.remove('grey')
+          rangeCalculador.disabled = false;
+          
           ingrediente1.innerText = 'Gin'
           ingrediente2.innerText = 'Campari'
           ingrediente3.innerText = 'Sweet Vermouth'
@@ -268,6 +284,8 @@ function onLogOut(event) {
 
           break;
         case 'Manhattan':
+          tabla.classList.remove('grey')
+          rangeCalculador.disabled = false;
           ingrediente1.innerText = 'Rye whiskey'
           ingrediente2.innerText = 'Sweet Vermouth'
           ingrediente3.innerText = 'Angostura bitters'
@@ -278,6 +296,8 @@ function onLogOut(event) {
           mlsingrediente4.innerText = `+${Math.ceil(valorRange * 0.15)} mls`
           break;
         case 'Dry Martini':
+          tabla.classList.remove('grey')
+          rangeCalculador.disabled = false;
           ingrediente1.innerText = 'Gin'
           ingrediente2.innerText = 'Dry Vermouth'
           ingrediente3.innerText = 'Water(recomended)'
@@ -286,6 +306,8 @@ function onLogOut(event) {
           mlsingrediente3.innerText = `${Math.ceil(valorRange * 0.15)} mls`
           break;
         case 'Old Fashioned':
+          tabla.classList.remove('grey')
+          rangeCalculador.disabled = false;
           ingrediente1.innerText = 'Bourbon whiskey'
           ingrediente2.innerText = 'Sugar syrup'
           ingrediente3.innerText = 'Angostura bitters'
@@ -296,6 +318,8 @@ function onLogOut(event) {
           mlsingrediente4.innerText = `+${Math.ceil(valorRange * 0.15)} mls`
           break;
         case 'Paloma':
+          tabla.classList.remove('grey')
+          rangeCalculador.disabled = false;
           ingrediente1.innerText = 'Tequila'
           ingrediente2.innerText = 'Lime juice'
           ingrediente3.innerText = 'Agave syrup'
@@ -306,27 +330,57 @@ function onLogOut(event) {
           mlsingrediente4.innerText = `+${Math.ceil(valorRange * 0.10)} mls`
           break;
         case 'Dark & Stormy':
+          tabla.classList.remove('grey')
+          rangeCalculador.disabled = false;
           ingrediente1.innerText = 'Dark spiced rum'
           ingrediente2.innerText = 'Lime juice'
           ingrediente3.innerText = 'Ginger beer'
           break;
         case 'Tom Collins':
+          tabla.classList.remove('grey')
+          rangeCalculador.disabled = false;
           ingrediente1.innerText = 'Vodka'
           ingrediente2.innerText = 'Lemon juice'
           ingrediente3.innerText = 'Raspberry syrup'
           ingrediente4.innerText = 'Ginger Ale'
           break;
         case 'Berry Hiball':
+          tabla.classList.remove('grey')
+          rangeCalculador.disabled = false;
           ingrediente1.innerText = 'Vodka'
           ingrediente2.innerText = 'Lemon juice'
           ingrediente3.innerText = 'Raspberry syrup'
           ingrediente4.innerText = 'Ginger Ale'
           break;
+      
         default:
+          tabla.classList.add('grey')
+          rangeCalculador.disabled = true;
+          ingrediente1.innerText = ''
+          ingrediente2.innerText = ' '
+          ingrediente3.innerText = ' '
+          ingrediente4.innerText = ' '
+          mlsingrediente1.innerText = `0 mls`
+          mlsingrediente2.innerText = `0 mls`
+          mlsingrediente3.innerText = `0 mls`
+          mlsingrediente4.innerText = `0 mls`
+          ;
           break;
       }
+  }
 
+  function openPopup(popUp) {
+    console.log(`the popup ${popUp} should open`)
+    let overlay = document.getElementById('overlay')
+    if (popUp == null) return
+    popUp.classList.add('active')
+    overlay.classList.add('active')
+  }
   
-
-// todo esto
+  function closePopup(popUp) {
+    console.log(`the popup ${popUp} should close`)
+    const overlay = document.getElementById('overlay')
+    if (popUp == null) return
+    popUp.classList.remove('active')
+    overlay.classList.remove('active')
   }

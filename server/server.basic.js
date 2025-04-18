@@ -1,4 +1,5 @@
 // /server/server.basic.js
+// @ts-no-check
 
 import * as http from 'node:http';
 import * as url from 'node:url';

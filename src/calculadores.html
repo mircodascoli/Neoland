@@ -7,6 +7,8 @@
         <script type="module" src="./js/main.js"></script>
         <link rel="stylesheet" href="./css/reset.css">
         <link rel="stylesheet" href="./css/styles.css">
+        <link rel="stylesheet" href="./css/styles.mobile.css" media="screen and (max-width: 480px)">
+        <link rel="stylesheet" href="./css/styles.desktop.css" media="screen and (min-width: 481px)">
         <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet">
@@ -23,10 +25,11 @@
     </header>
     <main class="container-calculador">
         <div id="inputscalculador">
-      
-          <label for="range"><input  id="range" type="range" min="200" max="2000" step="100" value="1000"></label>
-          <label for="seleccionador">of: </label><select name="coktails" id="seleccionador">
-            <option value="i would like" selected>i would like...</option>
+
+         <label for="seleccionador">of: </label><select name="coktails" id="seleccionador">
+        
+          
+            <option value="0" selected>i would like...</option>
             <option value="Negroni" >Negroni</option>
             <option value="Manhattan">Manhattan</option>
             <option value="Dry Martini">Dry Martini</option>
@@ -37,6 +40,7 @@
             <option value="Berry Hiball">Berry Hiball</option>
            
         </select>
+        <label for="range" id="label-range">Quantity:</label><input  id="range" type="range" min="200" max="2000" step="100" value="1000">
         </div>
        
         <div id="resultados">

@@ -1,4 +1,5 @@
 // server.api.js
+// @ts-no-check
 import * as http from "node:http";
 import * as qs from "node:querystring";
 import { crud } from "./server.crud.js";
@@ -16,8 +17,8 @@ const MIME_TYPES = {
   svg: "image/svg+xml",
 };
 
-const USERS_URL = './server/BBDD/users.json'
-const ARTICLES_URL = './server/BBDD/articles.json'
+const USERS_URL = './server/BBDD/user.json'
+const BOTELLAS_URL = './server/BBDD/botellas.json'
 
 /**
  * Returns an object with the action name and id from the given pathname.
@@ -68,7 +69,7 @@ http
         request.on('end', () => {
           let body = Buffer.concat(chunks)
           let parsedData = qs.parse(body.toString())
-          crud.create(ARTICLES_URL, parsedData, (data) => {
+          crud.create(BOTELLAS_URL, parsedData, (data) => {
             // console.log(`server create article ${data.name} creado`, data)
             responseData = data
 
@@ -77,14 +78,14 @@ http
           });
         })
         break;
-      case '/update/articles':
+      case '/update/botellas':
         request.on('data', (chunk) => {
           chunks.push(chunk)
         })
         request.on('end', () => {
           let body = Buffer.concat(chunks)
           let parsedData = qs.parse(body.toString())
-          crud.update(ARTICLES_URL, action.id, parsedData, (data) => {
+          crud.update(BOTELLAS_URL, action.id, parsedData, (data) => {
             // console.log(`server update article ${action.id} modificado`, data)
             responseData = data
 
@@ -93,8 +94,8 @@ http
           });
         })
         break;
-      case '/delete/articles':
-        crud.delete(ARTICLES_URL, action.id, (data) => {
+      case '/delete/botellas':
+        crud.delete(BOTELLAS_URL, action.id, (data) => {
           // console.log('server delete article', action.id, data)
           responseData = data
 
@@ -102,8 +103,8 @@ http
           response.end();
         })
         break;
-      case '/read/articles':
-        crud.read(ARTICLES_URL, (data) => {
+      case '/read/botellas':
+        crud.read(BOTELLAS_URL, (data) => {
           // console.log('server read articles', data)
           responseData = data
 
@@ -111,8 +112,8 @@ http
           response.end();
         });
         break;
-      case '/filter/articles':
-        crud.filter(ARTICLES_URL, urlParams, (data) => {
+      case '/filter/botellas':
+        crud.filter(BOTELLAS_URL, urlParams, (data) => {
           // console.log('server filter articles', data)
           responseData = data
 

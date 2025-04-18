@@ -12,8 +12,11 @@ html{
 }
 
 body{
-font-family: sans-serif;
-background-color: white;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    font-family: sans-serif;
+    background-color: white;
 
     &.container-logo-and-buttons{
         margin: 0 auto;
@@ -31,7 +34,8 @@ background-color: white;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        height:100vh;
+        padding: 2rem;
+        overflow: scroll;
 
         #busqueda{
             width:200px;
@@ -86,7 +90,10 @@ background-color: white;
             color: white;
             background-color: darkblue;
           }
+
+         
         }
+
     }
 
     header{
@@ -94,6 +101,7 @@ background-color: white;
         flex-direction: column;
         justify-content: space-between;
         background-color: #c3d7a5;
+        padding: 1rem;
 
         menu{
             text-transform:uppercase ;
@@ -127,7 +135,7 @@ background-color: white;
     ul{
         h3{
             text-transform: uppercase;
-            color:white;
+        
         }
 
    
@@ -146,27 +154,11 @@ background-color: white;
             }
 
    
-        .strong-list{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-                background-color: burlywood;
-                width:100%;
-            }
-    
-            .light-list{
-                background-color: lightgrey;
-                width:100%;
-            }
+     
 
     
 
-    .to-choose{
-        display: flex;
-        justify-content: center;
-        flex-flow:row wrap;
-        gap: 10px;
-    }
+  
    
 
     &.loading {
@@ -234,14 +226,14 @@ h1{
     margin: 0 auto;
     text-align: center;
     text-transform: uppercase;
-    font-size: 4em
+    font-size: 3em
 }
 
 h2{
     font-family: Boldonse, sans-serif;
     color: #8ae30c;
     text-transform: uppercase;
-    font-size: 2em
+    font-size: 1.5em 
 }
 
 
@@ -289,9 +281,104 @@ footer{
     justify-content: center;
     align-items: center;
     gap: 10px;
-    padding: 10px;
+    padding: 1rem;
     background-color: #888;
     color: white;
     font-weight: 100;
     font-style: italic;
+}
+
+.grey{
+    color: lightgrey;
+
+}
+
+a{
+    text-decoration: none;
+
+    .item-cocktail-list{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+        padding: 1rem;
+        color: black;
+        font-weight: 100;
+        font-style: italic;
+        border: 1px solid black;
+        cursor:pointer;
+    }
+}
+
+#description{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    gap: 3px;
+    padding: 1rem;
+    color: black;
+    font-weight: 100;
+    font-style: italic;
+    border: 1px solid black;
+    background-color: white;
+    max-width: 80%;
+    z-index: 10;
+
+    .pop-up-head{
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid black;
+        max-width: 100%;
+        width: 90%;
+
+        button{
+            cursor: pointer;
+            background: none;
+            border: none;
+            size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .pop-up-body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+        padding: 1rem;
+        color: black;
+        font-weight: 100;
+        font-style: italic;
+        border: 1px solid black;
+        background-color: white;
+    }
+
+    
+}
+
+#description.active{
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#overlay{
+    top:0;
+    bottom:0;
+    left: 0;
+    right:0;
+    opacity: 0;
+    transition: 200ms ease-in-out;
+    position:fixed;
+    background:rgba(0, 0, 0, 0.421);
+    z-index:9;
+    pointer-events: none;
+
+}
+
+#overlay.active{
+    opacity:1;
+    pointer-events: all;
 }
