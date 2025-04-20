@@ -20,6 +20,7 @@ function DomContentLoaded() {
     let selector = document.getElementById('seleccionador')
     let openPopUpLink = document.querySelectorAll('[data-modal-target]')
     let closePopUpButton = document.querySelectorAll('[data-close-button]')
+    // let overlay = document.getElementById('overlay') 44 TO 48
 
     formSign?.addEventListener('submit', SignIn)
     formLog?.addEventListener('submit', LogIn)
@@ -30,19 +31,23 @@ function DomContentLoaded() {
     openPopUpLink.forEach((link) => {
       link.addEventListener('click', () => {
         let popUp = document.querySelector(`${link.dataset.modalTarget}`);
-        openPopup(popUp);
+        openPopup(popUp, link);
       });
     });
+  
     closePopUpButton.forEach((button) => {
       button.addEventListener('click', () => {
         let popUp =button.closest('.description');
         closePopup(popUp);
       });
     });
+
+    // overlay.addEventListener('click', () => {
+    //   let popUp = document.querySelectorAll('.active');
+    //   closePopup(popUp);
+    // }) TERMINAR: CLICK EN EL OVERLAY PARA CERRAR EL POPUP
+
     readUsersFromLocalStorage()
-    // checkLoggedIn()
-    //debug
-    console.log('contenido redux a cargar la pagina', store.getState())
     window.addEventListener('stateChanged', onStateChanged)
     onChangeSelector()
   
@@ -264,8 +269,8 @@ function onLogOut(event) {
       let rangeCalculador = document.getElementById('range')
       let valorRange = rangeCalculador.value
       let labRange = document.getElementById('label-range')
-      let rowIngrediente4 = document.getElementById('row-ingrediente-4')
-   
+      
+     
       switch (selectedValue ) {
       
         case 'Negroni':
@@ -304,6 +309,7 @@ function onLogOut(event) {
           mlsingrediente1.innerText = `${Math.ceil(valorRange * 0.70)} mls`
           mlsingrediente2.innerText = `${Math.ceil(valorRange * 0.10)} mls`
           mlsingrediente3.innerText = `${Math.ceil(valorRange * 0.15)} mls`
+          //ADD OLIVE BRINE AS 4 TH INGREDIENT
           break;
         case 'Old Fashioned':
           tabla.classList.remove('grey')
@@ -335,8 +341,9 @@ function onLogOut(event) {
           ingrediente1.innerText = 'Dark spiced rum'
           ingrediente2.innerText = 'Lime juice'
           ingrediente3.innerText = 'Ginger beer'
+          // ADD ANGOSTURA BITTERS AS 4TH INGREDIENT 
           break;
-        case 'Tom Collins':
+        case 'Tom Collins'://COMPLETE THE REST FROM HERE TO 361
           tabla.classList.remove('grey')
           rangeCalculador.disabled = false;
           ingrediente1.innerText = 'Vodka'
@@ -369,18 +376,64 @@ function onLogOut(event) {
       }
   }
 
-  function openPopup(popUp) {
-    console.log(`the popup ${popUp} should open`)
+  function openPopup(popUp, link) {
     let overlay = document.getElementById('overlay')
-    if (popUp == null) return
-    popUp.classList.add('active')
-    overlay.classList.add('active')
-  }
+    let titlePop = document.getElementById('pop-up-name');
+    let bodyText = document.getElementById('pop-up-text');
+    let h3 = link.querySelector('h3');
+    let craftButton = document.getElementById('craft-button');
+    titlePop.innerText = h3.innerText;
+    // apri il popup
+    overlay.classList.add('active');
+    popUp.classList.add('active');
+    // cambiar ficha de la receta en el pop up a partir de el nombre
+    switch (titlePop.innerText.toLowerCase()) {
+      case 'negroni':
+         bodyText.innerText = 'negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni '
+        break;
+      case 'manhattan':
+        bodyText.innerText = 'manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan '
+        break;
+      case 'old fashioned':
+        bodyText.innerText = 'old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned '
+        break;
+      case 'dry martini':
+        bodyText.innerText = 'dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini '
+        break;
+      case 'tom collins':
+        bodyText.innerText = 'tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins '
+        break;
+      case 'paloma':
+        bodyText.innerText = 'paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma '
+        break;
+      case 'dark & stormy':
+        bodyText.innerText = 'dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy '
+        break;
+      case 'berry hiball':
+        bodyText.innerText = 'berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball '
+        break;
+      default:
+        bodyText.innerText = '';
+        break;
+      }
+        craftButton.addEventListener('click', () => {
+          // reindirizza l'utente alla pagina calculadores.html
+          console.log('redirect to calculadores.html');
+          window.location.href = './calculadores.html';
+        }); 
+   
+
+ }
+
+
+  
+  
   
   function closePopup(popUp) {
-    console.log(`the popup ${popUp} should close`)
-    const overlay = document.getElementById('overlay')
+     console.log(`the popup ${popUp} should close`)
+     let overlay = document.getElementById('overlay')
     if (popUp == null) return
+    console.log(popUp.classList)
     popUp.classList.remove('active')
     overlay.classList.remove('active')
   }
