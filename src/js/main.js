@@ -1,8 +1,14 @@
 // @ts-no-check
-import {User} from './clases/User.js'
+import {User} from './clases/user.js'
 // import {SingletonDB} from './clases/SingletonDB.js'
 // import { Botellas } from './clases/Botellas.js'
+import { simpleFetch } from './lib/simpleFetch.js'
+import { HttpError } from './clases/HttpError.js'
 import { store, INITIAL_STATE } from './store/redux.js'
+
+// Preparación para cuando trabajemos con express
+const API_PORT = location.port ? `:${1234}` : ''
+const TIMEOUT = 10000
 
 window.addEventListener('DOMContentLoaded', DomContentLoaded)
 // const USER_DB = new SingletonDB()
@@ -49,9 +55,9 @@ function DomContentLoaded() {
 
     readUsersFromLocalStorage()
     window.addEventListener('stateChanged', onStateChanged)
-    onChangeSelector()
+ 
   
-}
+ }
 /**
  * Handles a state change event from the store
  * @param {Event} event - The event object associated with the state change
@@ -67,14 +73,18 @@ function onStateChanged(event) {
  * @param {Event} event - The event object associated with the form submission.
  * 
  */
-function SignIn(event) {
-    event.preventDefault()
+async function SignIn(event) {
+    // event.preventDefault()
 
-    let nameSignElement =document.getElementById('nameSign')
-    let nameSign = /** @type {HTMLInputElement} */(nameSignElement)?.value
     let emailSignElement = document.getElementById('emailSign')
     let emailSign = /** @type {HTMLInputElement} */(emailSignElement)?.value
-    let NewUser = new User(nameSign, emailSign, 'user')
+    let PassSignElement = document.getElementById('passwordSign')
+    let PassSign = /** @type {HTMLInputElement} */(PassSignElement)?.value
+    let NewUser = new User(emailSign,PassSign , 'user')
+      // Transformación de User a URLSearchParams para el fetch
+  const payload = new URLSearchParams(/** @type {any} */(NewUser))
+  // Para cuando usemos express:
+  // const payload = JSON.stringify(NewUser)
     /**
    * @callback filterUserCallback
    * @param {User} user
@@ -89,15 +99,28 @@ function SignIn(event) {
     else {
     document.getElementById('AlreadyRegistered')?.classList.add('hidden')
     
-      store.user.create(NewUser)
-      updateUserDB()
-
-    document.getElementById('Registered')?.classList.remove('hidden')
-    setTimeout(() => {
-    document.getElementById('Registered')?.classList.add('hidden');
-      console.log(store.getState())
-    }, 2000)
-  }
+    // Sustituir por llamada fetch al servidor de apis
+  // Enviar el fetch a la API, crear nuevo usuario
+  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/create/users`, 'POST', payload)
+ 
+      if (!apiData) {
+        // Informo al usuario del resultado de la operación
+        document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
+        setTimeout(() => {
+          document.getElementById('AlreadyRegistered')?.classList.add('hidden')
+        }, 1000)
+        console.error('Error al crear usuario', apiData)
+        return
+      }
+      console.log('Respuesta del servidor de APIs', apiData)
+      // store.user.create(newUser, () => {
+        updateUserDB()
+        // Informo al usuario del resultado de la operación
+        document.getElementById('registered')?.classList.remove('hidden')
+        setTimeout(() => {
+          document.getElementById('registered')?.classList.add('hidden')
+        }, 1000)
+}
 }
 /**
  * Handles the login form submission, prevents the default form behavior,
@@ -109,13 +132,13 @@ function SignIn(event) {
  * @param {Event} event - The event object associated with the form submission.
  */
 function LogIn(event) {
-    event.preventDefault()
+event.preventDefault()
 
-    let nameLogElement = document.getElementById('nameLog')
-    let nameLog =  /** @type {HTMLInputElement} */(nameLogElement)?.value
+    let passLogElement = document.getElementById('passwordLog')
+    let passLog =  /** @type {HTMLInputElement} */(passLogElement)?.value
     let emailLogElement = document.getElementById('emailLog')
     let emailLog =  /** @type {HTMLInputElement} */(emailLogElement)?.value
-    let userExists = store.user.getAll().findIndex((/**@type {User}*/user) => user.name === nameLog && user.email === emailLog)
+    let userExists = store.user.getAll().findIndex((/**@type {User}*/user) => user.password === passLog && user.email === emailLog)
 
     if (userExists >= 0) {
         // Guardamos los datos del usuario en la sesión
@@ -219,10 +242,6 @@ function onLogOut(event) {
     }
 
   }
-  export function getDataFromLocalStorage() {
-    const defaultValue = JSON.stringify(INITIAL_STATE)
-    return JSON.parse(localStorage.getItem('REDUX_DB') || defaultValue)
-  }
 
 /**
  * Handles the input range change event, appending a <p> element to the
@@ -250,33 +269,32 @@ function onLogOut(event) {
  * #ingrediente-1, #ingrediente-2, #ingrediente-3, and #ingrediente-4
  * elements based on the selected value of the selector. The values
  * are based on the drinks specified in the selector element's options.
- *
- * @param {Event} event - The event object associated with the
- *                        selector change.
  */
-    function onChangeSelector(event) {
+    function onChangeSelector() {
       let selector = document.getElementById('seleccionador')
       let tabla = document.getElementById('tabla-calculos')
       let ingrediente1 = document.getElementById('ingrediente-1')
       let ingrediente2 = document.getElementById('ingrediente-2')
       let ingrediente3 = document.getElementById('ingrediente-3')
       let ingrediente4 = document.getElementById('ingrediente-4')
-      let selectedValue = selector.value
+      let selectedValue = selector?.value
       let mlsingrediente1 =document.getElementById('mls-ingrediente-1')
       let mlsingrediente2 =document.getElementById('mls-ingrediente-2')
       let mlsingrediente3 =document.getElementById('mls-ingrediente-3')
       let mlsingrediente4 =document.getElementById('mls-ingrediente-4')
       let rangeCalculador = document.getElementById('range')
-      let valorRange = rangeCalculador.value
+      let valorRange = rangeCalculador?.value
       let labRange = document.getElementById('label-range')
       
+      if (rangeCalculador !== null && rangeCalculador !== undefined) {
+        rangeCalculador.removeAttribute('disabled');
+      }
      
       switch (selectedValue ) {
-      
+       
         case 'Negroni':
           labRange.innerText = `${valorRange} mls`
           tabla.classList.remove('grey')
-          rangeCalculador.disabled = false;
           
           ingrediente1.innerText = 'Gin'
           ingrediente2.innerText = 'Campari'
@@ -290,7 +308,7 @@ function onLogOut(event) {
           break;
         case 'Manhattan':
           tabla.classList.remove('grey')
-          rangeCalculador.disabled = false;
+
           ingrediente1.innerText = 'Rye whiskey'
           ingrediente2.innerText = 'Sweet Vermouth'
           ingrediente3.innerText = 'Angostura bitters'
@@ -302,7 +320,7 @@ function onLogOut(event) {
           break;
         case 'Dry Martini':
           tabla.classList.remove('grey')
-          rangeCalculador.disabled = false;
+
           ingrediente1.innerText = 'Gin'
           ingrediente2.innerText = 'Dry Vermouth'
           ingrediente3.innerText = 'Water(recomended)'
@@ -313,7 +331,7 @@ function onLogOut(event) {
           break;
         case 'Old Fashioned':
           tabla.classList.remove('grey')
-          rangeCalculador.disabled = false;
+
           ingrediente1.innerText = 'Bourbon whiskey'
           ingrediente2.innerText = 'Sugar syrup'
           ingrediente3.innerText = 'Angostura bitters'
@@ -325,7 +343,7 @@ function onLogOut(event) {
           break;
         case 'Paloma':
           tabla.classList.remove('grey')
-          rangeCalculador.disabled = false;
+
           ingrediente1.innerText = 'Tequila'
           ingrediente2.innerText = 'Lime juice'
           ingrediente3.innerText = 'Agave syrup'
@@ -337,7 +355,7 @@ function onLogOut(event) {
           break;
         case 'Dark & Stormy':
           tabla.classList.remove('grey')
-          rangeCalculador.disabled = false;
+
           ingrediente1.innerText = 'Dark spiced rum'
           ingrediente2.innerText = 'Lime juice'
           ingrediente3.innerText = 'Ginger beer'
@@ -345,7 +363,7 @@ function onLogOut(event) {
           break;
         case 'Tom Collins'://COMPLETE THE REST FROM HERE TO 361
           tabla.classList.remove('grey')
-          rangeCalculador.disabled = false;
+
           ingrediente1.innerText = 'Vodka'
           ingrediente2.innerText = 'Lemon juice'
           ingrediente3.innerText = 'Raspberry syrup'
@@ -353,7 +371,7 @@ function onLogOut(event) {
           break;
         case 'Berry Hiball':
           tabla.classList.remove('grey')
-          rangeCalculador.disabled = false;
+
           ingrediente1.innerText = 'Vodka'
           ingrediente2.innerText = 'Lemon juice'
           ingrediente3.innerText = 'Raspberry syrup'
@@ -361,9 +379,9 @@ function onLogOut(event) {
           break;
       
         default:
-          tabla.classList.add('grey')
-          rangeCalculador.disabled = true;
-          ingrediente1.innerText = ''
+          tabla?.classList.add('grey')
+
+          ingrediente1.innerText = ' '
           ingrediente2.innerText = ' '
           ingrediente3.innerText = ' '
           ingrediente4.innerText = ' '
@@ -424,10 +442,6 @@ function onLogOut(event) {
    
 
  }
-
-
-  
-  
   
   function closePopup(popUp) {
      console.log(`the popup ${popUp} should close`)
@@ -437,3 +451,80 @@ function onLogOut(event) {
     popUp.classList.remove('active')
     overlay.classList.remove('active')
   }
+/**
+ * Checks if there is a user logged in by verifying the presence of a token
+ * in the local storage.
+ *
+ * @returns {boolean} True if the user is logged in, false otherwise.
+ */
+export function getDataFromLocalStorage() {
+  const defaultValue = JSON.stringify(INITIAL_STATE)
+  return JSON.parse(localStorage.getItem('REDUX_DB') || defaultValue)
+}
+/**
+ * Retrieves the shopping list data from session storage.
+ *
+ * @returns {State} Saved state.
+ * If no data is found, returns an empty State object.
+ */
+function getDataFromSessionStorage() {
+  const defaultValue = JSON.stringify(INITIAL_STATE)
+  return JSON.parse(sessionStorage.getItem('REDUX_DB') || defaultValue)
+}
+
+  /**
+ * Get data from API
+ * @param {string} apiURL
+ * @param {string} method
+ * @param {any} [data]
+ * @returns {Promise<Array<User | Botellas>>}
+ */
+export async function getAPIData(apiURL, method = 'GET', data) {
+  let apiData
+
+  try {
+    let headers = new Headers()
+    headers.append('Content-Type', 'application/json')
+    headers.append('Access-Control-Allow-Origin', '*')
+    if (data) {
+      headers.append('Content-Length', String(JSON.stringify(data).length))
+    }
+    // Añadimos la cabecera Authorization si el usuario esta logueado
+    if (isUserLoggedIn()) {
+      const userData = getDataFromSessionStorage()
+      headers.append('Authorization', `Bearer ${userData?.user?.token}`)
+    }
+    apiData = await simpleFetch(apiURL, {
+      // Si la petición tarda demasiado, la abortamos
+      signal: AbortSignal.timeout(TIMEOUT),
+      method: method,
+      body: data ?? undefined,
+      headers: headers
+    });
+  } catch (/** @type {any | HttpError} */err) {
+    // En caso de error, controlamos según el tipo de error
+    if (err.name === 'AbortError') {
+      console.error('Fetch abortado');
+    }
+    if (err instanceof HttpError) {
+      if (err.response.status === 404) {
+        console.error('Not found');
+      }
+      if (err.response.status === 500) {
+        console.error('Internal server error');
+      }
+    }
+  }
+
+  return apiData
+}
+/**
+ * Checks if there is a user logged in by verifying the presence of a token
+ * in the local storage.
+ *
+ * @returns {boolean} True if the user is logged in, false otherwise.
+ */
+function isUserLoggedIn() {
+  const userData = getDataFromSessionStorage()
+  return userData?.user?.token
+}

@@ -62,7 +62,7 @@ http
     // TODO: use POST/PUT/DELETE methods when needed
     switch (action.name) {
       // 1. Shopping list Articles
-      case '/create/articles':
+      case '/create/botellas':
         request.on('data', (chunk) => {
           chunks.push(chunk)
         })
@@ -112,11 +112,35 @@ http
           response.end();
         });
         break;
-      case '/filter/botellas':
-        crud.filter(BOTELLAS_URL, urlParams, (data) => {
-          // console.log('server filter articles', data)
+      case '/filter/botellasByName':
+        crud.filterByName(BOTELLAS_URL, urlParams, (data) => {
+          // console.log('server filter bottles by name', data)
           responseData = data
 
+          response.write(JSON.stringify(responseData));
+          response.end();
+        })
+        break;
+        case 'filter/botellasByRange':
+        crud.filterByRange(BOTELLAS_URL, urlParams, (data) => {
+          // console.log('server filter bottles by Range', data)
+          responseData = data
+        })
+        break;
+        case '/filter/botellasByType':
+        crud.filterByType(BOTELLAS_URL, urlParams, (data) => {
+          // console.log('server filter bottles by type', data)
+          responseData = data          
+
+          response.write(JSON.stringify(responseData));
+          response.end();
+        })
+        break;    
+        case '/filter/botellasBySpirit':
+        crud.filterBySpirit(BOTELLAS_URL, urlParams, (data) => {
+
+          // console.log('server filter bottles by spirit', data)
+          responseData = data
           response.write(JSON.stringify(responseData));
           response.end();
         })
@@ -131,6 +155,23 @@ http
           response.end();
         });
         break;
+        case '/create/users':
+                request.on('data', (chunk) => {
+                  chunks.push(chunk)
+                })
+                request.on('end', () => {
+                  let body = Buffer.concat(chunks)
+                  let parsedData = qs.parse(body.toString())
+                  console.log('datos recibidos desde el front al crear usuario', parsedData)
+                  crud.create(USERS_URL, parsedData, (data) => {
+                    console.log(`server create user ${data.name} creado`, data)
+                    responseData = data
+        
+                    response.write(JSON.stringify(responseData));
+                    response.end();
+                  });
+                })
+                break;
       default:
         console.log('no se encontro el endpoint');
 
