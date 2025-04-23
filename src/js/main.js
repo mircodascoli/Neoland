@@ -1,13 +1,13 @@
 // @ts-no-check
 import {User} from './clases/user.js'
 // import {SingletonDB} from './clases/SingletonDB.js'
-// import { Botellas } from './clases/Botellas.js'
+ import { Botellas } from './clases/Botellas.js'
 import { simpleFetch } from './lib/simpleFetch.js'
 import { HttpError } from './clases/HttpError.js'
 import { store, INITIAL_STATE } from './store/redux.js'
 
 // Preparación para cuando trabajemos con express
-const API_PORT = location.port ? `:${1234}` : ''
+const API_PORT = location.port ? `:${1337}` : ''
 const TIMEOUT = 10000
 
 window.addEventListener('DOMContentLoaded', DomContentLoaded)
@@ -26,6 +26,11 @@ function DomContentLoaded() {
     let selector = document.getElementById('seleccionador')
     let openPopUpLink = document.querySelectorAll('[data-modal-target]')
     let closePopUpButton = document.querySelectorAll('[data-close-button]')
+    let bodyProductos = document.getElementById('bodyProductos')
+    let formBusqueda =  document.getElementById('form-busqueda')
+    let botonBuscar = document.getElementById('botonBuscar')
+   
+    
     // let overlay = document.getElementById('overlay') 44 TO 48
 
     formSign?.addEventListener('submit', SignIn)
@@ -34,6 +39,8 @@ function DomContentLoaded() {
     formSignout?.addEventListener('submit', onSignOut)
     rangeCalculador?.addEventListener('change',onChangeRange)
     selector?.addEventListener('change', onChangeSelector)
+    botonBuscar?.addEventListener('click', buscarProducto)
+    formBusqueda?.addEventListener('submit', buscarProducto)
     openPopUpLink.forEach((link) => {
       link.addEventListener('click', () => {
         let popUp = document.querySelector(`${link.dataset.modalTarget}`);
@@ -47,6 +54,14 @@ function DomContentLoaded() {
         closePopup(popUp);
       });
     });
+    
+    if (bodyProductos != null){
+      console.log('body encontrado, display productos') 
+      displayProductos()
+    }
+
+    
+   
 
     // overlay.addEventListener('click', () => {
     //   let popUp = document.querySelectorAll('.active');
@@ -56,6 +71,7 @@ function DomContentLoaded() {
     readUsersFromLocalStorage()
     window.addEventListener('stateChanged', onStateChanged)
  
+
   
  }
 /**
@@ -70,11 +86,10 @@ function onStateChanged(event) {
  * Handles the sign-in form submission, prevents the default form behavior,
  * retrieves user input values, creates a new User instance, and adds it to
  * the USER_DB array. Finally, logs the updated USER_DB to the console.
- * @param {Event} event - The event object associated with the form submission.
  * 
  */
 async function SignIn(event) {
-    // event.preventDefault()
+  event.preventDefault()
 
     let emailSignElement = document.getElementById('emailSign')
     let emailSign = /** @type {HTMLInputElement} */(emailSignElement)?.value
@@ -82,9 +97,8 @@ async function SignIn(event) {
     let PassSign = /** @type {HTMLInputElement} */(PassSignElement)?.value
     let NewUser = new User(emailSign,PassSign , 'user')
       // Transformación de User a URLSearchParams para el fetch
-  const payload = new URLSearchParams(/** @type {any} */(NewUser))
   // Para cuando usemos express:
-  // const payload = JSON.stringify(NewUser)
+  const payload = JSON.stringify(NewUser)
     /**
    * @callback filterUserCallback
    * @param {User} user
@@ -120,6 +134,7 @@ async function SignIn(event) {
         setTimeout(() => {
           document.getElementById('registered')?.classList.add('hidden')
         }, 1000)
+
 }
 }
 /**
@@ -131,16 +146,20 @@ async function SignIn(event) {
  *
  * @param {Event} event - The event object associated with the form submission.
  */
-function LogIn(event) {
+async function LogIn(event) {
 event.preventDefault()
-
-    let passLogElement = document.getElementById('passwordLog')
-    let passLog =  /** @type {HTMLInputElement} */(passLogElement)?.value
+//quiero buscar en la base de datos el id y si coincide, log in
+    
     let emailLogElement = document.getElementById('emailLog')
     let emailLog =  /** @type {HTMLInputElement} */(emailLogElement)?.value
-    let userExists = store.user.getAll().findIndex((/**@type {User}*/user) => user.password === passLog && user.email === emailLog)
-
-    if (userExists >= 0) {
+    let passLogElement = document.getElementById('passwordLog')
+    let passLog =  /** @type {HTMLInputElement} */(passLogElement)?.value
+    let newUser = new User(emailLog, passLog, 'user')
+    const payload = JSON.stringify(newUser)
+    //Buscar en la BBDD si existe el usuario
+    // Usamos una petición HTTP para comprobar si el usuario existe
+    const apiData = JSON.parse(await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/login`, 'POST', payload))
+    if (apiData.length >= 0) {
         // Guardamos los datos del usuario en la sesión
         let userFromREDUX = store.user.getByEmail?.(emailLog)
         sessionStorage.setItem('user', JSON.stringify(userFromREDUX))
@@ -151,6 +170,11 @@ event.preventDefault()
         } else {
           document.getElementById('Rejected')?.classList.remove('hidden')
           document.getElementById('Logged')?.classList.add('hidden')
+          if (/** @type {any} */(apiData)?.error === true) {
+            console.error(/** @type {any} */(apiData)?.message)
+            window.alert(/** @type {any} */(apiData)?.message)
+            return
+          }
         }
 }
 
@@ -159,14 +183,23 @@ event.preventDefault()
  *
  * @returns {void}
  */
-
 function updateUserDB() {
-let localStoredString = localStorage.getItem('REDUX_DB')
-let localStoredData = JSON.parse(localStoredString || '')
-
-localStoredData.users = [...store.user.getAll()]
+  // localStorage.setItem('USER_DB', JSON.stringify(USER_DB.get()))
+  // Leemos el nodo users almacenado en localstorage REDUX_DB,
+  let localStoredString = localStorage.getItem('REDUX_DB')
+  let localStoredData = JSON.parse(localStoredString || '')
+  // y guardamos lo que tengamos en store.user.getAll()
+  localStoredData.users = [...store.user.getAll()]
   localStorage.setItem('REDUX_DB', JSON.stringify(localStoredData))
 }
+// async function updateUserDB() {
+//   //leer buscar y actualizar
+//   console.log('estoyen el updateUserDB')
+//   const payload = JSON.parse(apiData)
+//   const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/update/users`, 'PUT', payload)
+
+  
+// }
 /**
  * Reads the USER_DB array from local storage and updates the global USER_DB
  * array with the retrieved data. If no data is found in local storage, the 
@@ -234,7 +267,7 @@ function onLogOut(event) {
        console.log('usuario antes de borrar', JSON.parse(localStoredUser))
        store.user.delete(JSON.parse(localStoredUser))
        console.log('usuario borrado', store.user.getAll())  
-      updateUserDB()
+      // updateUserDB()
       // Eliminar la sesión del usuario
       sessionStorage.removeItem('user')
       alert('Usuario borrado correctamente')
@@ -469,7 +502,7 @@ export function getDataFromLocalStorage() {
  */
 function getDataFromSessionStorage() {
   const defaultValue = JSON.stringify(INITIAL_STATE)
-  return JSON.parse(sessionStorage.getItem('REDUX_DB') || defaultValue)
+  return JSON.parse(sessionStorage.getItem('PARTYTIME_SESSION') || defaultValue)
 }
 
   /**
@@ -527,4 +560,35 @@ export async function getAPIData(apiURL, method = 'GET', data) {
 function isUserLoggedIn() {
   const userData = getDataFromSessionStorage()
   return userData?.user?.token
+}
+
+async function displayProductos() {
+  try {
+    const listaProductos = document.getElementById('listaProductos');
+    const apiData = JSON.parse(await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/read/botellas`, 'GET'));
+    apiData.forEach((botella) => {
+      const producto = document.createElement('li');
+      producto.innerHTML = `
+        <h3>${botella.name}</h3>
+         <p>${botella.spirit}</p>
+        <p>${botella.price}</p>
+       
+      `;
+      listaProductos.appendChild(producto);
+    });
+  } catch (error) {
+    console.error('Errore durante la richiesta API:', error);
+  }
+}
+
+async function buscarProducto(event){
+  event.preventDefault()
+  let InputBusqueda = document.getElementById('busqueda') 
+  let valorBusqueda = InputBusqueda.value
+  let newBotella = {name: valorBusqueda}
+    const payload = JSON.stringify(newBotella)
+    //Buscar en la BBDD si existe el usuario
+    const apiData = JSON.parse(await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda`, 'POST', payload))
+    console.log(apiData)
+
 }

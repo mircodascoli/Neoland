@@ -3,16 +3,19 @@
 // MODEL
 export class User {
   /**
-   * @param {string} name
    * @param {string} email
-   * @param {'user' | 'admin'} [rol='user']
    * @param {string} [password='']
+   * @param {string} name
+   * @param {'user' | 'admin'} [rol='user']
    * @param {string} [token='']
    * @param {string} [_id]
    */
-  constructor(name, email, rol='user', password = '', token ='', _id) {
+  constructor(email, password = '', rol='user', token ='', _id) {
 
-
+    this.email = email
+    this.password = password
+    this.token= token
+    this.rol= rol
     if (_id === '') {
    const timestamp = new Date()
     // Generar id aleatorio (hasta que tengamos el de la BBDD)
@@ -20,11 +23,11 @@ export class User {
    } else  {
     this._id = _id
    }
-    this.name = name
-    this.email = email
-    this.rol= rol
-    this.password = password
-    this.token= token
+ 
+
+   
+ 
+   
   }
 }
 

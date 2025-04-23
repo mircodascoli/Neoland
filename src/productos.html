@@ -13,7 +13,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet">
     </head>
-    <body>
+    <body id="bodyProductos">
     <header>
         <h1>Available Products</h1>
        <menu>
@@ -25,39 +25,14 @@
       
     </header>
     <main>
-        <input type="text" name="busqueda" id="busqueda">
-        <button type="button" id="botonBuscar">Buscar</button>
-        
-        <ul class="productos">
-
-            <li>
-                <figure>
-                    <img src="./img/S_1372.png" alt="Tanquerray">
-                    <h3>Tanquerray</h3>
-                    <span>popular option</span>
-                    <p>$20,00</p>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <img src="./img/S_1372.png" alt="Tanquerray">
-                    <h3>Tanquerray</h3>
-                    <span>popular option</span>
-                    <p>$20,00</p>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <img src="./img/S_1372.png" alt="Tanquerray">
-                    <h3>Tanquerray</h3>
-                    <span>popular option</span>
-                    <p>$20,00</p>
-                </figure>
-            </li>
-            <p>this is the store and where all the produts can be found!</p>
+        <form action="" id="form-busqueda">
+        <input type="text" name="busqueda" id="busqueda" placeholder="Ex.'Campari','Vodka'...">
+        <button type="button" id="botonBuscar" >Buscar</button>
+    </form>
+        <ul id="listaProductos">
+            <li>nombre: <span>precio:</span></li>
         </ul>
     </main>
-    <footer>
         <p>PARTYTIME was made for fun, thank fors using it</p>
         <p>2025 Mirco D'Ascoli</p>
     </footer>

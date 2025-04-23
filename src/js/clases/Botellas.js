@@ -4,7 +4,7 @@ export class Botellas{
     /**
      * @param {number} _id
      * @param {string} name
-     *  @param {number} price
+     * @param {number} price
      * @param {number} [ml=700] - The volume of the bottle in milliliters
      * @param {string} spirit
      * @param {'basic'| 'recommended'| 'premium'} [range = 'recomended'] - The range or series of the bottle. {basic, recomended, premium} [range - The range or series of the bottle. 

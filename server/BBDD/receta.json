@@ -1,0 +1,23 @@
+[{
+    "_id": {
+      "$oid": "680898bdfcb834723cdb99bc"
+    },
+    "name": "Alvaro",
+    "email": "alvaro@neoland",
+    "password": "1234",
+    "recipes": [
+      {
+        "name": "negroni",
+        "ingredients": [
+          {
+            "spirit": "gin",
+            "ml": "30"
+          },
+          {
+            "spirit": "vermut",
+            "ml": "30"
+          }
+        ]
+      }
+    ]
+  }]

@@ -1,17 +1,18 @@
 import fs from 'fs';
 
-export async function filterByRange(file, filterParams, callback) {
-  let filteredData = []
-  console.log('filter', filterParams);
+export async function busqueda(file, botellaData, callback) {
+  let productFound = []
+  console.log('filter', botellaData);
   try {
     if (fs.existsSync(file)) {
       await fs.readFile(file, function (err, data) {
         const parsedData = JSON.parse(data.toString());
         // Filter by filterParams
-        filteredData = parsedData.filter((item) => {
-          return item.name.includes(filterParams.range)
+        productFound = parsedData.filter((producto) => {
+            console.log(producto)
+          return producto.name.includes(botellaData.name) || producto.spirit.includes(botellaData.name)
         });
-        if (filteredData.length === 0) {
+        if (productFound.length === 0) {
           console.log('read', 'No se encontraron resultados');
           if (callback) {
             return callback('No se encontraron resultados');
@@ -24,9 +25,9 @@ export async function filterByRange(file, filterParams, callback) {
         }
         // Return filtered data
         if (callback) {
-          return callback(filteredData);
+          return callback(productFound);
         }
-        return filteredData
+        return productFound
       });
     } else {
       console.log('filter', 'El fichero no existe');
