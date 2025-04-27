@@ -1,17 +1,15 @@
 // @ts-no-check
 import {User} from './clases/user.js'
-// import {SingletonDB} from './clases/SingletonDB.js'
- import { Botellas } from './clases/Botellas.js'
+//import { Botellas } from './clases/Botellas.js'
 import { simpleFetch } from './lib/simpleFetch.js'
 import { HttpError } from './clases/HttpError.js'
 import { store, INITIAL_STATE } from './store/redux.js'
 
-// Preparación para cuando trabajemos con express
 const API_PORT = location.port ? `:${1337}` : ''
 const TIMEOUT = 10000
 
 window.addEventListener('DOMContentLoaded', DomContentLoaded)
-// const USER_DB = new SingletonDB()
+
 /**
  * Evento que se lanza cuando el contenido de la página ha sido cargado en memoria
  * y se puede acceder a él.
@@ -60,28 +58,13 @@ function DomContentLoaded() {
       displayProductos()
     }
 
-    
-   
-
     // overlay.addEventListener('click', () => {
     //   let popUp = document.querySelectorAll('.active');
     //   closePopup(popUp);
     // }) TERMINAR: CLICK EN EL OVERLAY PARA CERRAR EL POPUP
-
-    readUsersFromLocalStorage()
-    window.addEventListener('stateChanged', onStateChanged)
- 
-
-  
  }
-/**
- * Handles a state change event from the store
- * @param {Event} event - The event object associated with the state change
- * @listens stateChanged
- */
-function onStateChanged(event) {
-  console.log('onStateChanged', /** @type {CustomEvent} */(event).detail)
-}
+
+
 /**
  * Handles the sign-in form submission, prevents the default form behavior,
  * retrieves user input values, creates a new User instance, and adds it to
@@ -89,6 +72,7 @@ function onStateChanged(event) {
  * 
  */
 async function SignIn(event) {
+
   event.preventDefault()
 
     let emailSignElement = document.getElementById('emailSign')
@@ -96,9 +80,10 @@ async function SignIn(event) {
     let PassSignElement = document.getElementById('passwordSign')
     let PassSign = /** @type {HTMLInputElement} */(PassSignElement)?.value
     let NewUser = new User(emailSign,PassSign , 'user')
+    const payload = JSON.stringify(NewUser)
       // Transformación de User a URLSearchParams para el fetch
   // Para cuando usemos express:
-  const payload = JSON.stringify(NewUser)
+  
     /**
    * @callback filterUserCallback
    * @param {User} user
@@ -192,55 +177,7 @@ function updateUserDB() {
   localStoredData.users = [...store.user.getAll()]
   localStorage.setItem('REDUX_DB', JSON.stringify(localStoredData))
 }
-// async function updateUserDB() {
-//   //leer buscar y actualizar
-//   console.log('estoyen el updateUserDB')
-//   const payload = JSON.parse(apiData)
-//   const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/update/users`, 'PUT', payload)
 
-  
-// }
-/**
- * Reads the USER_DB array from local storage and updates the global USER_DB
- * array with the retrieved data. If no data is found in local storage, the 
- * global USER_DB is left unchanged. Each user object is instantiated as a 
- * User instance.
- *
- * @returns {void}
- */
-
-function readUsersFromLocalStorage(){
-  let savedUsers = []
-
-  if (localStorage.getItem('REDUX_DB')) {
-    let localStoredREDUX_DB = localStorage.getItem('REDUX_DB')
-    // Si no existe la clave 'user' en local store, localStoredUSER_DB es null
-    if (localStoredREDUX_DB ===null){
-      localStoredREDUX_DB  =' '
-    }
-  savedUsers = JSON.parse(localStoredREDUX_DB)
-    ?.users
-  .map((/**  @type {User} */user) => new User(user.name, user.email, user.rol, user.password, user.token, user._id))
-    
-      // console.log('inicializo el singleton de la base de datos')
-    } else{
-          // REDUX_DB no existe en local storage, tenemos que crear el valor por defecto
-    console.log('Iniciamos local storage porque está vacío')
-    localStorage.setItem('REDUX_DB', JSON.stringify(INITIAL_STATE))
-    }
-    // Replicamos lo mismo en REDUX
-  savedUsers.forEach((/** @type {User} */newUser) => {
-    store.user.create(newUser, () => {console.log('usuario creado')})
-  })
-    
-    }
-  
-/**
- * Handles the log out form submission, prevents the default form behavior,
- * removes the user session data from session storage, and redirects to the home page.
- *
- * @param {Event} event - The event object associated with the form submission.
- */
 
 function onLogOut(event) {
     event.preventDefault()
@@ -484,16 +421,7 @@ function onLogOut(event) {
     popUp.classList.remove('active')
     overlay.classList.remove('active')
   }
-/**
- * Checks if there is a user logged in by verifying the presence of a token
- * in the local storage.
- *
- * @returns {boolean} True if the user is logged in, false otherwise.
- */
-export function getDataFromLocalStorage() {
-  const defaultValue = JSON.stringify(INITIAL_STATE)
-  return JSON.parse(localStorage.getItem('REDUX_DB') || defaultValue)
-}
+
 /**
  * Retrieves the shopping list data from session storage.
  *
@@ -565,15 +493,16 @@ function isUserLoggedIn() {
 async function displayProductos() {
   try {
     const listaProductos = document.getElementById('listaProductos');
-    const apiData = JSON.parse(await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/read/botellas`, 'GET'));
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/read/botellas`, 'GET')
+   
+    console.log(apiData)
     apiData.forEach((botella) => {
       const producto = document.createElement('li');
       producto.innerHTML = `
         <h3>${botella.name}</h3>
          <p>${botella.spirit}</p>
         <p>${botella.price}</p>
-       
-      `;
+       `;
       listaProductos.appendChild(producto);
     });
   } catch (error) {
@@ -588,7 +517,7 @@ async function buscarProducto(event){
   let newBotella = {name: valorBusqueda}
     const payload = JSON.stringify(newBotella)
     //Buscar en la BBDD si existe el usuario
-    const apiData = JSON.parse(await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda`, 'POST', payload))
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda`, 'POST', payload)
     console.log(apiData)
 
 }

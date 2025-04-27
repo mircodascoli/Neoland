@@ -1,5 +1,5 @@
 import express from 'express';
-import {crud} from './server.crud.js';
+import { db } from "./server.mongodb.js";
 import bodyParser from 'body-parser';
 
 const USERS_URL = './server/BBDD/users.json'
@@ -14,51 +14,53 @@ app.use(bodyParser.json());
 // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
+// })
 
 // CREATE
 app.post('/create/users', (req, res) => {
-    crud.create(USERS_URL, req.body, (data) => {
+    db.create(USERS_URL, req.body, (data) => {
       console.log(`server create user ${data.name} creado`, data)
       res.send(JSON.stringify(data));
     });
   });
   app.post('/create/botellas', (req, res) => {
-    crud.create(BOTELLAS_URL, req.body, (data) => {
+    db.create(BOTELLAS_URL, req.body, (data) => {
       console.log(`server create botellas ${data.name} creado`, data)
       res.send(JSON.stringify(data));
     });
   });
 
 // READ
-app.get('/read/users', (req, res) => {
-    crud.read(USERS_URL, (data) => {
-      console.log('server read users', data)
-  
-      res.send(JSON.stringify(data));
+app.get('/read/users', async (req, res) =>  {
+      console.log('server read users')
+      res.json(await db.users.get())
     });
-  });
-  app.get('/read/botellas', (req, res) => {
-    crud.read(BOTELLAS_URL, (data) => {
-      console.log('server read botellas', data)
-  
-      res.send(JSON.stringify(data));
+
+
+  app.get('/read/botellas', async (req, res) => {
+      console.log('server read botellas')
+      res.json(await db.botellas.get())
     });
-  });
+
+
+  app.get('/count/users',async (req, res) => {
+      const usuarios = await db.users.count()
+  res.send(`Hola ${req.params.nombre}, hay ${usuarios} usuarios`)
+    });
 
  // UPDATE
 
  app.put('/update/botellas' , (req, res) => {
-    crud.crud.update(BOTELLAS_URL, req.body.id, req.body, (data) => {
+    db.crud.update(BOTELLAS_URL, req.body.id, req.body, (data) => {
       console.log(`server update botellas ${data.name} modificado`, data)
       res.send(JSON.stringify(data));   
     })
 })
 
 app.put('/update/users' , (req, res) => {
-    crud.crud.update(USERS_URL, req.body.id, req.body, (data) => {
+    db.crud.update(USERS_URL, req.body.id, req.body, (data) => {
       console.log(`server update users ${data.name} modificado`, data)
       res.send(JSON.stringify(data));   
     })          
@@ -67,14 +69,14 @@ app.put('/update/users' , (req, res) => {
 
 // DELETE
     app.delete('/delete/botellas', (req, res) => {
-      crud.deleteById(BOTELLAS_URL, req.body.id, (data) => {
+      db.deleteById(BOTELLAS_URL, req.body.id, (data) => {
         console.log(`server delete botellas ${data.name} borrado`, data)
         res.send(JSON.stringify(data));   
       })
     })
 
     app.delete('/delete/users', (req, res) => {
-      crud.deleteById(USERS_URL, req.body.id, (data) => {
+      db.deleteById(USERS_URL, req.body.id, (data) => {
         console.log(`server delete users ${data.name} borrado`, data)
         res.send(JSON.stringify(data));   
       })
@@ -82,15 +84,14 @@ app.put('/update/users' , (req, res) => {
 
     // FILTER
 
-    app.post('/busqueda', (req, res) => {
-      crud.busqueda(BOTELLAS_URL, req.body, (data) => {
-        console.log(`server busqueda botellas ${data.name} modificado`, data)
-        res.send(JSON.stringify(data));   
+    app.post('/busqueda', async (req, res) => {
+      console.log('estamos en busqueda', req.body)
+      //recuerda añadir la projeccion para filtrar los ampos que devolvemos
+         res.json(await db.botellas.search( { $text: { $search: req.body.name } },{}))
       })
-    })
 
    app.post('/login', (req, res) => {
-     crud.login(USERS_URL, req.body, (data) => {
+     db.login(USERS_URL, req.body, (data) => {
        console.log(`server login ${data.name} modificado`, data)
        res.send(JSON.stringify(data));   
      })
@@ -111,3 +112,6 @@ app.listen(port, async () => {
     console.log(` listening on port ${port}`);
   })
   
+
+
+  // db.stores.find( { $text: { $search: "java shop -coffee" } } )

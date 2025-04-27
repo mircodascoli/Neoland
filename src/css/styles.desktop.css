@@ -33,5 +33,55 @@
         flex-wrap: wrap;
     }
 
+    #mainProductos{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+
+        #form-busqueda{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 10px;
+        }
+    
+        #listaProductos{
+            display: flex;
+            flex-direction: row ;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            row-gap: 20px;  
+    
+            li{
+                height: 200px;
+                width: 200px;
+                border: 1px solid black;
+            }
+
+            li:hover, li:focus, li:active {
+                border: 2px solid #7ae212;
+              }
+    
+        }
+    }
+
+    #botonesLogoutSignOut{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        form{
+            width: 200px;
+            height: 200px;
+
+            button{
+                height: 50px;
+                width: 100px;
+            }
+        }
+    }
+   
+
  
  
