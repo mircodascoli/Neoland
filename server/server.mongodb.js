@@ -8,6 +8,7 @@ export const db = {
         get: getUsers,
         login: login,
         create: createUsers,
+        update: updateUsers
     },
     botellas: {
         get: getBotellas,
@@ -66,4 +67,12 @@ async function countUsers() {
     const PartytimetDB = client.db('Partytime');
     const usersCollection = PartytimetDB.collection('users');
     return await usersCollection.insertOne(user)
+  }
+
+  async function updateUsers(id, updates){
+    console.log('your recipe has been saved to your account', )
+    const client = new MongoClient(URI);
+    const PartytimetDB = client.db('Partytime');
+    const usersCollection = PartytimetDB.collection('users');
+    return await usersCollection.updateOne({ _id: ObjectId(id) }, { $set: updates })
   }
