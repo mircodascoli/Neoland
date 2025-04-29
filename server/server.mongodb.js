@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 const URI = process.env.MONGO_URI;
 
@@ -6,6 +6,8 @@ export const db = {
     users: {
         count: countUsers,
         get: getUsers,
+        login: login,
+        create: createUsers,
     },
     botellas: {
         get: getBotellas,
@@ -45,4 +47,23 @@ async function countUsers() {
     const botellasCollection = PartytimetDB.collection('Botellas');
     return await botellasCollection.find(filter).project(projection).toArray();
 
+  }
+
+
+  async function login({email, password}){
+    console.log('hey from login')
+    const client = new MongoClient(URI);
+    const PartytimetDB = client.db('Partytime');
+    const usersCollection = PartytimetDB.collection('users');
+    let collectionUsers = usersCollection.findOne({email, password})
+    return await collectionUsers
+  
+   }
+
+ async function createUsers(user){
+    console.log('your email has been registred', user.email)
+    const client = new MongoClient(URI);
+    const PartytimetDB = client.db('Partytime');
+    const usersCollection = PartytimetDB.collection('users');
+    return await usersCollection.insertOne(user)
   }

@@ -81,15 +81,7 @@ async function SignIn(event) {
     let PassSign = /** @type {HTMLInputElement} */(PassSignElement)?.value
     let NewUser = new User(emailSign,PassSign , 'user')
     const payload = JSON.stringify(NewUser)
-      // Transformación de User a URLSearchParams para el fetch
-  // Para cuando usemos express:
   
-    /**
-   * @callback filterUserCallback
-   * @param {User} user
-   * @returns number
-   */
-  /** @type {filterUserCallback} */
     console.log('busco en la BBDD el email ' + emailSign, store.user.getByEmail?.(emailSign))
     if(store.user.getByEmail?.(emailSign)!==undefined){
       document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
@@ -101,7 +93,7 @@ async function SignIn(event) {
     // Sustituir por llamada fetch al servidor de apis
   // Enviar el fetch a la API, crear nuevo usuario
   const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/create/users`, 'POST', payload)
- 
+ console.log(apiData)
       if (!apiData) {
         // Informo al usuario del resultado de la operación
         document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
@@ -143,16 +135,20 @@ event.preventDefault()
     const payload = JSON.stringify(newUser)
     //Buscar en la BBDD si existe el usuario
     // Usamos una petición HTTP para comprobar si el usuario existe
-    const apiData = JSON.parse(await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/login`, 'POST', payload))
-    if (apiData.length >= 0) {
+  
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/login`, 'POST', payload)
+console.log(apiData)
+    if (Object.keys(apiData).length >= 0) {
         // Guardamos los datos del usuario en la sesión
-        let userFromREDUX = store.user.getByEmail?.(emailLog)
-        sessionStorage.setItem('user', JSON.stringify(userFromREDUX))
+        console.log('AAAAAAAA')
+        let userPartyTime= store.user.getByEmail?.(emailLog)
+        sessionStorage.setItem('user', JSON.stringify(userPartyTime))
         document.body.classList.add('loading')
         // Actualizo el interfaz
         setTimeout(() => {
            location.href = './user.html'}, 1000)
         } else {
+          console.log('BBBB')
           document.getElementById('Rejected')?.classList.remove('hidden')
           document.getElementById('Logged')?.classList.add('hidden')
           if (/** @type {any} */(apiData)?.error === true) {
@@ -161,8 +157,8 @@ event.preventDefault()
             return
           }
         }
-}
 
+      }
 /**
  * Updates the local storage with the latest state of the USER_DB array.
  *
