@@ -56,9 +56,10 @@ app.get('/read/users', async (req, res) =>  {
 
  // UPDATE     
 
- app.put('/update/users/:id', async (req, res) => {
-  console.log('estamos en update', req.body,req.params.id)
-  res.json(await db.users.update(req.params.id, req.body))
+ app.put('/update/users/:user', async (req, res) => {
+  const userId = sessionStorage.getItem('_id');
+  console.log('estamos en update', userId,req.params.id)
+  res.json(await db.users.update(userId, req.body))
 })
 // DELETE
  

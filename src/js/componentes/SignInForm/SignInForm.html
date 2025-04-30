@@ -1,0 +1,8 @@
+<template id="signInFormTemplate">
+  <form id="signInForm">
+    <slot></slot>
+    <input  type="email" id="emailSign"placeholder="Your email" minlength="3" required>
+    <input type="password" id="passwordSign" placeholder="Your password" minlength="3" required>
+    <button type="submit">Sign In</button>
+  </form>
+</template>

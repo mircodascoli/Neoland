@@ -12,9 +12,22 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet">
+    <script type="module" src="./js/componentes/bundle.js" defer></script>
+    <script type="importmap">
+        {
+          "imports": {
+            "classes/HttpError": "./JS/clases/HttpError.js",
+            "lib/simpleFetch": "./js/lib/simpleFetch.js"
+          }
+        }
+      </script>
     </head>
 <body>
     <main>
+        <signin-form>
+            <h3>Registro con web components</h3>
+            <p>Puedes registrarte con web components</p>
+          </signin-form>
         <form action="/" id="formSign">
             <h2>Sign up to PARTYTIME</h2>
         <label for="emailSign">Email:</label><input type="email" id="emailSign"placeholder="Your email" minlength="3">
