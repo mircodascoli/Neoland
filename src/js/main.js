@@ -6,7 +6,7 @@ import { simpleFetch } from './lib/simpleFetch.js'
 import { HttpError } from './clases/HttpError.js'
 import { store, INITIAL_STATE } from './store/redux.js'
 
-const API_PORT = location.port ? `:${1337}` : ''
+export const API_PORT = location.port ? `:${1337}` : ''
 const TIMEOUT = 10000
 
 window.addEventListener('DOMContentLoaded', DomContentLoaded)
@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', DomContentLoaded)
  * @listens DOMContentLoaded
  */
 function DomContentLoaded() {
-    let formSign = document.getElementById('formSign')
+  
     let formLog = document.getElementById('formLog')
     let formLogOut = document.getElementById('logOutForm')
     let formSignout = document.getElementById('signOutForm')
@@ -33,7 +33,7 @@ function DomContentLoaded() {
     
     // let overlay = document.getElementById('overlay') 44 TO 48
 
-    formSign?.addEventListener('submit', SignIn)
+   
     formLog?.addEventListener('submit', LogIn)
     formLogOut?.addEventListener('submit', onLogOut)
     formSignout?.addEventListener('submit', onSignOut)
@@ -74,49 +74,49 @@ function DomContentLoaded() {
  * the USER_DB array. Finally, logs the updated USER_DB to the console.
  * 
  */
-async function SignIn(event) {
+// async function SignIn(event) {
 
-  event.preventDefault()
+//   event.preventDefault()
 
-    let emailSignElement = document.getElementById('emailSign')
-    let emailSign = /** @type {HTMLInputElement} */(emailSignElement)?.value
-    let PassSignElement = document.getElementById('passwordSign')
-    let PassSign = /** @type {HTMLInputElement} */(PassSignElement)?.value
-    let NewUser = new User(emailSign,PassSign , 'user')
-    const payload = JSON.stringify(NewUser)
+//     let emailSignElement = document.getElementById('emailSign')
+//     let emailSign = /** @type {HTMLInputElement} */(emailSignElement)?.value
+//     let PassSignElement = document.getElementById('passwordSign')
+//     let PassSign = /** @type {HTMLInputElement} */(PassSignElement)?.value
+//     let NewUser = new User(emailSign,PassSign , 'user')
+//     const payload = JSON.stringify(NewUser)
   
-    console.log('busco en la BBDD el email ' + emailSign, store.user.getByEmail?.(emailSign))
-    if(store.user.getByEmail?.(emailSign)!==undefined){
-      document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
-      return
-    }
-    else {
-    document.getElementById('AlreadyRegistered')?.classList.add('hidden')
+//     console.log('busco en la BBDD el email ' + emailSign, store.user.getByEmail?.(emailSign))
+//     if(store.user.getByEmail?.(emailSign)!==undefined){
+//       document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
+//       return
+//     }
+//     else {
+//     document.getElementById('AlreadyRegistered')?.classList.add('hidden')
     
-    // Sustituir por llamada fetch al servidor de apis
-  // Enviar el fetch a la API, crear nuevo usuario
-  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/create/users`, 'POST', payload)
- console.log(apiData)
-      if (!apiData) {
-        // Informo al usuario del resultado de la operación
-        document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
-        setTimeout(() => {
-          document.getElementById('AlreadyRegistered')?.classList.add('hidden')
-        }, 1000)
-        console.error('Error al crear usuario', apiData)
-        return
-      }
-      console.log('Respuesta del servidor de APIs', apiData)
-      // store.user.create(newUser, () => {
-        updateUserDB()
-        // Informo al usuario del resultado de la operación
-        document.getElementById('registered')?.classList.remove('hidden')
-        setTimeout(() => {
-          document.getElementById('registered')?.classList.add('hidden')
-        }, 1000)
+//     // Sustituir por llamada fetch al servidor de apis
+//   // Enviar el fetch a la API, crear nuevo usuario
+//   const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/create/users`, 'POST', payload)
+//  console.log(apiData)
+//       if (!apiData) {
+//         // Informo al usuario del resultado de la operación
+//         document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
+//         setTimeout(() => {
+//           document.getElementById('AlreadyRegistered')?.classList.add('hidden')
+//         }, 1000)
+//         console.error('Error al crear usuario', apiData)
+//         return
+//       }
+//       console.log('Respuesta del servidor de APIs', apiData)
+//       // store.user.create(newUser, () => {
+//         updateUserDB()
+//         // Informo al usuario del resultado de la operación
+//         document.getElementById('registered')?.classList.remove('hidden')
+//         setTimeout(() => {
+//           document.getElementById('registered')?.classList.add('hidden')
+//         }, 1000)
 
-}
-}
+// }
+// }
 /**
  * Handles the login form submission, prevents the default form behavior,
  * retrieves user input values, and checks if a user exists in the USER_DB array.

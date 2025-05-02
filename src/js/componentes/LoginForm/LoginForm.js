@@ -1,6 +1,9 @@
 import { getAPIData, getInputValue, API_PORT } from '../../index.js';
 import { importTemplate } from '../../lib/importTemplate.js';
 
+import ResetCSS from '../../../css/reset.css';
+import LoginFormCSS from './LoginForm.css';
+
 
 const TEMPLATE = {
   id: 'loginFormTemplate',
@@ -36,7 +39,7 @@ export class LoginForm extends HTMLElement {
   async connectedCallback() {
     // console.log("constructor: Custom element added to page.");
     this.attachShadow({ mode: "open" });
-    this.shadowRoot.adoptedStyleSheets.push(ResetCSS, AppCSS, LoginFormCSS);
+    this.shadowRoot.adoptedStyleSheets.push(ResetCSS, LoginFormCSS);
 
     this._setUpContent();
     this._checkSmallScreenBehaviors();
