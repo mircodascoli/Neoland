@@ -1,13 +1,13 @@
-import { getAPIData, getInputValue, API_PORT } from '../../index.js';
 import { importTemplate } from '../../lib/importTemplate.js';
+import { getAPIData, getInputValue, API_PORT } from '../../main.js';
 
-import ResetCSS from '../../../css/reset.css';
-import LoginFormCSS from './LoginForm.css';
+import ResetCSS from '../../../css/reset.css' with { type: 'css' };
+import LoginFormCSS from './LoginForm.css' with { type: 'css' };
 
 
 const TEMPLATE = {
   id: 'loginFormTemplate',
-  url: './js/components/LoginForm/LoginForm.html'
+  url: './js/componentes/LoginForm/LoginForm.html'
 }
 // Wait for template to load
 await importTemplate(TEMPLATE.url);
@@ -37,14 +37,15 @@ export class LoginForm extends HTMLElement {
   // ======================= Lifecycle Methods ======================= //
 
   async connectedCallback() {
-    // console.log("constructor: Custom element added to page.");
+     console.log("constructor: Custom element added to page.");
+     // Necesitamos activar el shadow DOM para poder añadir la plantilla html
     this.attachShadow({ mode: "open" });
+     // Asignamos los estilos
     this.shadowRoot.adoptedStyleSheets.push(ResetCSS, LoginFormCSS);
-
+   // Creamos el contenido del shadowRoot
     this._setUpContent();
-    this._checkSmallScreenBehaviors();
-    // Add event listeners to form elements
-    const loginForm = this.shadowRoot.getElementById("loginForm");
+    // Ahora que ya existe el shadowRoot, podemos asignar eventos a nuestro HTML
+    const loginForm = this.shadowRoot.getElementById("formLog");
     // Get updates when content is updated in the slot
     this.shadowRoot.addEventListener('slotchange', this._handleSlotChanged.bind(this), { passive: true });
     // Global store state listener

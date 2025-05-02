@@ -1,3 +1,7 @@
+.hidden {
+  display: none;
+}
+
 form {
   --default-form-bg-color: #666;
 
@@ -17,7 +21,21 @@ form {
       color:white;
       text-decoration: none;
   }
-  
+
+  input[type="submit"]{
+    cursor: pointer;
+    height: 40px;
+    width: 100px;
+    margin: 4px auto;
+    }
+
+    input{
+        height: 30px;
+        width: 70%;
+        border-radius: 5px;
+
+    }
+
       .btn{
         a{
             font-weight: 700;
