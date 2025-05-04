@@ -106,31 +106,7 @@ export class LoginForm extends HTMLElement {
     // Notify the slot change event
     // console.log(['Slot changed', e])
   }
-
-  /**
-   * Handles a state change event from the store
-   * @param {import('../../store/redux').State} state - The new state
-   * @private
-   */
-  _handleStateChanged(state) {
-    // Do whatever is needed in this component after a particular state value changes
-    // Filter by the states needed in this component
-    console.log('stateChanged observed from component', state?.detail?.type);
-  }
-
-  /**
-   * Updates the visibility of the sidebar based on the screen size.
-   * If the screen width is 460px or less, the sidebar is hidden;
-   * otherwise, the sidebar is shown.
-   * @private
-   */
-  _checkSmallScreenBehaviors() {
-      if (window.matchMedia('(max-width: 460px)').matches) {
-          this.showSidebar = false;
-      } else {
-          this.showSidebar = true;
-      }
-  }
+ 
 
 /**
  * Handles the form submission event for the login form.
@@ -147,18 +123,37 @@ export class LoginForm extends HTMLElement {
 
   async _onFormSubmit(e) {
     e.preventDefault();
-    const email = this.shadowRoot.getElementById("email");
-    const password = this.shadowRoot.getElementById("password");
+    const email = this.shadowRoot.getElementById("emailLog");
+    const password = this.shadowRoot.getElementById("passwordLog");
     const loginData = {
       email: getInputValue(email),
       password: getInputValue(password)
     }
     let onFormSubmitEvent
-    // console.log(`DESDE DENTRO DEL COMPONENTE Email: ${loginData.email}, Password: ${loginData.password}`);
+    console.log(`DESDE DENTRO DEL COMPONENTE Email: ${loginData.email}, Password: ${loginData.password}`);
 
     if (loginData.email !== '' && loginData.password !== '') {
       const payload = JSON.stringify(loginData)
       const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/login`, 'POST', payload)
+      if (Object.keys(apiData).length >= 0) {
+        // Guardamos los datos del usuario en la sesión
+        let userPartyTime= JSON.stringify(apiData)
+        console.log(userPartyTime)
+        sessionStorage.setItem('user', userPartyTime)//userPartyTime)
+        document.body.classList.add('loading')
+        // Actualizo el interfaz
+        setTimeout(() => {
+           location.href = './user.html'}, 1000)
+        } else {
+   
+          document.getElementById('Rejected')?.classList.remove('hidden')
+          document.getElementById('Logged')?.classList.add('hidden')
+          if (/** @type {any} */(apiData)?.error === true) {
+            console.error(/** @type {any} */(apiData)?.message)
+            window.alert(/** @type {any} */(apiData)?.message)
+            return
+          }
+        }
       onFormSubmitEvent = new CustomEvent("login-form-submit", {
         bubbles: true,
         detail: apiData
