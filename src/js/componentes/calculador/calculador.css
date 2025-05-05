@@ -1,0 +1,33 @@
+.container-calculador{
+    margin: 0 auto;
+    padding: 10%;
+    
+  }
+
+  #inputscalculador{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 20px;
+    padding: 5%;          
+}
+
+  #resultados{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
+}
+
+  table{
+    width: 600px;
+    height: 300px;
+    text-align: center;
+    line-height: 40px;
+   border: 1px solid black;
+
+    th{
+        text-transform: uppercase;
+    }
+}

@@ -1,32 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Calculadores</title>
-        <script type="module" src="./js/main.js"></script>
-        <link rel="stylesheet" href="./css/reset.css">
-        <link rel="stylesheet" href="./css/styles.css">
-        <link rel="stylesheet" href="./css/styles.mobile.css" media="screen and (max-width: 480px)">
-        <link rel="stylesheet" href="./css/styles.desktop.css" media="screen and (min-width: 481px)">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet">
-    </head>
-<body id="body-calculadores">
-    <header>
-        <h1>calculadores</h1>
-       <menu>
-        <li><a href="./choosepoison.html">next cocktails</a></li>
-        <li><a href="./productos.html">Products</a></li>
-        <li><a href="./carrito.html">Cart</a></li>
-        <li><a href="./user.html">user area</a></li>
-       </menu>
-    </header>
-    <main class="container-calculador">
-        <calculador-component>
-            <p>this is a webcomponent</p>
-        </calculador-component>
+import { LitElement, html } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/all/lit-all.min.js';
+import ResetCSS from '../../../css/reset.css' with { type: 'css' }
+import CalculadorCSS from '../calculador/calculador.css' with { type: 'css' }
+export class Calculador extends LitElement{
+    static styles = [
+        ResetCSS, CalculadorCSS
+    ]
+    render(){
+        return html `
+        <div class="container-calculador">
+       
         <div id="inputscalculador">
 
          <label for="seleccionador">of: </label><select name="coktails" id="seleccionador">
@@ -43,7 +25,7 @@
             <option value="Berry Hiball">Berry Hiball</option>
            
         </select>
-        <label for="range" id="label-range">Quantity:</label><input  id="range" type="range" min="200" max="2000" step="100" value="1000">
+        <label for="range" id="label-range">Quantity:</label> <input  id="range" type="range" min="200" max="2000" step="100" value="1000"></input>
         </div>
        
         <div id="resultados">
@@ -76,11 +58,7 @@
             <button id="save"> save and party!</button>
         </div>
 
-    </main>
-
-    <footer>
-        <p>PARTYTIME was made for fun, thank fors using it</p>
-        <p>2025 Mirco D'Ascoli</p>
-    </footer>
-</body>
-</html>
+    </div> `;
+ }
+}
+customElements.define('calculador-component', Calculador);
