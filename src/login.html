@@ -9,11 +9,11 @@
         <link rel="stylesheet" href="./css/styles.css">
         <link rel="stylesheet" href="./css/styles.mobile.css" media="screen and (max-width: 480px)">
         <link rel="stylesheet" href="./css/styles.desktop.css" media="screen and (min-width: 481px)">
-        <script src="https://accounts.google.com/gsi/client" async defer></script>
+       <script src="https://accounts.google.com/gsi/client" async defer></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet">
-    <script type="module" src="./js/componentes/bundle.login.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet"> 
+    <script type="module" src="./js/componentes/bundle.js" defer></script>
     <script type="importmap">
         {
           "imports": {
@@ -45,12 +45,17 @@
         <p id="logged" class="hidden">Logged succesfuly!</p>
         <p id="rejected" class="hidden">incorrect login</p>
 
-            <login-form>
+            <!-- <login-form>
                 <p>este es webcomponent</p>
                 <h2>Log in to PARTYTIME</h2>
                 <a href="./sign.html" class="login-or-sign">Or sign up</a>
-              </login-form>
-        
+              </login-form> -->
+              
+        <log-in-form-lit>
+            <p>este es lit</p>
+            <h2>Log in to PARTYTIME</h2>
+            <a href="./sign.html" class="login-or-sign">Or sign up</a>  
+        </log-in-form-lit>
     
         
     </main>
@@ -58,6 +63,6 @@
         <p>PARTYTIME was made for fun, thank fors using it</p>
         <p>2025 Mirco D'Ascoli</p>
     </footer>
-    <script type="module" src="./js/googleOAuth.js"></script>
+    <!-- <script type="module" src="./js/googleOAuth.js"></script> -->
 </body>
 </html>
