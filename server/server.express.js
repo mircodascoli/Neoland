@@ -56,10 +56,13 @@ app.get('/read/users', async (req, res) =>  {
 
  // UPDATE     
 
- app.put('/update/users/:user', async (req, res) => {
-  const userId = sessionStorage.getItem('_id');
-  console.log('estamos en update', userId,req.params.id)
-  res.json(await db.users.update(userId, req.body))
+ app.put('/update/users/:_id', async (req, res) => {
+ // const userId = sessionStorage.getItem('user');
+//  console.log('userId', userId)
+ // console.log('estamos en update', userId,req.params.id)
+ // res.json(await db.users.update(userId, req.body))
+ console.log('estamos en update', req.params.id)
+ res.json(await db.users.update(req.params.id, req.body))
 })
 // DELETE
  

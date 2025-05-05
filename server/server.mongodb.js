@@ -64,15 +64,18 @@ async function countUsers() {
  async function createUsers(user){
     console.log('your email has been registred', user.email)
     const client = new MongoClient(URI);
-    const PartytimetDB = client.db('Partytime');
-    const usersCollection = PartytimetDB.collection('users');
+    const PartytimeDB = client.db('Partytime');
+    const usersCollection = PartytimeDB.collection('users');
     return await usersCollection.insertOne(user)
   }
 
   async function updateUsers(id, updates){
     console.log('your recipe has been saved to your account', )
     const client = new MongoClient(URI);
-    const PartytimetDB = client.db('Partytime');
-    const usersCollection = PartytimetDB.collection('users');
-    return await usersCollection.updateOne({ _id: ObjectId(id) }, { $set: updates })
+    const PartytimeDB = client.db('Partytime');
+    const usersCollection = PartytimeDB.collection('users');
+    
+    const returnValue = await usersCollection.updateOne({ _id: ObjectId(id) }, { $set: updates });
+    console.log(returnValue)
+    return returnValue
   }

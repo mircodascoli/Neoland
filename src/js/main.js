@@ -166,15 +166,15 @@ event.preventDefault()
  *
  * @returns {void}
  */
-function updateUserDB() {
-  // localStorage.setItem('USER_DB', JSON.stringify(USER_DB.get()))
-  // Leemos el nodo users almacenado en localstorage REDUX_DB,
-  let localStoredString = localStorage.getItem('REDUX_DB')
-  let localStoredData = JSON.parse(localStoredString || '')
-  // y guardamos lo que tengamos en store.user.getAll()
-  localStoredData.users = [...store.user.getAll()]
-  localStorage.setItem('REDUX_DB', JSON.stringify(localStoredData))
-}
+// function updateUserDB() {
+//   // localStorage.setItem('USER_DB', JSON.stringify(USER_DB.get()))
+//   // Leemos el nodo users almacenado en localstorage REDUX_DB,
+//   let localStoredString = localStorage.getItem('REDUX_DB')
+//   let localStoredData = JSON.parse(localStoredString || '')
+//   // y guardamos lo que tengamos en store.user.getAll()
+//   localStoredData.users = [...store.user.getAll()]
+//   localStorage.setItem('REDUX_DB', JSON.stringify(localStoredData))
+// }
 
 
 function onLogOut(event) {
@@ -516,7 +516,7 @@ export async function getAPIData(apiURL, method = 'GET', data) {
  */
 function isUserLoggedIn() {
   const userData = getDataFromSessionStorage()
-  return userData?.user?.token
+  return userData?.user?._id
 }
 
 async function displayProductos() {
