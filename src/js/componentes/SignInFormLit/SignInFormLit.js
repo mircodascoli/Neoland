@@ -9,41 +9,60 @@ export class SignInFormLit extends LitElement {
 
     render() {
         return html`
-            <form id="formLog"@submit="${this._onFormSubmit}">
+            <form id="formLog" @submit="${this._onFormSubmit}">
                 <slot></slot>
                 <p id="infoMessage">Registro del usuario con lit</p>
-                <input type="password" id="passwordSign" placeholder="Nombre de usuario" required>
                 <input type="email" id="emailSign" placeholder="Email" required>
+                <input type="password" id="passwordSign" placeholder="Password" required>
                 <button type="submit" class="btn">Sign In</button>
             </form>
         `;
        
         }
+
         async _onFormSubmit(e) {
+          console.log('onFormSubmit activation')
             e.preventDefault();
-            const email = this.renderRoot.querySelector('#emailSign').value;
-            const password = this.renderRoot.querySelector('#passwordSign').value;
-           const signInData = {
+           
+            const email = this.renderRoot.getElementById('emailSign');
+            const password = this.renderRoot.getElementById('passwordSign')
+            
+
+            const signInData  = {
               email: getInputValue(email),
               password: getInputValue(password)
             }
-             //  let onFormSubmitEvent
+
+           let onFormSubmitEvent
           
              console.log(`DESDE DENTRO DEL COMPONENTE Name: ${signInData.email}, Email: ${signInData.password}`);
+
              if (signInData.email !== '' && signInData.password !== '') {
                 const payload = JSON.stringify(signInData)
                 const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/create/users`, 'POST', payload)
                 console.log(apiData)
-                // onFormSubmitEvent = new CustomEvent("login-form-submit", {
-                //   bubbles: true,
-                //   detail: apiData
-                // })
-              } else {
-                console.error('No hay datos')
-                //   bubbles: true,
-                //   detail: null
-                // })
-              }
+                let eventDetail = apiData
+      if (apiData === undefined) {
+        eventDetail = {
+          text: 'No he encontrado el usuario o la contraseña'
+        }
+      }
+      onFormSubmitEvent = new CustomEvent("login-form-submit", {
+        bubbles: true,
+        detail: eventDetail
+      })
+    } else {
+      console.error('No se han enviado datos')
+      onFormSubmitEvent = new CustomEvent("login-form-submit", {
+        bubbles: true,
+        detail: {
+          text: 'No se han enviado los datos del formulario'
+        }
+      })
     }
-}
+
+     this.dispatchEvent(onFormSubmitEvent);
+  }
+    }
+
 customElements.define('signin-form-lit', SignInFormLit);
