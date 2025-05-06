@@ -30,4 +30,21 @@
     th{
         text-transform: uppercase;
     }
+
+  
 }
+
+.alert {
+    color: #d84315;
+    background-color: #fff3e0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #ff7043;
+    margin-bottom: 1em;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+  
+  input[type="range"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

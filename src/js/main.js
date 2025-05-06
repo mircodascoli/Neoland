@@ -21,8 +21,6 @@ function DomContentLoaded() {
     let formLog = document.getElementById('formLog')
     let formLogOut = document.getElementById('logOutForm')
     let formSignout = document.getElementById('signOutForm')
-    let rangeCalculador = document.getElementById('range')
-    let selector = document.getElementById('seleccionador')
     let openPopUpLink = document.querySelectorAll('[data-modal-target]')
     let closePopUpButton = document.querySelectorAll('[data-close-button]')
     let bodyProductos = document.getElementById('bodyProductos')
@@ -37,8 +35,6 @@ function DomContentLoaded() {
     formLog?.addEventListener('submit', LogIn)
     formLogOut?.addEventListener('submit', onLogOut)
     formSignout?.addEventListener('submit', onSignOut)
-    rangeCalculador?.addEventListener('change',onChangeRange)
-    selector?.addEventListener('change', onChangeSelector)
     botonBuscar?.addEventListener('click', buscarProducto)
     botonSave?.addEventListener('click', saveRecipe)
     formBusqueda?.addEventListener('submit', buscarProducto)
@@ -68,55 +64,6 @@ function DomContentLoaded() {
  }
 
 
-/**
- * Handles the sign-in form submission, prevents the default form behavior,
- * retrieves user input values, creates a new User instance, and adds it to
- * the USER_DB array. Finally, logs the updated USER_DB to the console.
- * 
- */
-// async function SignIn(event) {
-
-//   event.preventDefault()
-
-//     let emailSignElement = document.getElementById('emailSign')
-//     let emailSign = /** @type {HTMLInputElement} */(emailSignElement)?.value
-//     let PassSignElement = document.getElementById('passwordSign')
-//     let PassSign = /** @type {HTMLInputElement} */(PassSignElement)?.value
-//     let NewUser = new User(emailSign,PassSign , 'user')
-//     const payload = JSON.stringify(NewUser)
-  
-//     console.log('busco en la BBDD el email ' + emailSign, store.user.getByEmail?.(emailSign))
-//     if(store.user.getByEmail?.(emailSign)!==undefined){
-//       document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
-//       return
-//     }
-//     else {
-//     document.getElementById('AlreadyRegistered')?.classList.add('hidden')
-    
-//     // Sustituir por llamada fetch al servidor de apis
-//   // Enviar el fetch a la API, crear nuevo usuario
-//   const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/create/users`, 'POST', payload)
-//  console.log(apiData)
-//       if (!apiData) {
-//         // Informo al usuario del resultado de la operación
-//         document.getElementById('AlreadyRegistered')?.classList.remove('hidden')
-//         setTimeout(() => {
-//           document.getElementById('AlreadyRegistered')?.classList.add('hidden')
-//         }, 1000)
-//         console.error('Error al crear usuario', apiData)
-//         return
-//       }
-//       console.log('Respuesta del servidor de APIs', apiData)
-//       // store.user.create(newUser, () => {
-//         updateUserDB()
-//         // Informo al usuario del resultado de la operación
-//         document.getElementById('registered')?.classList.remove('hidden')
-//         setTimeout(() => {
-//           document.getElementById('registered')?.classList.add('hidden')
-//         }, 1000)
-
-// }
-// }
 /**
  * Handles the login form submission, prevents the default form behavior,
  * retrieves user input values, and checks if a user exists in the USER_DB array.
@@ -210,206 +157,7 @@ function onLogOut(event) {
     }
 
   }
-
-/**
- * Handles the input range change event, appending a <p> element to the
- * #inputs-calculador container with the current value of the range.
- *
- * @param {Event} event - The event object associated with the input range change.
- */
-  function onChangeRange(event){
-    let valorRange = Number(event.target.value)
-    if (valorRange == undefined) {
-      valorRange = 1000
-    }
-    console.log(valorRange)
-    let labRange = document.getElementById('label-range')
-    // while (labRange.innerHTML){ {
-    //   labRange.innerHTML = ''
-    // }
-    labRange.innerText = `${valorRange} mls`
-    onChangeSelector()
-   
-  } 
-  
-/**
- * Handles the selector change event, changing the text content of the
- * #ingrediente-1, #ingrediente-2, #ingrediente-3, and #ingrediente-4
- * elements based on the selected value of the selector. The values
- * are based on the drinks specified in the selector element's options.
- */
-    function onChangeSelector() {
-      let selector = document.getElementById('seleccionador')
-      let tabla = document.getElementById('tabla-calculos')
-      let ingrediente1 = document.getElementById('ingrediente-1')
-      let ingrediente2 = document.getElementById('ingrediente-2')
-      let ingrediente3 = document.getElementById('ingrediente-3')
-      let ingrediente4 = document.getElementById('ingrediente-4')
-      let selectedValue = selector?.value
-      let mlsingrediente1 =document.getElementById('mls-ingrediente-1')
-      let mlsingrediente2 =document.getElementById('mls-ingrediente-2')
-      let mlsingrediente3 =document.getElementById('mls-ingrediente-3')
-      let mlsingrediente4 =document.getElementById('mls-ingrediente-4')
-      let rangeCalculador = document.getElementById('range')
-      let valorRange = rangeCalculador?.value
-      let labRange = document.getElementById('label-range')
-      
-      if (rangeCalculador !== null && rangeCalculador !== undefined) {
-        rangeCalculador.removeAttribute('disabled');
-      }
-     
-      switch (selectedValue ) {
-       
-        case 'Negroni':
-          labRange.innerText = `${valorRange} mls`
-          tabla.classList.remove('grey')
-          
-          ingrediente1.innerText = 'Gin'
-          ingrediente2.innerText = 'Campari'
-          ingrediente3.innerText = 'Sweet Vermouth'
-          ingrediente4.innerText = 'Water(recomended)'
-          mlsingrediente1.innerText = `${Math.ceil(valorRange* 0.33)} mls`
-          mlsingrediente2.innerText = `${Math.ceil(valorRange* 0.33)} mls`
-          mlsingrediente3.innerText = `${Math.ceil(valorRange* 0.33)} mls`
-          mlsingrediente4.innerText = `+${Math.ceil(valorRange* 0.15)} mls`
-
-          break;
-        case 'Manhattan':
-          tabla.classList.remove('grey')
-
-          ingrediente1.innerText = 'Rye whiskey'
-          ingrediente2.innerText = 'Sweet Vermouth'
-          ingrediente3.innerText = 'Angostura bitters'
-          ingrediente4.innerText = 'Water'
-          mlsingrediente1.innerText = `${Math.ceil(valorRange * 0.66)} mls`
-          mlsingrediente2.innerText = `${Math.ceil(valorRange * 0.33)} mls`
-          mlsingrediente3.innerText = `${Math.ceil(valorRange * 0.01)} mls`
-          mlsingrediente4.innerText = `+${Math.ceil(valorRange * 0.15)} mls`
-          break;
-        case 'Dry Martini':
-          tabla.classList.remove('grey')
-
-          ingrediente1.innerText = 'Gin'
-          ingrediente2.innerText = 'Dry Vermouth'
-          ingrediente3.innerText = 'Water(recomended)'
-          mlsingrediente1.innerText = `${Math.ceil(valorRange * 0.70)} mls`
-          mlsingrediente2.innerText = `${Math.ceil(valorRange * 0.10)} mls`
-          mlsingrediente3.innerText = `${Math.ceil(valorRange * 0.15)} mls`
-          //ADD OLIVE BRINE AS 4 TH INGREDIENT
-          break;
-        case 'Old Fashioned':
-          tabla.classList.remove('grey')
-
-          ingrediente1.innerText = 'Bourbon whiskey'
-          ingrediente2.innerText = 'Sugar syrup'
-          ingrediente3.innerText = 'Angostura bitters'
-          ingrediente4.innerText = 'Water'
-          mlsingrediente1.innerText = `${Math.ceil(valorRange * 0.80)} mls`
-          mlsingrediente2.innerText = `${Math.ceil(valorRange * 0.05)} mls`
-          mlsingrediente3.innerText = `${Math.ceil(valorRange * 0.01)} mls`
-          mlsingrediente4.innerText = `+${Math.ceil(valorRange * 0.15)} mls`
-          break;
-        case 'Paloma':
-          tabla.classList.remove('grey')
-
-          ingrediente1.innerText = 'Tequila'
-          ingrediente2.innerText = 'Lime juice'
-          ingrediente3.innerText = 'Agave syrup'
-          ingrediente4.innerText = 'Grapefruit soda'
-          mlsingrediente1.innerText = `${Math.ceil(valorRange * 0.60)} mls`
-          mlsingrediente2.innerText = `${Math.ceil(valorRange * 0.125)} mls`
-          mlsingrediente3.innerText = `${Math.ceil(valorRange * 0.07)} mls`
-          mlsingrediente4.innerText = `+${Math.ceil(valorRange * 0.10)} mls`
-          break;
-        case 'Dark & Stormy':
-          tabla.classList.remove('grey')
-
-          ingrediente1.innerText = 'Dark spiced rum'
-          ingrediente2.innerText = 'Lime juice'
-          ingrediente3.innerText = 'Ginger beer'
-          // ADD ANGOSTURA BITTERS AS 4TH INGREDIENT 
-          break;
-        case 'Tom Collins'://COMPLETE THE REST FROM HERE TO 361
-          tabla.classList.remove('grey')
-
-          ingrediente1.innerText = 'Vodka'
-          ingrediente2.innerText = 'Lemon juice'
-          ingrediente3.innerText = 'Raspberry syrup'
-          ingrediente4.innerText = 'Ginger Ale'
-          break;
-        case 'Berry Hiball':
-          tabla.classList.remove('grey')
-
-          ingrediente1.innerText = 'Vodka'
-          ingrediente2.innerText = 'Lemon juice'
-          ingrediente3.innerText = 'Raspberry syrup'
-          ingrediente4.innerText = 'Ginger Ale'
-          break;
-      
-        default:
-          tabla?.classList.add('grey')
-
-          ingrediente1.innerText = ' '
-          ingrediente2.innerText = ' '
-          ingrediente3.innerText = ' '
-          ingrediente4.innerText = ' '
-          mlsingrediente1.innerText = `0 mls`
-          mlsingrediente2.innerText = `0 mls`
-          mlsingrediente3.innerText = `0 mls`
-          mlsingrediente4.innerText = `0 mls`
-          ;
-          break;
-      }
-  }
-
-  function openPopup(popUp, link) {
-    let overlay = document.getElementById('overlay')
-    let titlePop = document.getElementById('pop-up-name');
-    let bodyText = document.getElementById('pop-up-text');
-    let h3 = link.querySelector('h3');
-    let craftButton = document.getElementById('craft-button');
-    titlePop.innerText = h3.innerText;
-    // apri il popup
-    overlay.classList.add('active');
-    popUp.classList.add('active');
-    // cambiar ficha de la receta en el pop up a partir de el nombre
-    switch (titlePop.innerText.toLowerCase()) {
-      case 'negroni':
-         bodyText.innerText = 'negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni '
-        break;
-      case 'manhattan':
-        bodyText.innerText = 'manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan '
-        break;
-      case 'old fashioned':
-        bodyText.innerText = 'old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned '
-        break;
-      case 'dry martini':
-        bodyText.innerText = 'dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini '
-        break;
-      case 'tom collins':
-        bodyText.innerText = 'tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins '
-        break;
-      case 'paloma':
-        bodyText.innerText = 'paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma '
-        break;
-      case 'dark & stormy':
-        bodyText.innerText = 'dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy '
-        break;
-      case 'berry hiball':
-        bodyText.innerText = 'berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball '
-        break;
-      default:
-        bodyText.innerText = '';
-        break;
-      }
-        craftButton.addEventListener('click', () => {
-          // reindirizza l'utente alla pagina calculadores.html
-          console.log('redirect to calculadores.html');
-          window.location.href = './calculadores.html';
-        }); 
-   
-
- }
+    
 
  async function saveRecipe(){
   let selector = document.getElementById('seleccionador')
