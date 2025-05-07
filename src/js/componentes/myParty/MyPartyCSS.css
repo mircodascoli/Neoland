@@ -1,0 +1,10 @@
+.my-party{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
+    width: 600px;
+    margin: 0 auto;
+    border: 1px solid black;
+}

@@ -12,7 +12,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Boldonse&display=swap" rel="stylesheet">
-</head>
+    
+    <script type="importmap">
+      {
+        "imports": {
+          "classes/HttpError": "./JS/clases/HttpError.js",
+          "lib/simpleFetch": "./js/lib/simpleFetch.js"
+        }
+      }
+    </script>
+    <script type="module" src="./js/componentes/bundle.js" defer></script>
+
+  </head>
 <body>
   <header>
     <h1>your partytime</h1>
@@ -35,17 +46,7 @@
    </div>
 
    <div id="containerMyRecipies">
-     <h2>My recipies</h2>
-     <ul>
-      <li>
-        cocktail 1
-        resumen
-        ingrediente1
-        ingrediente2
-        ingrediente3
-        
-      </li>
-    </ul>
+    <my-party></my-party>
   
    </div>
 

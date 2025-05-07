@@ -59,60 +59,60 @@ function DomContentLoaded() {
 
     // overlay.addEventListener('click', () => {
     //   let popUp = document.querySelectorAll('.active');
-    //   closePopup(popUp);
-    // }) TERMINAR: CLICK EN EL OVERLAY PARA CERRAR EL POPUP
- }
+//     //   closePopup(popUp);
+//     // }) TERMINAR: CLICK EN EL OVERLAY PARA CERRAR EL POPUP
+  }
 
 
-/**
- * Handles the login form submission, prevents the default form behavior,
- * retrieves user input values, and checks if a user exists in the USER_DB array.
- * If the user is found, displays a success message, hides the forms, and shows
- * the user link and log out form. If the user is not found, displays an error
- * message.
- *
- * @param {Event} event - The event object associated with the form submission.
- */
-async function LogIn(event) {
-event.preventDefault()
-//quiero buscar en la base de datos el id y si coincide, log in
+// /**
+//  * Handles the login form submission, prevents the default form behavior,
+//  * retrieves user input values, and checks if a user exists in the USER_DB array.
+//  * If the user is found, displays a success message, hides the forms, and shows
+//  * the user link and log out form. If the user is not found, displays an error
+//  * message.
+//  *
+//  * @param {Event} event - The event object associated with the form submission.
+//  */
+// async function LogIn(event) {
+// event.preventDefault()
+// //quiero buscar en la base de datos el id y si coincide, log in
     
-    let emailLogElement = document.getElementById('emailLog')
-    let emailLog =  /** @type {HTMLInputElement} */(emailLogElement)?.value
-    let passLogElement = document.getElementById('passwordLog')
-    let passLog =  /** @type {HTMLInputElement} */(passLogElement)?.value
-    let newUser = new User(emailLog, passLog, 'user')
-    const payload = JSON.stringify(newUser)
-    //Buscar en la BBDD si existe el usuario
-    // Usamos una petición HTTP para comprobar si el usuario existe
-   const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/login`, 'POST', payload)
-    console.log("esta el la respuesta de el login apidata",apiData)
-    if (Object.keys(apiData).length >= 0) {
-        // Guardamos los datos del usuario en la sesión
-        let userPartyTime= JSON.stringify(apiData)
-        console.log(userPartyTime)
-        sessionStorage.setItem('user', userPartyTime)//userPartyTime)
-        document.body.classList.add('loading')
-        // Actualizo el interfaz
-        setTimeout(() => {
-           location.href = './user.html'}, 1000)
-        } else {
+//     let emailLogElement = document.getElementById('emailLog')
+//     let emailLog =  /** @type {HTMLInputElement} */(emailLogElement)?.value
+//     let passLogElement = document.getElementById('passwordLog')
+//     let passLog =  /** @type {HTMLInputElement} */(passLogElement)?.value
+//     let newUser = new User(emailLog, passLog, 'user')
+//     const payload = JSON.stringify(newUser)
+//     //Buscar en la BBDD si existe el usuario
+//     // Usamos una petición HTTP para comprobar si el usuario existe
+//    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/login`, 'POST', payload)
+//     console.log("esta el la respuesta de el login apidata",apiData)
+//     if (Object.keys(apiData).length >= 0) {
+//         // Guardamos los datos del usuario en la sesión
+//         let userPartyTime= JSON.stringify(apiData)
+//         console.log(userPartyTime)
+//         sessionStorage.setItem('user', userPartyTime)//userPartyTime)
+//         document.body.classList.add('loading')
+//         // Actualizo el interfaz
+//         setTimeout(() => {
+//            location.href = './user.html'}, 1000)
+//         } else {
    
-          document.getElementById('Rejected')?.classList.remove('hidden')
-          document.getElementById('Logged')?.classList.add('hidden')
-          if (/** @type {any} */(apiData)?.error === true) {
-            console.error(/** @type {any} */(apiData)?.message)
-            window.alert(/** @type {any} */(apiData)?.message)
-            return
-          }
-        }
+//           document.getElementById('Rejected')?.classList.remove('hidden')
+//           document.getElementById('Logged')?.classList.add('hidden')
+//           if (/** @type {any} */(apiData)?.error === true) {
+//             console.error(/** @type {any} */(apiData)?.message)
+//             window.alert(/** @type {any} */(apiData)?.message)
+//             return
+//           }
+//         }
 
-      }
-/**
- * Updates the local storage with the latest state of the USER_DB array.
- *
- * @returns {void}
- */
+//       }
+// /**
+//  * Updates the local storage with the latest state of the USER_DB array.
+//  *
+//  * @returns {void}
+//  */
 // function updateUserDB() {
 //   // localStorage.setItem('USER_DB', JSON.stringify(USER_DB.get()))
 //   // Leemos el nodo users almacenado en localstorage REDUX_DB,
@@ -159,36 +159,36 @@ function onLogOut(event) {
   }
     
 
- async function saveRecipe(){
-  let selector = document.getElementById('seleccionador')
-  let selectedValue = selector?.value
-  let ingrediente1 = document.getElementById('ingrediente-1')
-  let ingrediente2 = document.getElementById('ingrediente-2')
-  let ingrediente3 = document.getElementById('ingrediente-3')
-  let ingrediente4 = document.getElementById('ingrediente-4')
-  let mlsingrediente1 =document.getElementById('mls-ingrediente-1')
-  let mlsingrediente2 =document.getElementById('mls-ingrediente-2')
-  let mlsingrediente3 =document.getElementById('mls-ingrediente-3')
-  let mlsingrediente4 =document.getElementById('mls-ingrediente-4')
-  let rangeCalculador = document.getElementById('range')
-  let valorRange = rangeCalculador?.value
-  let newReceta= new RecetaGuardada(selectedValue,
-    ingrediente1.innerText,
-    mlsingrediente1.innerText,
-    ingrediente2.innerText,
-    mlsingrediente2.innerText,
-    ingrediente3.innerText,
-    mlsingrediente3.innerText,
-    ingrediente4.innerText,
-    mlsingrediente4.innerText,
-    valorRange);
+//  async function saveRecipe(){
+//   let selector = document.getElementById('seleccionador')
+//   let selectedValue = selector?.value
+//   let ingrediente1 = document.getElementById('ingrediente-1')
+//   let ingrediente2 = document.getElementById('ingrediente-2')
+//   let ingrediente3 = document.getElementById('ingrediente-3')
+//   let ingrediente4 = document.getElementById('ingrediente-4')
+//   let mlsingrediente1 =document.getElementById('mls-ingrediente-1')
+//   let mlsingrediente2 =document.getElementById('mls-ingrediente-2')
+//   let mlsingrediente3 =document.getElementById('mls-ingrediente-3')
+//   let mlsingrediente4 =document.getElementById('mls-ingrediente-4')
+//   let rangeCalculador = document.getElementById('range')
+//   let valorRange = rangeCalculador?.value
+//   let newReceta= new RecetaGuardada(selectedValue,
+//     ingrediente1.innerText,
+//     mlsingrediente1.innerText,
+//     ingrediente2.innerText,
+//     mlsingrediente2.innerText,
+//     ingrediente3.innerText,
+//     mlsingrediente3.innerText,
+//     ingrediente4.innerText,
+//     mlsingrediente4.innerText,
+//     valorRange);
     
-  let PAYLOAD = JSON.stringify(newReceta)
-  console.log("esta es PAYLOAD ", PAYLOAD )
-  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/update/users`, 'PUT', PAYLOAD)
-   console.log("esta es apidata",apiData)
+//   let PAYLOAD = JSON.stringify(newReceta)
+//   console.log("esta es PAYLOAD ", PAYLOAD )
+//   const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/update/users`, 'PUT', PAYLOAD)
+//    console.log("esta es apidata",apiData)
 
-}
+// }
  
   function closePopup(popUp) {
      console.log(`the popup ${popUp} should close`)
