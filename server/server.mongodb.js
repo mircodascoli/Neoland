@@ -75,7 +75,7 @@ async function countUsers() {
     const PartytimeDB = client.db('Partytime');
     const usersCollection = PartytimeDB.collection('users');
     
-    const returnValue = await usersCollection.updateOne({ _id: ObjectId(id) }, { $set: updates });
+    const returnValue = await usersCollection.updateOne({ _id: new ObjectId(id) }, { $set: updates });
     console.log(returnValue)
     return returnValue
   }

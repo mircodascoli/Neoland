@@ -2,7 +2,7 @@ import { LitElement, html } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/all/lit
 import ResetCSS from '../../../css/reset.css' with { type: 'css' }
 import CalculadorCSS from '../calculador/calculador.css' with { type: 'css' }
 import { cocktails } from '../../clases/Cocktails.js';
-
+import { getAPIData, API_PORT } from '../../main.js';
 export class Calculador extends LitElement{
     static styles = [
         ResetCSS, CalculadorCSS
@@ -71,7 +71,7 @@ export class Calculador extends LitElement{
            ${this.selected
   ? html`<p class="total-ml"> Total: <strong>${this.totalMl} ml</strong></p>`
   : null}
-            <button id="save" .disabled=${!this.selected}> save and party!</button>
+            <button id="save" @click="${this.guardarReceta}" .disabled=${!this.selected}> save and party!</button>
            
         </div>
 
@@ -83,6 +83,26 @@ export class Calculador extends LitElement{
     
       handleRange(e) {
         this.quantity = parseInt(e.target.value);
+      }
+    
+      async guardarReceta() {
+       
+        const receta = {
+          name: this.selected,
+          quantity: this.quantity,
+          ingredientes: this.ingredients
+        };
+
+        const sessionStorageUser = JSON.parse(sessionStorage.getItem('user'))
+        const sessionStorageUserId = sessionStorageUser._id
+
+        const dataForUpdate = {
+           receta: receta
+        }
+        const PAYLOAD = JSON.stringify(dataForUpdate)
+        console.log("esta es PAYLOAD ", PAYLOAD )
+        const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/update/users/${sessionStorageUserId}`, 'PUT', PAYLOAD)
+        console.log("esta es apidata",apiData)
       }
     
 

@@ -55,7 +55,7 @@ export class LoginInFormLit extends LitElement {
       if (Object.keys(apiData).length >= 0) {
         // Guardamos los datos del usuario en la sesión
         let userPartyTime= JSON.stringify(apiData)
-        console.log(userPartyTime)
+        console.log('userpartytime',userPartyTime)
         sessionStorage.setItem('user', userPartyTime)//userPartyTime)
         document.body.classList.add('loading')
         // Actualizo el interfaz
