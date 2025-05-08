@@ -9,13 +9,13 @@ export class MyParty extends LitElement {
     ]
     static get properties() {
         return {
-            party: { type: Object }
+           
         }
     }
 
     constructor() {
         super();
-        this.party = {};
+       
     }
 
     render() {
