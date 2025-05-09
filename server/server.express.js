@@ -75,6 +75,12 @@ app.get('/read/users', async (req, res) =>  {
          res.json(await db.botellas.search( { $text: { $search: req.body.name } },{}))
       })
 
+      app.post('/buscar/usuario', async (req, res) => {
+        console.log('estamos en busqueda', req.body)
+        //recuerda añadir la projeccion para filtrar los ampos que devolvemos
+           res.json(await db.users.search(req.body))
+        })
+
    app.post('/login', async (req, res) => {
     console.log('estamos en login', req.body)
     const user = await db.users.login({ email:req.body.email, password:req.body.password})

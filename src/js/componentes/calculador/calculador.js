@@ -87,7 +87,7 @@ export class Calculador extends LitElement{
       async handleClick() {
 
         await this.guardarReceta();
-        // this.updateSessionStorage();
+       
       }
       async guardarReceta() {
        

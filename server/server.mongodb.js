@@ -8,7 +8,8 @@ export const db = {
         get: getUsers,
         login: login,
         create: createUsers,
-        update: updateUsers
+        update: updateUsers,
+        search: searchUsers,
     },
     botellas: {
         get: getBotellas,
@@ -48,6 +49,27 @@ async function countUsers() {
     const botellasCollection = PartytimetDB.collection('Botellas');
     return await botellasCollection.find(filter).project(projection).toArray();
 
+  }
+
+/**
+ * Searches for a user in the 'users' collection in the 'Partytime' database
+ * using the provided filter.
+ *
+ * @param {string} filter - The filter to locate the user, typically a user ID.
+ * @returns {Promise<object|null>} A promise that resolves to the user object if found, or null otherwise.
+ */
+
+  async function searchUsers(filter){
+    console.log('hey from search users')
+    const client = new MongoClient(URI);
+    const PartytimetDB = client.db('Partytime');
+    const usersCollection = PartytimetDB.collection('users');
+
+    console.log({id: new ObjectId(filter) })
+   
+    let UserFromDB = await usersCollection.findOne({ _id: new ObjectId(filter) });
+    console.log(UserFromDB)
+    return UserFromDB
   }
 
 
