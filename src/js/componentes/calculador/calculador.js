@@ -71,7 +71,7 @@ export class Calculador extends LitElement{
            ${this.selected
   ? html`<p class="total-ml"> Total: <strong>${this.totalMl} ml</strong></p>`
   : null}
-            <button id="save" @click="${this.guardarReceta}" .disabled=${!this.selected}> save and party!</button>
+            <button id="save" @click="${this.handleClick}" .disabled=${!this.selected}> save and party!</button>
            
         </div>
 
@@ -84,7 +84,11 @@ export class Calculador extends LitElement{
       handleRange(e) {
         this.quantity = parseInt(e.target.value);
       }
-    
+      async handleClick() {
+
+        await this.guardarReceta();
+        // this.updateSessionStorage();
+      }
       async guardarReceta() {
        
         const receta = {
@@ -95,7 +99,6 @@ export class Calculador extends LitElement{
 
         const sessionStorageUser = JSON.parse(sessionStorage.getItem('user'))
         const sessionStorageUserId = sessionStorageUser._id
-
         const dataForUpdate = {
            receta: receta
         }
@@ -103,8 +106,15 @@ export class Calculador extends LitElement{
         console.log("esta es PAYLOAD ", PAYLOAD )
         const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/update/users/${sessionStorageUserId}`, 'PUT', PAYLOAD)
         console.log("esta es apidata",apiData)
+
+     
       }
-    
+    //  updateSessionStorage(receta) {
+    //   const user = JSON.parse(sessionStorage.getItem('user'));
+    //   user.receta = receta;
+    //   sessionStorage.setItem('user', JSON.stringify(user));
+    // console.log(user,receta)
+    //  }
 
 }
 customElements.define('calculador-component', Calculador);

@@ -36,8 +36,8 @@ async function countUsers() {
     console.log('hey from get users')
   const client = new MongoClient(URI);
   const PartytimetDB = client.db('Partytime');
-  const botellasCollection = PartytimetDB.collection('users');
-  return await botellasCollection.find(filter).project(projection).toArray();
+  const usersCollection = PartytimetDB.collection('users');
+  return await usersCollection.find(filter).project(projection).toArray();
 
   }
 
