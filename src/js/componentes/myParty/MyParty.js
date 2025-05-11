@@ -39,11 +39,8 @@ export class MyParty extends LitElement {
     return html`
       <div class="my-party"> 
         <h2>My Party</h2>
-        ${this.apiData ? html`
-          <p>API Data: ${JSON.stringify(this.apiData)}</p>
-        ` : html`
-          <p>Loading...</p>
-        `}
+         <p>this is this.apiData: ${JSON.stringify(this.apiData)}</p>
+ 
       </div>
     `;
   }
