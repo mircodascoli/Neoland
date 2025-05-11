@@ -16,34 +16,46 @@ export class MyParty extends LitElement {
   _idSession;
   apiData;
 
-  async loadApiData() {
-    const varSS = JSON.parse(sessionStorage.getItem('user'))._id
-    let idInSession ={id: varSS}
-    const payload = JSON.stringify(idInSession)
-    console.log(payload)
-    this._idSession = JSON.parse(sessionStorage.getItem('user'))._id;
-    console.log(this._idSession);
-    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload)
-    console.log(apiData)
-    this.apiData = apiData;
-  }
-
   constructor() {
     super();
-    this._idSession = JSON.parse(sessionStorage.getItem('user'))._id;
-    console.log(this._idSession);
-    this.loadApiData.bind(this)();
+    this.apiData = null;
+    try {
+      this._idSession = JSON.parse(sessionStorage.getItem('user'))._id;
+      console.log(this._idSession, 'id session storage catched!');
+    } catch {
+      console.warn('No user in sessionStorage');
+      this._idSession = null;
+    }
+}
+  
+  async firstUpdated() {
+    console.log('id session storage exists', this._idSession);
+    if (this._idSession) {
+      await this.loadApiData();
+    }
+  }
+  
+  async loadApiData() {
+    console.log('Loading the data');
+    const payload = JSON.stringify({ id: this._idSession });
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload);
+  
+    this.apiData = apiData;
+    console.log(this.apiData, "valore di apidata, alla fine della funzione e prima del  render");
+    this.requestUpdate()
   }
 
-  render() {
+  render(){
+    console.log(this.apiData, typeof this.apiData, "valore di apidata, nel render");
     return html`
       <div class="my-party"> 
         <h2>My Party</h2>
-         <p>this is this.apiData: ${JSON.stringify(this.apiData)}</p>
- 
+        ${this.apiData
+          ? html`<p>this is this.apiData: ${JSON.stringify(this.apiData.receta)} 
+        </p>`
+          : html`<p>Loading data...</p>`}
       </div>
     `;
   }
 }
-
 customElements.define('my-party', MyParty);
