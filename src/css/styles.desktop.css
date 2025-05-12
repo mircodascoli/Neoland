@@ -11,6 +11,16 @@
         flex-direction: column;
         justify-content: space-between;
         flex-wrap: wrap ;
+       
+        }
+    
+ 
+
+    .main-choose{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        flex-wrap: wrap;
 
         ul{
             display: flex;
@@ -22,16 +32,8 @@
                 width: 100px;
                 height: 100px;
              }
-        }
-    
     }
-
-    .main-choose{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        flex-wrap: wrap;
-    }
+}
 
     #mainProductos{
         display: flex;

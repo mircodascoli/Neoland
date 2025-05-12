@@ -106,7 +106,8 @@ export class Calculador extends LitElement{
         console.log("esta es PAYLOAD ", PAYLOAD )
         const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/update/users/${sessionStorageUserId}`, 'PUT', PAYLOAD)
         console.log("esta es apidata",apiData)
-
+ alert('Saved!')
+      location.href = './user.html'
      
       }
     //  updateSessionStorage(receta) {

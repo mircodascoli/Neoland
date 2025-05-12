@@ -256,24 +256,7 @@ h2{
     margin: 10px auto;
 }
 
-#formSign{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(192 119 55);
-    color: black;
 
-}
-
-#formLog{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(52 77 77);
-    color: white;
-}
 
 footer{
     display: flex;

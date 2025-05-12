@@ -51,9 +51,25 @@ export class MyParty extends LitElement {
       <div class="my-party"> 
         <h2>My Party</h2>
         ${this.apiData
-          ? html`<p>this is this.apiData: ${JSON.stringify(this.apiData.receta)} 
-        </p>`
-          : html`<p>Loading data...</p>`}
+          ? html`<p>cocktail:${this.apiData.receta.name} </p>
+                <p>${this.apiData.receta.quantity} mls</p>
+                <div>
+                  <p>${this.apiData.receta.ingredientes[0].name}</p>
+                  <p>${this.apiData.receta.ingredientes[0].quantity}ml</p>
+                </div>
+                <div>
+                  <p>${this.apiData.receta.ingredientes[1].name}</p>
+                  <p>${this.apiData.receta.ingredientes[1].quantity}ml</p>
+                </div>
+                <div>
+                  <p>${this.apiData.receta.ingredientes[2].name}</p>
+                  <p>${this.apiData.receta.ingredientes[2].quantity}ml</p>
+                </div>
+                <div>
+                  <p>${this.apiData.receta.ingredientes[3].name}</p>
+                  <p>${this.apiData.receta.ingredientes[3].quantity}ml</p>
+                </div> `
+          : html`<p>No Recipes Yet! start by <a href="/choosepoison.html">craft one</a></p>`}
       </div>
     `;
   }

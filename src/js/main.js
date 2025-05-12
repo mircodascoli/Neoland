@@ -1,6 +1,5 @@
-// @ts-no-check
-import {User} from './clases/user.js'
-import { RecetaGuardada } from './clases/payloadrecetas.js'
+ //@ts-no-check
+
 //import { Botellas } from './clases/Botellas.js'
 import { simpleFetch } from './lib/simpleFetch.js'
 import { HttpError } from './clases/HttpError.js'
@@ -18,30 +17,31 @@ window.addEventListener('DOMContentLoaded', DomContentLoaded)
  */
 function DomContentLoaded() {
   
-    let formLog = document.getElementById('formLog')
+   
     let formLogOut = document.getElementById('logOutForm')
     let formSignout = document.getElementById('signOutForm')
     let openPopUpLink = document.querySelectorAll('[data-modal-target]')
     let closePopUpButton = document.querySelectorAll('[data-close-button]')
+    let bodyCalculator = document.getElementById('body-calculadores')
     let bodyProductos = document.getElementById('bodyProductos')
     let formBusqueda =  document.getElementById('form-busqueda')
     let botonBuscar = document.getElementById('botonBuscar')
-    let botonSave = document.getElementById('save')
-   
-    
-    // let overlay = document.getElementById('overlay') 44 TO 48
+    let overlay = document.getElementById('overlay') 
+    let craftButton = document.getElementById('craft-button');
+    //44 TO 48
 
    
-    formLog?.addEventListener('submit', LogIn)
+   
     formLogOut?.addEventListener('submit', onLogOut)
     formSignout?.addEventListener('submit', onSignOut)
     botonBuscar?.addEventListener('click', buscarProducto)
-    botonSave?.addEventListener('click', saveRecipe)
+    craftButton?.addEventListener('click', redirectToCalculadores); 
     formBusqueda?.addEventListener('submit', buscarProducto)
     openPopUpLink.forEach((link) => {
       link.addEventListener('click', () => {
         let popUp = document.querySelector(`${link.dataset.modalTarget}`);
         openPopup(popUp, link);
+        console.log('pop up')
       });
     });
   
@@ -56,72 +56,19 @@ function DomContentLoaded() {
       console.log('body encontrado, display productos') 
       displayProductos()
     }
+    if (bodyCalculator != null){
+      console.log('body encontrado, display calculadores') 
+      autoSelectOption()
+    }
 
-    // overlay.addEventListener('click', () => {
-    //   let popUp = document.querySelectorAll('.active');
-//     //   closePopup(popUp);
-//     // }) TERMINAR: CLICK EN EL OVERLAY PARA CERRAR EL POPUP
+    overlay?.addEventListener('click', () => {
+      const activePopUps = document.querySelectorAll('.description.active');
+      activePopUps.forEach((popUp) => closePopup(popUp));
+    })
+//TERMINAR: CLICK EN EL OVERLAY PARA CERRAR EL POPUP
   }
 
 
-// /**
-//  * Handles the login form submission, prevents the default form behavior,
-//  * retrieves user input values, and checks if a user exists in the USER_DB array.
-//  * If the user is found, displays a success message, hides the forms, and shows
-//  * the user link and log out form. If the user is not found, displays an error
-//  * message.
-//  *
-//  * @param {Event} event - The event object associated with the form submission.
-//  */
-// async function LogIn(event) {
-// event.preventDefault()
-// //quiero buscar en la base de datos el id y si coincide, log in
-    
-//     let emailLogElement = document.getElementById('emailLog')
-//     let emailLog =  /** @type {HTMLInputElement} */(emailLogElement)?.value
-//     let passLogElement = document.getElementById('passwordLog')
-//     let passLog =  /** @type {HTMLInputElement} */(passLogElement)?.value
-//     let newUser = new User(emailLog, passLog, 'user')
-//     const payload = JSON.stringify(newUser)
-//     //Buscar en la BBDD si existe el usuario
-//     // Usamos una petición HTTP para comprobar si el usuario existe
-//    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/login`, 'POST', payload)
-//     console.log("esta el la respuesta de el login apidata",apiData)
-//     if (Object.keys(apiData).length >= 0) {
-//         // Guardamos los datos del usuario en la sesión
-//         let userPartyTime= JSON.stringify(apiData)
-//         console.log(userPartyTime)
-//         sessionStorage.setItem('user', userPartyTime)//userPartyTime)
-//         document.body.classList.add('loading')
-//         // Actualizo el interfaz
-//         setTimeout(() => {
-//            location.href = './user.html'}, 1000)
-//         } else {
-   
-//           document.getElementById('Rejected')?.classList.remove('hidden')
-//           document.getElementById('Logged')?.classList.add('hidden')
-//           if (/** @type {any} */(apiData)?.error === true) {
-//             console.error(/** @type {any} */(apiData)?.message)
-//             window.alert(/** @type {any} */(apiData)?.message)
-//             return
-//           }
-//         }
-
-//       }
-// /**
-//  * Updates the local storage with the latest state of the USER_DB array.
-//  *
-//  * @returns {void}
-//  */
-// function updateUserDB() {
-//   // localStorage.setItem('USER_DB', JSON.stringify(USER_DB.get()))
-//   // Leemos el nodo users almacenado en localstorage REDUX_DB,
-//   let localStoredString = localStorage.getItem('REDUX_DB')
-//   let localStoredData = JSON.parse(localStoredString || '')
-//   // y guardamos lo que tengamos en store.user.getAll()
-//   localStoredData.users = [...store.user.getAll()]
-//   localStorage.setItem('REDUX_DB', JSON.stringify(localStoredData))
-// }
 
 
 function onLogOut(event) {
@@ -157,39 +104,72 @@ function onLogOut(event) {
     }
 
   }
-    
-
-//  async function saveRecipe(){
-//   let selector = document.getElementById('seleccionador')
-//   let selectedValue = selector?.value
-//   let ingrediente1 = document.getElementById('ingrediente-1')
-//   let ingrediente2 = document.getElementById('ingrediente-2')
-//   let ingrediente3 = document.getElementById('ingrediente-3')
-//   let ingrediente4 = document.getElementById('ingrediente-4')
-//   let mlsingrediente1 =document.getElementById('mls-ingrediente-1')
-//   let mlsingrediente2 =document.getElementById('mls-ingrediente-2')
-//   let mlsingrediente3 =document.getElementById('mls-ingrediente-3')
-//   let mlsingrediente4 =document.getElementById('mls-ingrediente-4')
-//   let rangeCalculador = document.getElementById('range')
-//   let valorRange = rangeCalculador?.value
-//   let newReceta= new RecetaGuardada(selectedValue,
-//     ingrediente1.innerText,
-//     mlsingrediente1.innerText,
-//     ingrediente2.innerText,
-//     mlsingrediente2.innerText,
-//     ingrediente3.innerText,
-//     mlsingrediente3.innerText,
-//     ingrediente4.innerText,
-//     mlsingrediente4.innerText,
-//     valorRange);
-    
-//   let PAYLOAD = JSON.stringify(newReceta)
-//   console.log("esta es PAYLOAD ", PAYLOAD )
-//   const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/update/users`, 'PUT', PAYLOAD)
-//    console.log("esta es apidata",apiData)
-
-// }
+  function openPopup(popUp, link) {
+    let overlay = document.getElementById('overlay')
+    if (popUp == null) return
+    popUp.classList.add('active')
+    overlay.classList.add('active')
  
+    let titlePop = document.getElementById('pop-up-name');
+    let bodyText = document.getElementById('pop-up-text');
+    let h3 = link.querySelector('h3');
+   
+    titlePop.innerText = h3.innerText;
+    // apri il popup
+    overlay.classList.add('active');
+    popUp.classList.add('active');
+    // cambiar ficha de la receta en el pop up a partir de el nombre
+    switch (titlePop.innerText.toLowerCase()) {
+      case 'negroni':
+         bodyText.innerText = 'negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni '
+        break;
+      case 'manhattan':
+        bodyText.innerText = 'manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan '
+        break;
+      case 'old fashioned':
+        bodyText.innerText = 'old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned '
+        break;
+      case 'dry martini':
+        bodyText.innerText = 'dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini '
+        break;
+      case 'tom collins':
+        bodyText.innerText = 'tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins '
+        break;
+      case 'paloma':
+        bodyText.innerText = 'paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma '
+        break;
+      case 'dark & stormy':
+        bodyText.innerText = 'dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy '
+        break;
+      case 'berry hiball':
+        bodyText.innerText = 'berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball '
+        break;
+      default:
+        bodyText.innerText = '';
+        break;
+      }
+       
+   
+      }
+
+     function redirectToCalculadores() {
+      let titlePop = document.getElementById('pop-up-name');
+      let valueToStore = titlePop.textContent || titlePop.value;
+      sessionStorage.setItem('choice', valueToStore);
+        // reindirizza l'utente alla pagina calculadores.html
+        console.log(valueToStore,'selected redirecting you to calculadores.html');
+      
+        window.location.href = './calculadores.html';
+
+     }
+
+     function autoSelectOption() {
+      if (!sessionStorage.getItem('choice')) return
+      
+     let choice = sessionStorage.getItem('choice').toLowerCase();
+     console.log(choice,"after redirecting to calculadores.html i hae this value, next it will go to the web component as props");
+     }
+  
   function closePopup(popUp) {
      console.log(`the popup ${popUp} should close`)
      let overlay = document.getElementById('overlay')
@@ -279,6 +259,7 @@ async function displayProductos() {
         <h3>${botella.name}</h3>
          <p>${botella.spirit}</p>
         <p>${botella.price}</p>
+         <a href="./carrito.html">Add to cart</a>
        `;
       listaProductos.appendChild(producto);
     });
@@ -289,14 +270,35 @@ async function displayProductos() {
 
 async function buscarProducto(event){
   event.preventDefault()
+  const listaProductos = document.getElementById('listaProductos');
   let InputBusqueda = document.getElementById('busqueda') 
   let valorBusqueda = InputBusqueda.value
   let newBotella = {name: valorBusqueda}
     const payload = JSON.stringify(newBotella)
     //Buscar en la BBDD si existe el usuario
     const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda`, 'POST', payload)
-    console.log(apiData)
-
+if (valorBusqueda === '') {
+  alert('Debes ingresar un nombre de producto')
+  return
+}
+if (apiData.length === 0) {
+  alert('Producto no encontrado')
+  return
+}
+    while (listaProductos.firstChild) {
+      listaProductos.removeChild(listaProductos.firstChild)
+    }
+    apiData.forEach((botella) => {
+      const producto = document.createElement('li');
+      producto.innerHTML = `
+        <h3>${botella.name}</h3>
+         <p>${botella.spirit}</p>
+        <p>${botella.price}</p>
+        <a href="./carrito.html">Add to cart</a>
+       `;
+      listaProductos.appendChild(producto);
+    });
+    
 }
 /**
  * Retrieves the value from the specified input element.
