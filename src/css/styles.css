@@ -13,7 +13,7 @@ html{
 
 body{
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: 100px 1fr 50px;
     height: 100vh;
     font-family: sans-serif;
     background-color: white;
@@ -35,7 +35,7 @@ body{
         flex-direction: column;
         justify-content: space-around;
         padding: 2rem;
-        overflow: scroll;
+        overflow:hidden;
 
         #busqueda{
             width:200px;

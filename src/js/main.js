@@ -24,14 +24,12 @@ function DomContentLoaded() {
     let closePopUpButton = document.querySelectorAll('[data-close-button]')
     let bodyCalculator = document.getElementById('body-calculadores')
     let bodyProductos = document.getElementById('bodyProductos')
+    let bodyUser = document.getElementById('bodyUser')
     let formBusqueda =  document.getElementById('form-busqueda')
     let botonBuscar = document.getElementById('botonBuscar')
     let overlay = document.getElementById('overlay') 
     let craftButton = document.getElementById('craft-button');
-    //44 TO 48
 
-   
-   
     formLogOut?.addEventListener('submit', onLogOut)
     formSignout?.addEventListener('submit', onSignOut)
     botonBuscar?.addEventListener('click', buscarProducto)
@@ -59,6 +57,10 @@ function DomContentLoaded() {
     if (bodyCalculator != null){
       console.log('body encontrado, display calculadores') 
       autoSelectOption()
+    }
+    if (bodyUser != null){
+      console.log('body userencontrado, weloming user') 
+      welcoming()
     }
 
     overlay?.addEventListener('click', () => {
@@ -191,7 +193,7 @@ function onLogOut(event) {
  */
 function getDataFromSessionStorage() {
   const defaultValue = JSON.stringify(INITIAL_STATE)
-  return JSON.parse(sessionStorage.getItem('PARTYTIME_SESSION') || defaultValue)
+  return JSON.parse(sessionStorage.getItem('user') || defaultValue)
 }
 
   /**
@@ -307,6 +309,11 @@ if (apiData.length === 0) {
       listaProductos.appendChild(producto);
     });
 
+}
+function welcoming(){
+  let pWelcome = document.getElementById('welcome')
+  let userEmail = JSON.parse(sessionStorage.getItem('user')).email
+  pWelcome.textContent = `Welcome, ${userEmail}`
 }
 /**
  * Retrieves the value from the specified input element.

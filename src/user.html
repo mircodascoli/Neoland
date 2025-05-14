@@ -27,7 +27,7 @@
     <script type="module" src="./js/componentes/bundle.js" defer></script>
 
   </head>
-<body>
+<body id="bodyUser">
   <header>
     <h1>your partytime</h1>
     <nav>
@@ -43,9 +43,15 @@
 
   <main id="mainUser">
 
-   <div id="botonesLogoutSignOut">
-      <form id="logOutForm"><button type="submit">Cerrar sesión</button"></form>
-      <form id="signOutForm"><button type="submit">Darse de baja</button></form>
+   <div id="userArea">
+    <p id="welcome"></p>
+      <!-- <form id="logOutForm"> -->
+        <button id="logOutButton" type="submit">Cerrar sesión</button">
+      <!-- </form> -->
+
+      <!-- <form id="signOutForm"> -->
+        <button id="signOutButton" type="submit">Darse de baja</button>
+      <!-- </form> -->
    </div>
 
    <div id="containerMyRecipies">

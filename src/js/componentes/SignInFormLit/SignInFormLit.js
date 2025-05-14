@@ -45,7 +45,8 @@ export class SignInFormLit extends LitElement {
                 let eventDetail = apiData
       if (apiData === undefined) {
         eventDetail = {
-          text: 'No he encontrado el usuario o la contraseña'
+          text: 'No he encontrado el usuario o la contraseña',
+          alert: 'No he encontrado el usuario o la contraseña'
         }
       }
       onFormSubmitEvent = new CustomEvent("login-form-submit", {

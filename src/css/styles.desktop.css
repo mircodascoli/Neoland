@@ -85,21 +85,28 @@
         }
     }
 
-    #botonesLogoutSignOut{
+    #userArea{
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: center;
+        align-items: center;
+        row-gap: 20px;  
 
-        form{
-            width: 200px;
-            height: 200px;
+      #welcome{
+        font-size: 1.5em;
+        font-weight: bold;
+      }
 
-            button{
-                height: 50px;
-                width: 100px;
-            }
+        #logOutButton, #signOutButton{
+            width: 80px;
+            height: 40px;
+            background-color: lightgrey;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid black;
         }
     }
+    
    
 
  
