@@ -135,7 +135,10 @@ body{
     ul{
         h3{
             text-transform: uppercase;
-        
+
+        &.drink-name{
+            text-transform: none;
+        }
         }
 
    

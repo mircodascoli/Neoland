@@ -56,9 +56,26 @@
             row-gap: 20px;  
     
             li{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
                 height: 200px;
-                width: 200px;
-                border: 1px solid black;
+                width: 170px;
+                border: 1px solid lightgrey;
+
+                h3{
+                    text-transform: capitalize;
+                }
+
+                .price{
+                    font-weight: bold;
+                }
+
+                img{
+                    height: 100px;
+                    width: auto;
+                }
             }
 
             li:hover, li:focus, li:active {

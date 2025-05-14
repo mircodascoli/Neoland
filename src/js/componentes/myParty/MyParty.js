@@ -10,12 +10,14 @@ export class MyParty extends LitElement {
   static get properties() {
     return {
       apiData: { type: Object }
+  
     }
   }
 
+
   _idSession;
   apiData;
-
+  
   constructor() {
     super();
     this.apiData = null;
@@ -45,32 +47,50 @@ export class MyParty extends LitElement {
     this.requestUpdate()
   }
 
+
   render(){
     console.log(this.apiData, typeof this.apiData, "valore di apidata, nel render");
     return html`
       <div class="my-party"> 
-        <h2>My Party</h2>
+
         ${this.apiData
-          ? html`<p>cocktail:${this.apiData.receta.name} </p>
-                <p>${this.apiData.receta.quantity} mls</p>
-                <div>
-                  <p>${this.apiData.receta.ingredientes[0].name}</p>
-                  <p>${this.apiData.receta.ingredientes[0].quantity}ml</p>
-                </div>
-                <div>
-                  <p>${this.apiData.receta.ingredientes[1].name}</p>
-                  <p>${this.apiData.receta.ingredientes[1].quantity}ml</p>
-                </div>
-                <div>
-                  <p>${this.apiData.receta.ingredientes[2].name}</p>
-                  <p>${this.apiData.receta.ingredientes[2].quantity}ml</p>
-                </div>
-                <div>
-                  <p>${this.apiData.receta.ingredientes[3].name}</p>
-                  <p>${this.apiData.receta.ingredientes[3].quantity}ml</p>
-                </div> `
+          ? html`
+            <div class="thead">
+              <p>Cocktail:${this.apiData.receta.name} </p>
+              <p>${this.apiData.receta.quantity} mls</p>
+            </div>
+             <div class="tr">
+               <p>${this.apiData.receta.ingredientes[0].name}</p>
+               <p>${this.apiData.receta.ingredientes[0].quantity}ml</p>
+              </div>
+            <div class="tr">
+               <p>${this.apiData.receta.ingredientes[1].name}</p>
+               <p>${this.apiData.receta.ingredientes[1].quantity}ml</p>
+             </div>
+              <div class="tr">
+                <p>${this.apiData.receta.ingredientes[2].name}</p>
+                <p>${this.apiData.receta.ingredientes[2].quantity}ml</p>
+              </div>
+              <div class="tr">
+                <p>${this.apiData.receta.ingredientes[3].name}</p>
+                <p>${this.apiData.receta.ingredientes[3].quantity}ml</p>
+              </div>
+              </div>
+      <div class="grab">
+      <div class="grabth">
+      <p>Grab your ingredients</p>
+        </div>
+        <ul>
+          <li>${this.apiData.receta.ingredientes[0].name}</li>
+          <li>${this.apiData.receta.ingredientes[1].name}</li>
+          <li>${this.apiData.receta.ingredientes[2].name}</li>
+          <li>${this.apiData.receta.ingredientes[3].name}</li>
+        </ul>
+        <div >
+        </div>
+      </div> `
           : html`<p>No Recipes Yet! start by <a href="/choosepoison.html">craft one</a></p>`}
-      </div>
+      
     `;
   }
 }

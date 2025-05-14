@@ -11,10 +11,11 @@ export class SignInFormLit extends LitElement {
         return html`
             <form id="formLog" @submit="${this._onFormSubmit}">
                 <slot></slot>
-                <p id="infoMessage">Registro del usuario con lit</p>
+                <p id="infoMessage">Register your account</p>
                 <input type="email" id="emailSign" placeholder="Email" required>
                 <input type="password" id="passwordSign" placeholder="Password" required>
                 <button type="submit" class="btn">Sign In</button>
+                <a href="./login.html" class="login-or-sign">Or login</a>
             </form>
         `;
        

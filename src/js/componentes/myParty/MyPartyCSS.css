@@ -6,5 +6,52 @@
     row-gap: 20px;
     width: 600px;
     margin: 0 auto;
-    border: 1px solid black;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+
+
+    .tr, .thead{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      border: 1px solid black;
+      padding: 2%;
+      box-sizing: border-box;
+    
+    }
+
+    .thead{
+      background-color: lightgrey;
+    }
+
+    .grabth{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      border: 1px solid black;
+      padding: 1%;
+      box-sizing: border-box;
+      background-color: lightgrey;
+    }
+
+    ul{
+        display: flex;
+        flex-direction: row ;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        row-gap: 20px;  
+
+        li{
+            height: 100px;
+            width: 100px;
+            border: 1px solid black;
+        }
+
+        li:hover, li:focus, li:active {
+            border: 2px solid #7ae212;
+          }
+
+    }
 }

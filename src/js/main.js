@@ -164,12 +164,16 @@ function onLogOut(event) {
      }
 
      function autoSelectOption() {
-      if (!sessionStorage.getItem('choice')) return
-      
-     let choice = sessionStorage.getItem('choice').toLowerCase();
-     console.log(choice,"after redirecting to calculadores.html i hae this value, next it will go to the web component as props");
-     }
-  
+      const chosenOption = sessionStorage.getItem('choice');
+      if (!chosenOption) return;
+    
+      console.log(chosenOption, "✅ Retrieved and ready to pass to the web component.");
+    
+      const component = document.querySelector('calculador-component');
+      if (component) {
+        component.choice = chosenOption;  
+      }
+    }
   function closePopup(popUp) {
      console.log(`the popup ${popUp} should close`)
      let overlay = document.getElementById('overlay')
@@ -254,11 +258,13 @@ async function displayProductos() {
    
     console.log(apiData)
     apiData.forEach((botella) => {
+      console.log(botella.name)
       const producto = document.createElement('li');
       producto.innerHTML = `
+      <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
         <h3>${botella.name}</h3>
-         <p>${botella.spirit}</p>
-        <p>${botella.price}</p>
+        <p class="price">${botella.price} &euro;</p>
+        
          <a href="./carrito.html">Add to cart</a>
        `;
       listaProductos.appendChild(producto);
@@ -290,15 +296,17 @@ if (apiData.length === 0) {
     }
     apiData.forEach((botella) => {
       const producto = document.createElement('li');
+
       producto.innerHTML = `
         <h3>${botella.name}</h3>
          <p>${botella.spirit}</p>
         <p>${botella.price}</p>
+        <img src="./img/${botella.name}" alt="${botella.name}">
         <a href="./carrito.html">Add to cart</a>
        `;
       listaProductos.appendChild(producto);
     });
-    
+
 }
 /**
  * Retrieves the value from the specified input element.
