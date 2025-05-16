@@ -38,16 +38,18 @@ export class SignInFormLit extends LitElement {
              console.log(`DESDE DENTRO DEL COMPONENTE Name: ${signInData.email}, Email: ${signInData.password}`);
 
              if (signInData.email !== '' && signInData.password !== '') {
+
                 const payload = JSON.stringify(signInData)
                 const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/create/users`, 'POST', payload)
                 console.log(apiData)
                 let eventDetail = apiData
-      if (apiData === undefined) {
-        eventDetail = {
-          text: 'No he encontrado el usuario o la contraseña',
-          alert: 'No he encontrado el usuario o la contraseña'
-        }
-      }
+
+                   if (apiData === undefined) { 
+                         console.log('aaaa')
+
+                         eventDetail = { text: 'User already exists',}
+                        }
+      console.log('BBBB')
       onFormSubmitEvent = new CustomEvent("login-form-submit", {
         bubbles: true,
         detail: eventDetail

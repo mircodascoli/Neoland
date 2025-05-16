@@ -230,14 +230,13 @@ form{
   
 
 h1{
-    
-
     font-family: Boldonse, sans-serif;
     color: slategray;
     margin: 0 auto;
     text-align: center;
     text-transform: uppercase;
-    font-size: 3em
+    font-size: 3em;
+    text-shadow: 2px 2px 4px rgb(216, 84, 84);
 }
 
 h2{

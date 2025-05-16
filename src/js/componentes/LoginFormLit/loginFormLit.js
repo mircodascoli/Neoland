@@ -18,10 +18,11 @@ export class LoginInFormLit extends LitElement {
         return html`
             <form id="formSign" @submit="${this._onFormSubmit}">
                 <slot></slot>
-                <p id="infoMessage">Registro del usuario con lit</p>
+                <p id="infoMessage">Get Back to your account</p>
                 <input  type="email" id="emailLog"placeholder="Your email" minlength="3" required>
                  <input type="password" id="passwordLog" placeholder="Your password" minlength="3" required>
-                 <button type="submit" id="loginButton" title="Login" ?disabled=${this.email === '' || this.password === ''}>Login</button>
+                 <button type="submit" id="" title="Login" ?disabled=${this.email === '' || this.password === ''}>Login</button>
+                  <a href="./sign.html" class="login-or-sign">Or Sign Up</a>
             </form>
         `;
     }

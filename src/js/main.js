@@ -29,6 +29,7 @@ function DomContentLoaded() {
     let botonBuscar = document.getElementById('botonBuscar')
     let overlay = document.getElementById('overlay') 
     let craftButton = document.getElementById('craft-button');
+    let signInFormLit = document.querySelector('signin-form-lit')
 
     formLogOut?.addEventListener('submit', onLogOut)
     formSignout?.addEventListener('submit', onSignOut)
@@ -67,7 +68,14 @@ function DomContentLoaded() {
       const activePopUps = document.querySelectorAll('.description.active');
       activePopUps.forEach((popUp) => closePopup(popUp));
     })
-//TERMINAR: CLICK EN EL OVERLAY PARA CERRAR EL POPUP
+    signInFormLit?.addEventListener('login-form-submit', (event) => {
+    // Aquí decido qué hacer una vez lanzado el login
+    console.log('signin-form-lit recogido desde el index.js', event?.detail)
+    if (event?.detail?.text === 'User already exists') {
+    console.log('ponemos el cartel de user existente')
+    }
+    
+  })
   }
 
 
