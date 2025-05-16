@@ -1,10 +1,9 @@
 import { LitElement, html } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/all/lit-all.min.js';
 import { getAPIData, getInputValue, API_PORT } from '../../main.js';
 import ResetCSS from '../../../css/reset.css' with {type: 'css'};
-import SignInFormCSS from '../SignInForm/SignInForm.css' with {type: 'css'};
-
+import SignInFormLitCSS from '../SignInFormLit/SignInFormLit.css'with {type: 'css'};
 export class SignInFormLit extends LitElement {
-    static styles = [ResetCSS, SignInFormCSS];
+    static styles = [ResetCSS, SignInFormLitCSS];
 
 
     render() {

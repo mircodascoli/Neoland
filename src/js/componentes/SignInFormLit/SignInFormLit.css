@@ -1,0 +1,42 @@
+.hidden {
+  display: none;
+}
+
+.title {
+  text-shadow: 2px 2px 4px rgb(175 195 110);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: #888;
+  padding: 1em;
+  border-radius: 5px;
+  gap: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  align-items: center;
+  row-gap: 20px;
+
+ 
+  .login-or-sign{
+      color:white;
+      text-decoration: none;
+  }
+
+  .btn{
+   cursor: pointer;
+        height: 40px;
+        width: 100px;
+        border-radius: 5px;
+    }
+
+    input{
+        height: 30px;
+        width: 60%;
+        border-radius: 5px;
+
+    }
+
+
+}
