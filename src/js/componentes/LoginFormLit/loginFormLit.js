@@ -21,7 +21,7 @@ export class LoginInFormLit extends LitElement {
                 <p id="infoMessage">Get Back to your account</p>
                 <input  type="email" id="emailLog"placeholder="Your email" minlength="3" required>
                  <input type="password" id="passwordLog" placeholder="Your password" minlength="3" required>
-                 <button type="submit" id="" title="Login" ?disabled=${this.email === '' || this.password === ''}>Login</button>
+                 <button type="submit" class="btn" title="Login" ?disabled=${this.email === '' || this.password === ''}>Login</button>
                   <a href="./sign.html" class="login-or-sign">Or Sign Up</a>
             </form>
         `;
@@ -53,7 +53,7 @@ export class LoginInFormLit extends LitElement {
       console.log(payload)
       let apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/login`, 'POST', payload)
       console.log(apiData)
-      if (Object.keys(apiData).length >= 0) {
+      if (apiData !== null) {
         // Guardamos los datos del usuario en la sesión
         let userPartyTime= JSON.stringify(apiData)
         console.log('userpartytime',userPartyTime)
@@ -62,15 +62,6 @@ export class LoginInFormLit extends LitElement {
         // Actualizo el interfaz
         setTimeout(() => {
            location.href = './user.html'}, 1000)
-        } else {
-   
-          document.getElementById('Rejected')?.classList.remove('hidden')
-          document.getElementById('Logged')?.classList.add('hidden')
-          if (/** @type {any} */(apiData)?.error === true) {
-            console.error(/** @type {any} */(apiData)?.message)
-            window.alert(/** @type {any} */(apiData)?.message)
-            return
-          }
         }
       onFormSubmitEvent = new CustomEvent("login-form-submit", {
         bubbles: true,

@@ -2,6 +2,12 @@
   display: none;
 }
 
+.loading {
+  opacity: .5;
+}
+
+
+
 .title {
   text-shadow: 2px 2px 4px rgb(175 195 110);
 }

@@ -45,11 +45,10 @@ export class SignInFormLit extends LitElement {
                 let eventDetail = apiData
 
                    if (apiData === undefined) { 
-                         console.log('aaaa')
 
                          eventDetail = { text: 'User already exists',}
                         }
-      console.log('BBBB')
+  
       onFormSubmitEvent = new CustomEvent("login-form-submit", {
         bubbles: true,
         detail: eventDetail

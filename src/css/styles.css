@@ -170,7 +170,27 @@ body{
             }
 
    
-     
+    #already{
+    color: #d84315;
+    background-color: #fff3e0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #ff7043;
+    border-radius: 6px;
+    font-weight: bold;
+    max-width:  400px;
+    margin: 0 auto;
+}
+
+#registered{
+    color: #2e7d32;
+    background-color: #e8f5e9;
+    padding: 0.5em 1em;
+    border-left: 4px solid #4caf50;
+    border-radius: 6px;
+    font-weight: bold;
+    max-width:  400px;
+    margin: 0 auto;
+} 
 
     
 
@@ -248,23 +268,7 @@ h2{
 
 
 
-#alreadyRegistered, #rejected{
-    background-color: rgb(237 160 60);
-    color: red;
-    max-width: 600px;
-    font-weight: bold;
-    margin: 10px auto;
-    
 
-}
-
-#registered, #logged{
-    background-color: rgb(130 207 74);
-    color: rgb(255 255 255);
-    max-width: 600px;
-    font-weight: bold;
-    margin: 10px auto;
-}
 
 
 
