@@ -1,6 +1,6 @@
  //@ts-no-check
 
-//import { Botellas } from './clases/Botellas.js'
+
 import { simpleFetch } from './lib/simpleFetch.js'
 import { HttpError } from './clases/HttpError.js'
 import { store, INITIAL_STATE } from './store/redux.js'
@@ -37,6 +37,7 @@ function DomContentLoaded() {
     botonBuscar?.addEventListener('click', buscarProducto)
     craftButton?.addEventListener('click', redirectToCalculadores); 
     formBusqueda?.addEventListener('submit', buscarProducto)
+     formBusqueda?.addEventListener('keyup', onInputKeyUp)
     openPopUpLink.forEach((link) => {
       link.addEventListener('click', () => {
         let popUp = document.querySelector(`${link.dataset.modalTarget}`);
@@ -294,6 +295,7 @@ function isUserLoggedIn() {
 async function displayProductos() {
   try {
     const listaProductos = document.getElementById('listaProductos');
+    console.log('Tentativo di chiamare API: ', `${location.protocol}//${location.hostname}${API_PORT}/read/botellas`);
     const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/read/botellas`, 'GET')
    
     console.log(apiData)
@@ -302,10 +304,9 @@ async function displayProductos() {
       const producto = document.createElement('li');
       producto.innerHTML = `
       <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
-        <h3>${botella.name}</h3>
-        <p class="price">${botella.price} &euro;</p>
-        
-         <a href="./carrito.html">Add to cart</a>
+      <h3>${botella.name}</h3>
+      <p class="price">${botella.price} &euro;</p>
+      <a href="./carrito.html">Add to cart</a>
        `;
       listaProductos.appendChild(producto);
     });
@@ -338,15 +339,21 @@ if (apiData.length === 0) {
       const producto = document.createElement('li');
 
       producto.innerHTML = `
+        <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
         <h3>${botella.name}</h3>
-         <p>${botella.spirit}</p>
-        <p>${botella.price}</p>
-        <img src="./img/${botella.name}" alt="${botella.name}">
+        <p class="price">${botella.price} &euro;</p>
         <a href="./carrito.html">Add to cart</a>
        `;
       listaProductos.appendChild(producto);
     });
 
+}
+function onInputKeyUp(event) {// Keyup: mirar teclas pulsadas
+  console.log(event.key)
+  let formBusqueda  = document.getElementById('busqueda')
+  if(formBusqueda.value  === ''){
+    displayProductos()
+  }
 }
 function welcoming(){
   let pWelcome = document.getElementById('welcome')

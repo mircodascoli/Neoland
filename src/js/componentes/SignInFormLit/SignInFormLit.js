@@ -4,7 +4,18 @@ import ResetCSS from '../../../css/reset.css' with {type: 'css'};
 import SignInFormLitCSS from '../SignInFormLit/SignInFormLit.css'with {type: 'css'};
 export class SignInFormLit extends LitElement {
     static styles = [ResetCSS, SignInFormLitCSS];
+      static properties = {
+    // Propiedad reactiva y pública por medio de un atributo HTML
+    info: { type: String },
+    email: { type: String },
+    password: { type: String },
+  }
 
+ constructor() {
+    super();
+    this.email = '';
+    this.password = '';
+  }
 
     render() {
         return html`

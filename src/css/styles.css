@@ -8,19 +8,23 @@
 }
 
 html{
-    background-color: #888;
+    background-color: lightcoral;
 }
 
 body{
     display: grid;
     grid-template-rows: 100px 1fr 50px;
     height: 100vh;
+    width: 100vw;
+    margin: 0;
     font-family: sans-serif;
     background-color: white;
 
-    
-
 }
+
+  #mainProductos, #mainCalculadores{
+        overflow-y: scroll;
+    }
 
   .index-buttons {
         cursor: pointer;
@@ -115,6 +119,9 @@ body{
         justify-content: space-between;
         background-color: #c3d7a5;
         padding: 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 8;
 
         menu{
             text-transform:uppercase ;
@@ -122,20 +129,17 @@ body{
             flex-direction: row;
             justify-content: space-evenly;
 
-            a{
-                text-decoration: none;
-                font-weight: 700;
-                color: black;
-
-            }
-
             li{
                 text-decoration: none;
+
+                a{
+                 text-decoration: none;
+                 font-weight: 700;
+                 color: black;
+
+                 }
             }
-        }
-
-       
-
+        } 
     }
     
 
