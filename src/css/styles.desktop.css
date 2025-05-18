@@ -48,41 +48,7 @@
             gap: 10px;
         }
     
-        #listaProductos{
-            display: flex;
-            flex-direction: row ;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            row-gap: 20px;  
-    
-            li{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                height: 200px;
-                width: 170px;
-                border: 1px solid lightgrey;
-
-                h3{
-                    text-transform: capitalize;
-                }
-
-                .price{
-                    font-weight: bold;
-                }
-
-                img{
-                    height: 100px;
-                    width: auto;
-                }
-            }
-
-            li:hover, li:focus, li:active {
-                border: 2px solid #7ae212;
-              }
-    
-        }
+      
     }
 
     #userArea{
