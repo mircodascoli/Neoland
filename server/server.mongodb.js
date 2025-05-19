@@ -10,11 +10,12 @@ export const db = {
         create: createUsers,
         update: updateUsers,
         search: searchUsers,
+        carting: AddIdBotellaToCart,
     },
     botellas: {
         get: getBotellas,
         search: searchBotellas,
-        
+       
     }
 }
 async function countUsers() {
@@ -31,6 +32,13 @@ async function countUsers() {
   const botellasCollection = PartytimetDB.collection('Botellas');
   return await botellasCollection.find(filter).project(projection).toArray();
    
+  }
+async function AddIdBotellaToCart(idBotella, idUser){
+    console.log('hey from add to cart')
+    const client = new MongoClient(URI);
+    const PartytimetDB = client.db('Partytime');
+    const usersCollection = PartytimetDB.collection('users');
+    return await usersCollection.updateOne({ _id: new ObjectId(idUser) }, { $push: { cart: idBotella } });
   }
 
   async function  getUsers(filter, projection){

@@ -75,6 +75,12 @@ app.get('/read/users', async (req, res) =>  {
          res.json(await db.botellas.search( { $text: { $search: req.body.name } },{}))
       })
 
+         app.post('/push/to/cart', async (req, res) => {
+      console.log('estamos para push to cart', req.body)
+      //recuerda añadir la projeccion para filtrar los ampos que devolvemos
+         res.json(await db.users.carting( req.body.idBotella, req.body.idUser))
+      })
+
       app.post('/buscar/usuario', async (req, res) => {
         console.log('estamos en busqueda', req.body)
         //recuerda añadir la projeccion para filtrar los ampos que devolvemos

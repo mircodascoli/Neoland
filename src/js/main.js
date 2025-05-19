@@ -403,9 +403,18 @@ function onInputKeyUp(event) {// Keyup: mirar teclas pulsadas
 
 async function addToCart(id){
 try{
-
-
   console.log('add to cart',id)
+  const idUserNum = JSON.parse(sessionStorage.getItem('user'))._id
+  const idBotellaNum = id
+  const body = {
+  idUser : idUserNum,
+  idBotella: idBotellaNum
+}
+  const payload = JSON.stringify(body);
+   console.log(payload)
+  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/push/to/cart`, 'POST', payload);
+
+    console.log(apiData)
 }
 catch (error) {
   console.error('Error during botton click:', error);
