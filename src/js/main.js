@@ -31,7 +31,7 @@ function DomContentLoaded() {
     let craftButton = document.getElementById('craft-button');
     let signInFormLit = document.querySelector('signin-form-lit')
     let LogInFormLit = document.querySelector('log-in-form-lit')
-    let addToCartbtn = document.getElementById('addToCart')
+   
   
       
   
@@ -40,7 +40,7 @@ function DomContentLoaded() {
     botonBuscar?.addEventListener('click', buscarProducto)
     craftButton?.addEventListener('click', redirectToCalculadores); 
     formBusqueda?.addEventListener('submit', buscarProducto)
-     formBusqueda?.addEventListener('keyup', onInputKeyUp)
+    formBusqueda?.addEventListener('keyup', onInputKeyUp)
     
     openPopUpLink.forEach((link) => {
       link.addEventListener('click', () => {
@@ -300,72 +300,112 @@ function isUserLoggedIn() {
 async function displayProductos() {
   try {
     const listaProductos = document.getElementById('listaProductos');
+
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/read/botellas`, 'GET');
     
-    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/read/botellas`, 'GET')
-   
-    console.log(apiData)
+    console.log(apiData);
+
     apiData.forEach((botella) => {
       const producto = document.createElement('li');
-      producto.innerHTML = `
-      <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
-      <h3>${botella.name}</h3>
-      <p class="price">${botella.price} &euro;</p>
-      <button id="addToCart" >Add to cart <span id="botellaId" class="hidden">${botella._id}</span></button>
-       `;
-      listaProductos.appendChild(producto);
       
+      // Crea il bottone
+      const button = document.createElement('button');
+      button.textContent = 'Add to cart';
+      button.classList.add('addToCart'); // Classe invece dell'id
+      button.dataset.id = botella._id; // Usa dataset per salvare l'id
+
+      // Aggiungi l'event listener direttamente qui
+      button.addEventListener('click', () => {
+        addToCart(botella._id); // Funzione da scrivere a parte
+      });
+
+      // Crea l'HTML del resto
+      producto.innerHTML = `
+        <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
+        <h3>${botella.name}</h3>
+        <p class="price">${botella.price} &euro;</p>
+      `;
+
+      producto.appendChild(button); // Aggiungi il bottone creato
+      listaProductos.appendChild(producto);
     });
   } catch (error) {
     console.error('Errore durante la richiesta API:', error);
   }
 }
 
-async function buscarProducto(event){
-  event.preventDefault()
-  const listaProductos = document.getElementById('listaProductos');
-  let InputBusqueda = document.getElementById('busqueda') 
-  let valorBusqueda = InputBusqueda.value
-  let newBotella = {name: valorBusqueda}
-    const payload = JSON.stringify(newBotella)
-    //Buscar en la BBDD si existe el usuario
-    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda`, 'POST', payload)
-if (valorBusqueda === '') {
-  alert('Debes ingresar un nombre de producto')
-  return
-}
-if (apiData.length === 0) {
-  alert('Producto no encontrado')
-  return
-}
-    while (listaProductos.firstChild) {
-      listaProductos.removeChild(listaProductos.firstChild)
+async function buscarProducto(event) {
+  event.preventDefault();
+
+  try {
+    const listaProductos = document.getElementById('listaProductos');
+    const InputBusqueda = document.getElementById('busqueda');
+    const valorBusqueda = InputBusqueda.value.trim(); // rimuove spazi iniziali/finali
+
+    if (valorBusqueda === '') {
+      alert('Debes ingresar un nombre de producto');
+      return;
     }
+
+    const newBotella = { name: valorBusqueda };
+    const payload = JSON.stringify(newBotella);
+
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda`, 'POST', payload);
+
+    if (apiData.length === 0) {
+      alert('Producto no encontrado');
+      return;
+    }
+
+    // Svuota la lista
+    listaProductos.innerHTML = '';
+
     apiData.forEach((botella) => {
-      const producto = document.createElement('li');
+      const producto = document.createElement('li'); // <-- qui mancava
 
       producto.innerHTML = `
         <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
         <h3>${botella.name}</h3>
         <p class="price">${botella.price} &euro;</p>
-        <button id="addToCart">Add to cart</button>
-       `;
+      `;
+
+      const button = document.createElement('button');
+      button.textContent = 'Add to cart';
+      button.classList.add('addToCart');
+      button.dataset.id = botella._id;
+
+      button.addEventListener('click', () => {
+        addToCart(botella._id);
+      });
+
+      producto.appendChild(button);
       listaProductos.appendChild(producto);
-      addToCart()
     });
 
+  } catch (error) {
+    console.error('Errore durante la richiesta API:', error);
+  }
 }
+
+
 function onInputKeyUp(event) {// Keyup: mirar teclas pulsadas
   console.log(event.key)
+   const listaProductos = document.getElementById('listaProductos');
+   
   let formBusqueda  = document.getElementById('busqueda')
   if(formBusqueda.value  === ''){
+    while (listaProductos.firstChild) {
+      listaProductos.removeChild(listaProductos.firstChild)
+    }
     displayProductos()
   }
 }
 
-async function addToCart(){
+async function addToCart(id){
 try{
-let idBotellatoCart = document.getElementById('botellaId').textContent
-  console.log('add to cart',idBotellatoCart)
+
+
+  console.log('add to cart',id)
 }
 catch (error) {
   console.error('Error during botton click:', error);
