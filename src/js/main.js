@@ -4,6 +4,7 @@
 import { simpleFetch } from './lib/simpleFetch.js'
 import { HttpError } from './clases/HttpError.js'
 import { store, INITIAL_STATE } from './store/redux.js'
+import e from 'express'
 
 export const API_PORT = location.port ? `:${1337}` : ''
 const TIMEOUT = 10000
@@ -31,7 +32,7 @@ function DomContentLoaded() {
     let craftButton = document.getElementById('craft-button');
     let signInFormLit = document.querySelector('signin-form-lit')
     let LogInFormLit = document.querySelector('log-in-form-lit')
-   
+    let bodyCart = document.getElementById('bodyCarrito')
   
       
   
@@ -69,6 +70,10 @@ function DomContentLoaded() {
     if (bodyUser != null){
       console.log('body userencontrado, weloming user') 
       welcoming()
+    }
+    if (bodyCart != null){
+      console.log('body cart encontrado, display calculadores') 
+      displayCart()
     }
 
     overlay?.addEventListener('click', () => {
@@ -420,11 +425,25 @@ catch (error) {
   console.error('Error during botton click:', error);
 }
 }
+async function displayCart(){
+  console.log('display cart')
+  let idUser = JSON.parse(sessionStorage.getItem('user'))._id
+  console.log(idUser)
+  const payload = JSON.stringify({ id: idUser });
+  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload);
+  
+ let idsInCart = apiData.cart
+ console.log(idsInCart)
+/*   for (let i = 0; i < idsInCart.length; i++) {
+    console.log(idsInCart[i])
+  } */
+}
 function welcoming(){
   let pWelcome = document.getElementById('welcome')
   let userEmail = JSON.parse(sessionStorage.getItem('user')).email
   pWelcome.textContent = `Welcome, ${userEmail}`
 }
+
 /**
  * Retrieves the value from the specified input element.
  * @param {HTMLElement | null} inputElement - The input element from which to get the value.

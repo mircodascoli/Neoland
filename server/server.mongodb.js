@@ -14,6 +14,7 @@ export const db = {
     },
     botellas: {
         get: getBotellas,
+        getInCart: getBotellaInCart,
         search: searchBotellas,
        
     }
@@ -33,6 +34,16 @@ async function countUsers() {
   return await botellasCollection.find(filter).project(projection).toArray();
    
   }
+
+
+  async function getBotellaInCart(){
+    console.log('hey from get botellas in cart')
+    const client = new MongoClient(URI);
+    const PartytimetDB = client.db('Partytime');
+    const usersCollection = PartytimetDB.collection('Botellas');
+    return await usersCollection.findOne({  });
+  }
+
 async function AddIdBotellaToCart(idBotella, idUser){
     console.log('hey from add to cart')
     const client = new MongoClient(URI);
