@@ -46,7 +46,7 @@ app.get('/read/users', async (req, res) =>  {
 
 
   app.get('/read/botellas', async (req, res) => {
-    debugger;
+   
       console.log('server read botellas')
       res.json(await db.botellas.get())
     });
@@ -76,6 +76,11 @@ app.get('/read/users', async (req, res) =>  {
       console.log('estamos en busqueda', req.body)
       //recuerda añadir la projeccion para filtrar los ampos que devolvemos
          res.json(await db.botellas.search( { $text: { $search: req.body.name } },{}))
+      })
+    app.post('/busqueda/cart', async (req, res) => {
+      console.log('estamos en busqueda cart', req.body)
+      //recuerda añadir la projeccion para filtrar los ampos que devolvemos
+        res.json(await db.botellas.searchCart(req.body))
       })
 
          app.post('/push/to/cart', async (req, res) => {

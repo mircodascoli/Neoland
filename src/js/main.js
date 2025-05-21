@@ -249,7 +249,7 @@ function getDataFromSessionStorage() {
  */
 export async function getAPIData(apiURL, method = 'GET', data) {
   let apiData
-console.log(apiURL)
+
 
   try {
     let headers = new Headers()
@@ -303,7 +303,6 @@ function isUserLoggedIn() {
 async function displayProductos() {
  try { 
   const listaProductos = document.getElementById('listaProductos'); 
-    console.log('end point', `${location.protocol}//${location.hostname}${API_PORT}/read/botellas`);
 
     const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/read/botellas`, 'GET');
     
@@ -428,13 +427,25 @@ catch (error) {
 
 }
  async function loadCartData(idUserNum) {
-    console.log('Loading the data',idUserNum);
-    const payload = JSON.stringify({ id: idUserNum});
+ console.log('Loading the data',idUserNum);
+
+  try{  const payload = JSON.stringify({ id: idUserNum});
     const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload);
-  
-    console.log(apiData.cart, 'in loadCart data')
-  
-  }
+    let idsInCart = apiData.cart
+    console.log(idsInCart)
+    idsInCart.forEach((id) =>{ try{
+                                console.log('Loading the data',id);
+                                 const payloadCart = JSON.stringify({ id: id});
+                                 const apiDataCart = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda/cart`, 'POST', payloadCart);
+                                console.log(apiDataCart)
+                                   }catch (error) {
+                                   console.error('Error during botton click:', error);
+                                         }})
+                                          }
+                                        catch (error) {
+                                         console.error('Error during botton click:', error);
+                                          }
+}
 function welcoming(){
   let pWelcome = document.getElementById('welcome')
   let userEmail = JSON.parse(sessionStorage.getItem('user')).email
