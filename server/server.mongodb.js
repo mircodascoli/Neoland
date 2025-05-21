@@ -92,11 +92,14 @@ async function AddIdBotellaToCart(idBotella, idUser){
     return UserFromDB
   }
   async function searchBotellasInCart(filter){
-    console.log('hey from search botellas in cart')
+    console.log('hey from search botellas in cart', filter)
+
     const client = new MongoClient(URI);
     const PartytimetDB = client.db('Partytime');
     const botellasCollection = PartytimetDB.collection('Botellas');
-    return await botellasCollection.find(filter).toArray();
+   let BotellaFromDB = await botellasCollection .findOne({ _id: new ObjectId(filter) });
+    console.log(BotellaFromDB)
+    return BotellaFromDB
   }
 
   async function login({email, password}){

@@ -420,6 +420,7 @@ try{
   alert('Added to your cart!')
     console.log(apiData)
      loadCartData(idUserNum)
+
 }
 catch (error) {
   console.error('Error during botton click:', error);
@@ -427,25 +428,47 @@ catch (error) {
 
 }
  async function loadCartData(idUserNum) {
- console.log('Loading the data',idUserNum);
+  console.log('Loading the data', idUserNum);
 
-  try{  const payload = JSON.stringify({ id: idUserNum});
+  try {
+    const payload = JSON.stringify({ id: idUserNum });
+    console.log(payload);
     const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload);
-    let idsInCart = apiData.cart
-    console.log(idsInCart)
-    idsInCart.forEach((id) =>{ try{
-                                console.log('Loading the data',id);
-                                 const payloadCart = JSON.stringify({ id: id});
-                                 const apiDataCart = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda/cart`, 'POST', payloadCart);
-                                console.log(apiDataCart)
-                                   }catch (error) {
-                                   console.error('Error during botton click:', error);
-                                         }})
-                                          }
-                                        catch (error) {
-                                         console.error('Error during botton click:', error);
-                                          }
+   console.log(apiData);
+    let idsInCart = apiData.cart;
+    console.log(idsInCart);
+    idsInCart.forEach((id) => {
+      getbottlesFromShop(id);
+    });
+  } catch (error) {
+    console.error('Error during botton click:', error);
+  }
 }
+async function getbottlesFromShop(id) {
+  console.log('display cart,almostdone',id);
+
+ try{
+  console.log('Loading the data',id);
+  const payloadCart = JSON.stringify({ id: id});
+  const apiDataCart = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda/cart`, 'POST', payloadCart);
+     console.log(apiDataCart,typeof apiDataCart);
+     const producto = document.createElement('li'); 
+     const cartList = document.getElementById('carrito');
+ producto.innerHTML = `
+        <img src="../img/imgProductos/${apiDataCart.name}.png" alt="${apiDataCart.name}">
+        <h3>${apiDataCart.name}</h3>
+        <p class="price">${apiDataCart.price} &euro;</p>
+      `;
+     cartList.appendChild(producto)
+     }catch (error) {
+    console.error('Error during botton click:', error);
+     }
+ 
+     
+
+}
+ 
+
 function welcoming(){
   let pWelcome = document.getElementById('welcome')
   let userEmail = JSON.parse(sessionStorage.getItem('user')).email
