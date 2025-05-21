@@ -4,7 +4,6 @@
 import { simpleFetch } from './lib/simpleFetch.js'
 import { HttpError } from './clases/HttpError.js'
 import { store, INITIAL_STATE } from './store/redux.js'
-import e from 'express'
 
 export const API_PORT = location.port ? `:${1337}` : ''
 const TIMEOUT = 10000
@@ -32,7 +31,7 @@ function DomContentLoaded() {
     let craftButton = document.getElementById('craft-button');
     let signInFormLit = document.querySelector('signin-form-lit')
     let LogInFormLit = document.querySelector('log-in-form-lit')
-    let bodyCart = document.getElementById('bodyCarrito')
+   
   
       
   
@@ -70,10 +69,6 @@ function DomContentLoaded() {
     if (bodyUser != null){
       console.log('body userencontrado, weloming user') 
       welcoming()
-    }
-    if (bodyCart != null){
-      console.log('body cart encontrado, display calculadores') 
-      displayCart()
     }
 
     overlay?.addEventListener('click', () => {
@@ -172,28 +167,28 @@ function onLogOut(event) {
     // cambiar ficha de la receta en el pop up a partir de el nombre
     switch (titlePop.innerText.toLowerCase()) {
       case 'negroni':
-         bodyText.innerText = 'negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni negroni '
+         bodyText.innerText = 'Born in 1919 Florence, the Negroni blends gin, Campari, and sweet vermouth for a bold, bittersweet taste with herbal, citrus, and spiced notes—an Italian aperitivo classic. '
         break;
       case 'manhattan':
-        bodyText.innerText = 'manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan manhattan '
+        bodyText.innerText = 'Created in 19th-century New York, the Manhattan mixes rye whiskey, sweet vermouth, and bitters—rich, smooth, and slightly spicy with cherry and herbal notes. A timeless, elegant classic.'
         break;
       case 'old fashioned':
-        bodyText.innerText = 'old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned old fashioned '
+        bodyText.innerText = 'Dating to the early 1800s, it combines bourbon or rye, sugar, bitters, and orange zest. Bold, smooth, and subtly sweet with a citrusy, aromatic twist. The original cocktail.'
         break;
       case 'dry martini':
-        bodyText.innerText = 'dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini dry martini '
+        bodyText.innerText = 'Born in the early 20th century, it mixes gin and dry vermouth, garnished with olive or lemon. Crisp, clean, and botanical—a symbol of sophistication and minimalist elegance. '
         break;
       case 'tom collins':
-        bodyText.innerText = 'tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins tom collins '
+        bodyText.innerText = 'A 19th-century gin cocktail of lemon juice, sugar, and soda water. Light, fizzy, and citrusy—like sparkling lemonade with a botanical twist. A refreshing, sunny-day drink. '
         break;
       case 'paloma':
-        bodyText.innerText = 'paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma paloma '
+        bodyText.innerText = 'A refreshing Mexican favorite of tequila and grapefruit soda (or juice + soda), often with lime and salt. Bright, tangy, and slightly bitter-sweet with a zesty, citrusy kick.'
         break;
       case 'dark & stormy':
-        bodyText.innerText = 'dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy dark & stormy '
+        bodyText.innerText = 'Originating in Bermuda, this cocktail layers dark rum over ginger beer and lime. Spicy, rich, and invigorating with warming ginger heat and deep molasses notes. A sailor&rsquo;s delight. '
         break;
       case 'berry hiball':
-        bodyText.innerText = 'berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball berry hiball '
+        bodyText.innerText = 'Our latest creation! surprise your friends with a unique cocktail. Fruity, easy drinking, and refreshing with a hint of sweetness. '
         break;
       default:
         bodyText.innerText = '';
@@ -254,6 +249,7 @@ function getDataFromSessionStorage() {
  */
 export async function getAPIData(apiURL, method = 'GET', data) {
   let apiData
+console.log(apiURL)
 
   try {
     let headers = new Headers()
@@ -266,6 +262,8 @@ export async function getAPIData(apiURL, method = 'GET', data) {
     if (isUserLoggedIn()) {
       const userData = getDataFromSessionStorage()
       headers.append('Authorization', `Bearer ${userData?.user?.token}`)
+      console.log(headers)
+
     }
     apiData = await simpleFetch(apiURL, {
       // Si la petición tarda demasiado, la abortamos
@@ -303,8 +301,9 @@ function isUserLoggedIn() {
 }
 
 async function displayProductos() {
-  try {
-    const listaProductos = document.getElementById('listaProductos');
+ try { 
+  const listaProductos = document.getElementById('listaProductos'); 
+    console.log('end point', `${location.protocol}//${location.hostname}${API_PORT}/read/botellas`);
 
     const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/read/botellas`, 'GET');
     
@@ -336,7 +335,7 @@ async function displayProductos() {
     });
   } catch (error) {
     console.error('Errore durante la richiesta API:', error);
-  }
+  } 
 }
 
 async function buscarProducto(event) {
@@ -425,25 +424,11 @@ catch (error) {
   console.error('Error during botton click:', error);
 }
 }
-async function displayCart(){
-  console.log('display cart')
-  let idUser = JSON.parse(sessionStorage.getItem('user'))._id
-  console.log(idUser)
-  const payload = JSON.stringify({ id: idUser });
-  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload);
-  
- let idsInCart = apiData.cart
- console.log(idsInCart)
-/*   for (let i = 0; i < idsInCart.length; i++) {
-    console.log(idsInCart[i])
-  } */
-}
 function welcoming(){
   let pWelcome = document.getElementById('welcome')
   let userEmail = JSON.parse(sessionStorage.getItem('user')).email
   pWelcome.textContent = `Welcome, ${userEmail}`
 }
-
 /**
  * Retrieves the value from the specified input element.
  * @param {HTMLElement | null} inputElement - The input element from which to get the value.

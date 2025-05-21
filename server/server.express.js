@@ -24,6 +24,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
   app.post('/create/users', async (req, res) => {
     // 1. Comprobar si ya existe el usuario, usando getUsers
     const userExists = await db.users.get({ email: req.body.email})
+    console.log("hello from create users")
+    
     // 2. Si no existe, crearlo
     if (userExists.length === 0) {
       // Remove _id property from payload object
@@ -44,6 +46,7 @@ app.get('/read/users', async (req, res) =>  {
 
 
   app.get('/read/botellas', async (req, res) => {
+    debugger;
       console.log('server read botellas')
       res.json(await db.botellas.get())
     });
@@ -93,25 +96,11 @@ app.get('/read/users', async (req, res) =>  {
     res.json(user)
     
   })
-   
 
-
-    
-
-
-
-// // UPDATE
-// app.put('/users/:id', (req, res) => {
-//   res.send('User updated!')
-// })
-// // DELETE
-// app.delete('/users/:id', (req, res) => {
-//   res.send('User deleted!')
-// })
-app.listen(port, async () => {
+  app.listen(port, async () => {
     console.log(` listening on port ${port}`);
   })
   
 
 
-  // db.stores.find( { $text: { $search: "java shop -coffee" } } )
+ 

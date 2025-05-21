@@ -36,6 +36,12 @@ export const cocktails = {
         { name: "Sugar syrup", percent: 7}, 
         { name: "soda water", percent: 10 },
       ],
+      "Dark & stormy": [
+        { name: "Rum", percent: 60 },
+        { name: "Lime juice", percent: 12.5 },
+        { name: "Angostura", percent: 1}, 
+        { name: "Ginger Beer", percent: 10 },
+      ],
       "Berry Hiball": [
         { name: "Vodka", percent: 60 },
         { name: "Lemon juice", percent: 12.5 },

@@ -1,5 +1,5 @@
 // @ts-check
-/**  @import {User} from '../clases/User.js'*/
+/**  @import {User} from '../clases/user.js'*/
 /**  @import {Botellas} from '../clases/Botellas.js'*/
 
 /**
