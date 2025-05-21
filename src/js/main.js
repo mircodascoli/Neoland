@@ -412,18 +412,29 @@ try{
   const idBotellaNum = id
   const body = {
   idUser : idUserNum,
-  idBotella: idBotellaNum
+  idBotella: idBotellaNum,
+ 
 }
   const payload = JSON.stringify(body);
    console.log(payload)
   const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/push/to/cart`, 'POST', payload);
-
+  alert('Added to your cart!')
     console.log(apiData)
+     loadCartData(idUserNum)
 }
 catch (error) {
   console.error('Error during botton click:', error);
 }
+
 }
+ async function loadCartData(idUserNum) {
+    console.log('Loading the data',idUserNum);
+    const payload = JSON.stringify({ id: idUserNum});
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload);
+  
+    console.log(apiData.cart, 'in loadCart data')
+  
+  }
 function welcoming(){
   let pWelcome = document.getElementById('welcome')
   let userEmail = JSON.parse(sessionStorage.getItem('user')).email
