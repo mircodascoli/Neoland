@@ -4,6 +4,14 @@
 PARTYTIME es una applicacion con calculadores para aumentar,
  la venta de licores de una tienda de licores en linea
 
+## Tecnologias usadas
+HTML, CSS, Javascript para el front end
+Javascipt con Node.js e MONGO DB como base de datos
+TypeScript : conceptos basicos para evitar errore de tipado
+ESlint, Style lint para linteo
+Lit para componentes web reutilizables
+ 
+
 ## Inicio y Selección de Cócteles
 
 El usuario abre la aplicación y ve dos listas de cócteles:
