@@ -16,7 +16,7 @@ export const db = {
         get: getBotellas,
         getInCart: getBotellaInCart,
         search: searchBotellas,
-        searchCart: searchBotellasInCart
+        findByIds: findBotellasByIds
        
     }
 }
@@ -91,16 +91,16 @@ async function AddIdBotellaToCart(idBotella, idUser){
     console.log(UserFromDB)
     return UserFromDB
   }
-  async function searchBotellasInCart(filter){
-    console.log('hey from search botellas in cart', filter)
+  async function findBotellasByIds(filter) {
+  console.log('Cercando bottiglie con questi ID:', filter);
 
-    const client = new MongoClient(URI);
-    const PartytimetDB = client.db('Partytime');
-    const botellasCollection = PartytimetDB.collection('Botellas');
-   let BotellaFromDB = await botellasCollection .findOne({ _id: new ObjectId(filter) });
-    console.log(BotellaFromDB)
-    return BotellaFromDB
-  }
+  const client = new MongoClient(URI);
+  const db = client.db('Partytime');
+  const botellasCollection = db.collection('Botellas');
+
+  return await botellasCollection.find(filter).toArray();
+}
+  
 
   async function login({email, password}){
     console.log('hey from login')

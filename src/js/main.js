@@ -18,8 +18,8 @@ window.addEventListener('DOMContentLoaded', DomContentLoaded)
 function DomContentLoaded() {
   
    
-    let formLogOut = document.getElementById('logOutForm')
-    let formSignout = document.getElementById('signOutForm')
+    let formLogOut = document.getElementById('logOutButton')
+    let formSignout = document.getElementById('signOutButton')
     let openPopUpLink = document.querySelectorAll('[data-modal-target]')
     let closePopUpButton = document.querySelectorAll('[data-close-button]')
     let bodyCalculator = document.getElementById('body-calculadores')
@@ -31,12 +31,12 @@ function DomContentLoaded() {
     let craftButton = document.getElementById('craft-button');
     let signInFormLit = document.querySelector('signin-form-lit')
     let LogInFormLit = document.querySelector('log-in-form-lit')
-   
+    let bodyCarrito = document.getElementById('bodyCarrito')
   
       
   
-    formLogOut?.addEventListener('submit', onLogOut)
-    formSignout?.addEventListener('submit', onSignOut)
+    formLogOut?.addEventListener('click', onLogOut)
+    formSignout?.addEventListener('click', onSignOut)
     botonBuscar?.addEventListener('click', buscarProducto)
     craftButton?.addEventListener('click', redirectToCalculadores); 
     formBusqueda?.addEventListener('submit', buscarProducto)
@@ -57,7 +57,7 @@ function DomContentLoaded() {
       });
     });
     
-    if (bodyProductos != null){
+    if (bodyProductos || bodyCarrito != null){
       console.log('body encontrado, display productos') 
       displayProductos()
     }
@@ -431,27 +431,34 @@ catch (error) {
   console.log('Loading the data', idUserNum);
 
   try {
+   /*  location.href = './carrito.html'; */
+    console.log('AAAA');
     const payload = JSON.stringify({ id: idUserNum });
     console.log(payload);
     const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload);
    console.log(apiData);
     let idsInCart = apiData.cart;
     console.log(idsInCart);
-    idsInCart.forEach((id) => {
-      getbottlesFromShop(id);
-    });
+ getbottlesFromShop(idsInCart)
+
+    
   } catch (error) {
     console.error('Error during botton click:', error);
   }
 }
-async function getbottlesFromShop(id) {
-  console.log('display cart,almostdone',id);
+  async function getbottlesFromShop(idsInCart) {
+  console.log('up next getting this bottles from shop',idsInCart);
 
  try{
-  console.log('Loading the data',id);
-  const payloadCart = JSON.stringify({ id: id});
+ 
+  const payloadCart = JSON.stringify({ ids: idsInCart });
+  console.log(payloadCart);
   const apiDataCart = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda/cart`, 'POST', payloadCart);
      console.log(apiDataCart,typeof apiDataCart);
+     if (apiDataCart.length === 0) {
+  alert('No product found in DB');
+  return;
+}
      const producto = document.createElement('li'); 
      const cartList = document.getElementById('carrito');
  producto.innerHTML = `

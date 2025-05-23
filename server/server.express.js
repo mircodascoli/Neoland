@@ -1,6 +1,7 @@
 import express from 'express';
 import { db } from "./server.mongodb.js";
 import bodyParser from 'body-parser';
+import { ObjectId } from 'mongodb';
 
 const app = express();
 const port = process.env.PORT;
@@ -78,10 +79,16 @@ app.get('/read/users', async (req, res) =>  {
          res.json(await db.botellas.search( { $text: { $search: req.body.name } },{}))
       })
     app.post('/busqueda/cart', async (req, res) => {
-      console.log('estamos en busqueda cart', req.body)
-      //recuerda añadir la projeccion para filtrar los ampos que devolvemos
-        res.json(await db.botellas.searchCart(req.body))
-      })
+  try {
+    const ids = req.body.ids;
+    console.log('Ricevuti questi ID:', ids);
+    const objectIds = ids.map(id => new ObjectId(id));
+    const botellas = await db.botellas.findByIds({ _id: { $in: objectIds } });
+    res.json(botellas);
+  } catch (error) {
+    console.error('Error in express', error);
+  }})
+
 
          app.post('/push/to/cart', async (req, res) => {
       console.log('estamos para push to cart', req.body)
