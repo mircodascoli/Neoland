@@ -161,18 +161,6 @@ body{
    
         }
 
-        .carrito,
-         .productos{ 
-            h3{
-                color:rgb(175 195 110);
-               font-weight: 300;
-             }
-
-            display: flex;	
-            flex-direction: row;
-            justify-content: space-evenly;
-            }
-
    
     #already{
     color: #d84315;
@@ -312,7 +300,8 @@ a{
     }
 }
 
-  #listaProductos{
+  #listaProductos,
+  #carrito{
             display: flex;
             flex-direction: row ;
             flex-wrap: wrap;

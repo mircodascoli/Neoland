@@ -57,7 +57,7 @@ function DomContentLoaded() {
       });
     });
     
-    if (bodyProductos || bodyCarrito != null){
+    if (bodyProductos != null){
       console.log('body encontrado, display productos') 
       displayProductos()
     }
@@ -69,6 +69,10 @@ function DomContentLoaded() {
     if (bodyUser != null){
       console.log('body userencontrado, weloming user') 
       welcoming()
+    }
+    if (bodyCarrito != null){
+      console.log('body carritoencontrado, display carrito') 
+     loadCartData()
     }
 
     overlay?.addEventListener('click', () => {
@@ -360,11 +364,11 @@ async function buscarProducto(event) {
       return;
     }
 
-    // Svuota la lista
+   
     listaProductos.innerHTML = '';
 
     apiData.forEach((botella) => {
-      const producto = document.createElement('li'); // <-- qui mancava
+      const producto = document.createElement('li'); 
 
       producto.innerHTML = `
         <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
@@ -419,7 +423,7 @@ try{
   const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/push/to/cart`, 'POST', payload);
   alert('Added to your cart!')
     console.log(apiData)
-     loadCartData(idUserNum)
+    location.href = './carrito.html';
 
 }
 catch (error) {
@@ -427,11 +431,13 @@ catch (error) {
 }
 
 }
- async function loadCartData(idUserNum) {
+ async function loadCartData() {
+
+  const idUserNum = JSON.parse(sessionStorage.getItem('user'))._id
   console.log('Loading the data', idUserNum);
 
   try {
-   /*  location.href = './carrito.html'; */
+    
     console.log('AAAA');
     const payload = JSON.stringify({ id: idUserNum });
     console.log(payload);
@@ -446,6 +452,8 @@ catch (error) {
     console.error('Error during botton click:', error);
   }
 }
+
+
   async function getbottlesFromShop(idsInCart) {
   console.log('up next getting this bottles from shop',idsInCart);
 
@@ -459,14 +467,22 @@ catch (error) {
   alert('No product found in DB');
   return;
 }
-     const producto = document.createElement('li'); 
-     const cartList = document.getElementById('carrito');
- producto.innerHTML = `
-        <img src="../img/imgProductos/${apiDataCart.name}.png" alt="${apiDataCart.name}">
-        <h3>${apiDataCart.name}</h3>
-        <p class="price">${apiDataCart.price} &euro;</p>
+const cartList = document.getElementById('carrito');
+apiDataCart.forEach((botella) => {
+  const producto = document.createElement('li'); 
+  producto.innerHTML = `
+        <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
+        <h3>${botella.name}</h3>
+        <p class="price">${botella.price} &euro;</p>
       `;
      cartList.appendChild(producto)
+})
+   
+  
+ 
+
+ 
+   
      }catch (error) {
     console.error('Error during botton click:', error);
      }
