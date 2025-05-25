@@ -149,17 +149,7 @@ body{
     height:30px
 }
 
-    ul{
-        h3{
-            text-transform: uppercase;
-
-        &.drink-name{
-            text-transform: none;
-        }
-        }
-
-   
-        }
+  
 
    
     #already{
@@ -301,7 +291,8 @@ a{
 }
 
   #listaProductos,
-  #carrito{
+  #carrito,
+  #listCocktails{
             display: flex;
             flex-direction: row ;
             flex-wrap: wrap;
@@ -339,6 +330,11 @@ a{
 
             li:hover, li:focus, li:active {
                 border: 2px solid black
+              }
+
+              .delete-button{
+                cursor: pointer;
+                align-self: flex-end;
               }
     
         }

@@ -53,11 +53,6 @@ app.get('/read/users', async (req, res) =>  {
     });
 
 
-  app.get('/count/users',async (req, res) => {
-      const usuarios = await db.users.count()
-  res.send(`Hola ${req.params.nombre}, hay ${usuarios} usuarios`)
-    });
-
  // UPDATE     
  app.put('/update/users/:_id', async (req, res) => {
   res.json(await db.users.update(req.params._id, req.body))
@@ -66,11 +61,24 @@ app.get('/read/users', async (req, res) =>  {
 
 // DELETE
  
-    app.delete('/delete/users', () => {
-    
+  app.delete('/delete/from/cart', async (req, res) => {
+    console.log('server delete from cart')
+   
+    res.json(await db.users.DeleteFromCart( req.body.idBotella, req.body.idUser))
+    console.log('delete', req.body)
       })
-      
 
+   app.delete('/delete/cart', async (req, res) => {
+    console.log('server delete cart')
+
+    res.json(await db.users.DeleteAllCart( req.body.idBotella, req.body.idUser))
+      })  
+
+  app.delete('/delete/recipe', async (req, res) => {
+    console.log('server delete recipe')
+
+    res.json(await db.users.DeleteRecipe( req.body.idBotella, req.body.idUser))
+      })  
     // FILTER
 
     app.post('/busqueda', async (req, res) => {
@@ -92,7 +100,7 @@ app.get('/read/users', async (req, res) =>  {
 
          app.post('/push/to/cart', async (req, res) => {
       console.log('estamos para push to cart', req.body)
-      //recuerda añadir la projeccion para filtrar los ampos que devolvemos
+    
          res.json(await db.users.carting( req.body.idBotella, req.body.idUser))
       })
 
@@ -101,6 +109,7 @@ app.get('/read/users', async (req, res) =>  {
         //recuerda añadir la projeccion para filtrar los ampos que devolvemos
            res.json(await db.users.search(req.body))
         })
+
 
    app.post('/login', async (req, res) => {
     console.log('estamos en login', req.body)

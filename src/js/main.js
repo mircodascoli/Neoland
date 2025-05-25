@@ -31,9 +31,7 @@ function DomContentLoaded() {
     let craftButton = document.getElementById('craft-button');
     let signInFormLit = document.querySelector('signin-form-lit')
     let LogInFormLit = document.querySelector('log-in-form-lit')
-    let bodyCarrito = document.getElementById('bodyCarrito')
-  
-      
+    let bodyCarrito = document.getElementById('bodyCarrito') 
   
     formLogOut?.addEventListener('click', onLogOut)
     formSignout?.addEventListener('click', onSignOut)
@@ -41,7 +39,7 @@ function DomContentLoaded() {
     craftButton?.addEventListener('click', redirectToCalculadores); 
     formBusqueda?.addEventListener('submit', buscarProducto)
     formBusqueda?.addEventListener('keyup', onInputKeyUp)
-    
+   /*  deleteButton?.addEventListener('click', deleteItemFromCart) */
     openPopUpLink.forEach((link) => {
       link.addEventListener('click', () => {
         let popUp = document.querySelector(`${link.dataset.modalTarget}`);
@@ -73,6 +71,7 @@ function DomContentLoaded() {
     if (bodyCarrito != null){
       console.log('body carritoencontrado, display carrito') 
      loadCartData()
+
     }
 
     overlay?.addEventListener('click', () => {
@@ -328,6 +327,7 @@ async function displayProductos() {
 
       // Crea l'HTML del resto
       producto.innerHTML = `
+       
         <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
         <h3>${botella.name}</h3>
         <p class="price">${botella.price} &euro;</p>
@@ -380,6 +380,7 @@ async function buscarProducto(event) {
       button.textContent = 'Add to cart';
       button.classList.add('addToCart');
       button.dataset.id = botella._id;
+     
 
       button.addEventListener('click', () => {
         addToCart(botella._id);
@@ -437,8 +438,6 @@ catch (error) {
   console.log('Loading the data', idUserNum);
 
   try {
-    
-    console.log('AAAA');
     const payload = JSON.stringify({ id: idUserNum });
     console.log(payload);
     const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload);
@@ -451,6 +450,7 @@ catch (error) {
   } catch (error) {
     console.error('Error during botton click:', error);
   }
+
 }
 
 
@@ -471,26 +471,49 @@ const cartList = document.getElementById('carrito');
 apiDataCart.forEach((botella) => {
   const producto = document.createElement('li'); 
   producto.innerHTML = `
+      
         <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
         <h3>${botella.name}</h3>
         <p class="price">${botella.price} &euro;</p>
+       
       `;
      cartList.appendChild(producto)
-})
-   
-  
- 
+     const button = document.createElement('button');
+      button.textContent = 'X';
+      button.classList.add('delete-button');
+      button.dataset.id = botella._id;
 
- 
+      button.addEventListener('click', () => {
+        deleteItemFromCart(botella._id);
+      });
+
+      producto.appendChild(button);
+      cartList.appendChild(producto);
+    
+    
+})
    
      }catch (error) {
     console.error('Error during botton click:', error);
      }
- 
-     
-
 }
  
+function deleteItemFromCart(event){
+  console.log('delete from crt event lauched')
+let userId = JSON.parse(sessionStorage.getItem('user'))._id
+console.log(userId, event.target)
+
+  const body = {
+  idUser : userId,
+ /*  idBotella: idBotellaNum, */
+ 
+}
+  const payload = JSON.stringify(body);
+   console.log(payload)
+  const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/delete/from/cart`, 'DELETE', payload);
+  console.log(apiData)
+ 
+}
 
 function welcoming(){
   let pWelcome = document.getElementById('welcome')

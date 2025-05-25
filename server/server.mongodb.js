@@ -4,13 +4,13 @@ const URI = process.env.MONGO_URI;
 
 export const db = {
     users: {
-        count: countUsers,
         get: getUsers,
         login: login,
         create: createUsers,
         update: updateUsers,
         search: searchUsers,
         carting: AddIdBotellaToCart,
+        DeleteFromCart: DeleteFromCart
     },
     botellas: {
         get: getBotellas,
@@ -20,12 +20,6 @@ export const db = {
        
     }
 }
-async function countUsers() {
-    const client = new MongoClient(URI);
-    const PartytimetDB = client.db('Partytime');
-    const usersCollection = PartytimetDB.collection('users');
-    return await usersCollection.countDocuments()
-  }
 
   async function getBotellas(filter, projection){
     console.log('hey from get bottellas')
@@ -130,3 +124,14 @@ async function AddIdBotellaToCart(idBotella, idUser){
     console.log(returnValue)
     return returnValue
   }
+
+    async function DeleteFromCart(idBotella, idUser){
+        console.log('hey from delete from cart in mongo db')
+        const client = new MongoClient(URI);
+        const PartytimetDB = client.db('Partytime');
+        const usersCollection = PartytimetDB.collection('users');
+        return await usersCollection.updateOne(
+      { _id: new ObjectId(idUser) },
+      { $pull: { cart: { _id: idBotella } } }
+    );;
+      }
