@@ -125,13 +125,28 @@ async function AddIdBotellaToCart(idBotella, idUser){
     return returnValue
   }
 
-    async function DeleteFromCart(idBotella, idUser){
-        console.log('hey from delete from cart in mongo db')
-        const client = new MongoClient(URI);
-        const PartytimetDB = client.db('Partytime');
-        const usersCollection = PartytimetDB.collection('users');
-        return await usersCollection.updateOne(
+
+
+async function DeleteFromCart(idBotella, idUser) {
+  console.log('Deleting from cart...');
+  const client = new MongoClient(URI);
+
+  try {
+    await client.connect();
+    const db = client.db('Partytime');
+    const users = db.collection('users');
+
+    const result = await users.updateOne(
       { _id: new ObjectId(idUser) },
-      { $pull: { cart: { _id: idBotella } } }
-    );;
-      }
+     { $pull: { cart: idBotella } }
+    );
+
+    console.log('Delete result:', result);
+    return result;
+  } catch (error) {
+    console.error('Error deleting from cart:', error);
+    throw error;
+  } finally {
+    await client.close();
+  }
+}

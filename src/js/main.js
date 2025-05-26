@@ -482,9 +482,10 @@ apiDataCart.forEach((botella) => {
       button.textContent = 'X';
       button.classList.add('delete-button');
       button.dataset.id = botella._id;
-
+      let idBotellaNum = button.dataset.id 
+      console.log(button.dataset.id,`botella.dataset.id`);
       button.addEventListener('click', () => {
-        deleteItemFromCart(botella._id);
+        deleteItemFromCart(idBotellaNum);
       });
 
       producto.appendChild(button);
@@ -498,21 +499,22 @@ apiDataCart.forEach((botella) => {
      }
 }
  
-function deleteItemFromCart(event){
+function deleteItemFromCart(idBotellaNum){
   console.log('delete from crt event lauched')
 let userId = JSON.parse(sessionStorage.getItem('user'))._id
-console.log(userId, event.target)
+console.log(userId, idBotellaNum)
 
   const body = {
   idUser : userId,
- /*  idBotella: idBotellaNum, */
+   idBotella: idBotellaNum, 
  
 }
   const payload = JSON.stringify(body);
    console.log(payload)
   const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/delete/from/cart`, 'DELETE', payload);
   console.log(apiData)
- 
+location.reload();
+
 }
 
 function welcoming(){
