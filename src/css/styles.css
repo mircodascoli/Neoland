@@ -22,6 +22,54 @@ body{
 
 }
 
+.index-body{
+        background-image: url('../css/img-css/background-index.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        .main-index{
+          background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          display: flex ;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          row-gap: 20px;
+
+          .container-index{
+             display: flex;
+             flex-direction: column;
+             justify-content: flex-start;
+             align-items: center;
+             width: 50vw;
+              height: 50vh;
+    
+            .hero-logo{
+               display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+                height: 100%;
+
+                h1{
+                  font-family: Boldonse, sans-serif;
+                  color: #fff;
+                  text-shadow: 2px 2px 4px rgb(0, 0, 0);
+                  margin: 0 auto;
+                  text-align: center;
+                  text-transform: uppercase;
+                  font-size: 6em;
+                }
+
+            }
+        }
+    }
+
   #mainProductos, #mainCalculadores{
         overflow-y: scroll;
     }
@@ -46,9 +94,8 @@ body{
         padding: 2rem;
         overflow:hidden;
 
-        &.main-index{
-        background-color: #c3d7a5;
-        
+      
+       
       
     }
             
@@ -122,6 +169,11 @@ body{
         position: sticky;
         top: 0;
         z-index: 8;
+
+         &.header-index{
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)), url('../css/img-css/background-index.png');
+        width: 100%;
+        }
 
         menu{
             text-transform:uppercase ;
@@ -225,21 +277,7 @@ form{
   
 }
 
-.hero-logo{
-        font-size: 1.5em;
-    }
 
-  
-
-h1{
-    font-family: Boldonse, sans-serif;
-    color: slategray;
-    margin: 0 auto;
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 3em;
-    text-shadow: 2px 2px 4px rgb(216, 84, 84);
-}
 
 h2{
     font-family: Boldonse, sans-serif;
@@ -247,6 +285,7 @@ h2{
     text-transform: uppercase;
     font-size: 1.5em 
 }
+
 
 
 
