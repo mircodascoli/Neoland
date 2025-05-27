@@ -10,7 +10,8 @@ export const db = {
         update: updateUsers,
         search: searchUsers,
         carting: AddIdBotellaToCart,
-        DeleteFromCart: DeleteFromCart
+        DeleteFromCart: DeleteFromCart,
+        clearCart: clearCart
     },
     botellas: {
         get: getBotellas,
@@ -150,3 +151,27 @@ async function DeleteFromCart(idBotella, idUser) {
     await client.close();
   }
 }
+async function clearCart(userId) {
+  console.log('Clearing cart...');
+  const client = new MongoClient(URI);
+
+  try {
+   await client.connect();
+const db = client.db('Partytime');
+const users = db.collection('users');
+
+const result = await users.updateOne(
+  { _id: new ObjectId(userId) },
+  { $unset: { cart: "" } }
+);          
+
+    console.log('Clear result:', result);
+    return result;
+  } catch (error) {
+    console.error('Error clearing cart:', error);
+    throw error;
+  } finally {
+    await client.close();
+  }
+}
+  

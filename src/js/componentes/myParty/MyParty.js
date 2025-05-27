@@ -88,7 +88,13 @@ export class MyParty extends LitElement {
         </ul>
         <div >
         </div>
-      </div> `
+      </div> 
+        <div id="EraseOrUpdate">
+        <button class="user-btn" id="erase" type="submit">Erase</button">
+  
+        <button class="user-btn" id="update" type="submit">Update</button>
+     
+   </div>`
           : html`<p>No Recipes Yet! start by <a href="/choosepoison.html">craft one</a></p>`}
       
     `;

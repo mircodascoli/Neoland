@@ -336,6 +336,7 @@ async function displayProductos() {
       producto.appendChild(button); // Aggiungi il bottone creato
       listaProductos.appendChild(producto);
     });
+ 
   } catch (error) {
     console.error('Errore durante la richiesta API:', error);
   } 
@@ -487,13 +488,21 @@ apiDataCart.forEach((botella) => {
       button.addEventListener('click', () => {
         deleteItemFromCart(idBotellaNum);
       });
-
+     
       producto.appendChild(button);
-      cartList.appendChild(producto);
+  
     
     
 })
-   
+
+    let ClearCartButton = document.createElement('button');
+    let mainCarrito = document.querySelector('.main-carrito')
+    ClearCartButton.textContent = 'Clear Cart';
+    ClearCartButton.classList.add('Clear');
+     mainCarrito.appendChild(ClearCartButton);
+    ClearCartButton.addEventListener('click', () => {
+      clearCart();
+    })
      }catch (error) {
     console.error('Error during botton click:', error);
      }
@@ -516,7 +525,20 @@ console.log(userId, idBotellaNum)
 location.reload();
 
 }
-
+function clearCart(){
+  console.log('clear cart event lauched')
+  let userId = JSON.parse(sessionStorage.getItem('user'))._id
+  console.log(userId)
+  const body = {
+    userId
+  }
+  const payload = JSON.stringify(body);
+   console.log(payload)
+  const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/delete/cart`, 'DELETE', payload);
+  console.log(apiData)
+  alert('Cart cleared!')
+  location.reload(); 
+}
 function welcoming(){
   let pWelcome = document.getElementById('welcome')
   let userEmail = JSON.parse(sessionStorage.getItem('user')).email

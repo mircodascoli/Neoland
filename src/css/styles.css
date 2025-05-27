@@ -110,7 +110,7 @@ body{
 
    
 .body-form{
-        background-image: url('../css/img-css/background-form.png');
+        
         background-color: background-color: rgb(224, 135, 56);
         
 
@@ -121,6 +121,7 @@ body{
     align-items: center;
     row-gap: 20px;
     padding: 10%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)),url(./img-css/background-desktop.png);
   }
 
 }
@@ -188,12 +189,8 @@ body{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        background-color: #c3d7a5;
-        padding: 1rem;
-        position: sticky;
-        top: 0;
-        z-index: 8;
-
+        background-color: rgb(224, 135, 56);
+      
         img{
             width: 100px;
             height: 100px;
@@ -266,26 +263,31 @@ body{
       }
 
 
-.index-buttons-container{
+.index-buttons-container,
+#userArea{
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 10px;
 
-     .index-buttons {
+     .index-buttons,
+      .user-btn{
         cursor: pointer;
         height: 40px;
         width: 100px;
         border-radius: 5px;
     }
 
-    .index-login{
+    .index-login,
+    #logOutButton
+    {
         background-color: #000;
         color: #fff;
 
     }
 
-    .index-sign{
+    .index-sign
+    #signOutButton{
         background-color: transparent;
         color: #fff;
         border: 2px solid #fff
@@ -346,7 +348,7 @@ footer{
     align-items: center;
     gap: 10px;
     padding: 1rem;
-    background-color: #888;
+   background-color: black;
     color: white;
     font-weight: 100;
     font-style: italic;
