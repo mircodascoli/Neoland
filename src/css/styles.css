@@ -8,7 +8,7 @@
 }
 
 html{
-    background-color: lightcoral;
+    background-color: black
 }
 
 body{
@@ -21,12 +21,17 @@ body{
     background-color: white;
 
 }
-
+  
 .index-body{
         background-image: url('../css/img-css/background-index.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+
+        .header-index{
+          background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+          background-color: transparent;
+       }
 
         .main-index{
           background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
@@ -74,12 +79,7 @@ body{
         overflow-y: scroll;
     }
 
-  .index-buttons {
-        cursor: pointer;
-        height: 40px;
-        width: 100px;
-        border-radius: 5px;
-    }
+  
 
     .title{
         color: beige;
@@ -98,8 +98,32 @@ body{
        
       
     }
-            
+
+    .footer-index{
+    
+      background:  linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+      background-color: transparent; 
+
+
         }
+}
+
+   
+.body-form{
+        background-image: url('../css/img-css/background-form.png');
+        background-color: background-color: rgb(224, 135, 56);
+        
+
+  .main-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
+    padding: 10%;
+  }
+
+}
 
         #busqueda{
             width:200px;
@@ -110,7 +134,7 @@ body{
         #botonBuscar{
             width:40px;
             height: 40px;
-            background: #ee6b2f;
+            background-color: rgb(224, 135, 56)
           }
 
           &.container-calculador{
@@ -170,10 +194,16 @@ body{
         top: 0;
         z-index: 8;
 
-         &.header-index{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)), url('../css/img-css/background-index.png');
-        width: 100%;
+        img{
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
         }
+
+       
+    }
+
+    
 
         menu{
             text-transform:uppercase ;
@@ -192,7 +222,7 @@ body{
                  }
             }
         } 
-    }
+
     
 
 
@@ -242,8 +272,24 @@ body{
     justify-content: center;
     gap: 10px;
 
-    
+     .index-buttons {
+        cursor: pointer;
+        height: 40px;
+        width: 100px;
+        border-radius: 5px;
+    }
 
+    .index-login{
+        background-color: #000;
+        color: #fff;
+
+    }
+
+    .index-sign{
+        background-color: transparent;
+        color: #fff;
+        border: 2px solid #fff
+    }
 }
 
 
