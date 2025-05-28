@@ -77,8 +77,10 @@ app.get('/read/users', async (req, res) =>  {
   app.delete('/delete/recipe', async (req, res) => {
     console.log('server delete recipe')
 
-    res.json(await db.users.DeleteRecipe( req.body.idBotella, req.body.idUser))
+    res.json(await db.users.clearRecipe( req.body.userId))
       })  
+      
+
     // FILTER
 
     app.post('/busqueda', async (req, res) => {

@@ -108,12 +108,8 @@ body{
         }
 }
 
-   
-.body-form{
-        
-        background-color: background-color: rgb(224, 135, 56);
-        
 
+        
   .main-form{
     display: flex;
     flex-direction: column;
@@ -122,9 +118,12 @@ body{
     row-gap: 20px;
     padding: 10%;
     background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)),url(./img-css/background-desktop.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
-}
+
 
         #busqueda{
             width:200px;

@@ -8,7 +8,7 @@
 form {
   display: flex;
   flex-direction: column;
-  background-color: #888;
+  background-color: #ebebeb;
   padding: 1em;
   border-radius: 5px;
   gap: 10px;
@@ -19,8 +19,13 @@ form {
 
  
   .login-or-sign{
-      color:white;
+      color:rgb(224, 135, 56);
+      font-weight: bold;
       text-decoration: none;
+  }
+
+  .login-or-sign:hover{
+      text-decoration: underline;
   }
 
   .btn{

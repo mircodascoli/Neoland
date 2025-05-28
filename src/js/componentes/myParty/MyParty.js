@@ -46,8 +46,20 @@ export class MyParty extends LitElement {
     console.log(this.apiData, "valore di apidata, alla fine della funzione e prima del  render");
     this.requestUpdate()
   }
-
-
+async clearRecipe() {
+    console.log('clear recipe event lauched')
+  let userId = JSON.parse(sessionStorage.getItem('user'))._id
+  console.log(userId)
+  const body = {
+    userId
+  }
+  const payload = JSON.stringify(body);
+   console.log(payload)
+  const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/delete/recipe`, 'DELETE', payload);
+  console.log(apiData)
+  alert('Recipe cleared!')
+/*   location.reload();  */
+}
   render(){
     console.log(this.apiData, typeof this.apiData, "valore di apidata, nel render");
     return html`
@@ -90,7 +102,7 @@ export class MyParty extends LitElement {
         </div>
       </div> 
         <div id="EraseOrUpdate">
-        <button class="user-btn" id="erase" type="submit">Erase</button">
+        <button class="user-btn" id="erase"  @click="${this.clearRecipe}">Erase</button">
   
         <button class="user-btn" id="update" type="submit">Update</button>
      
