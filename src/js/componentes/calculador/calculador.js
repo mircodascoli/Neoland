@@ -45,7 +45,8 @@ export class Calculador extends LitElement {
 
     return receta.map(i => ({
       name: i.name,
-      quantity: Math.round((i.percent / totalPercent) * this.quantity)
+      quantity: Math.round((i.percent / totalPercent) * this.quantity),
+      dbname: i.dbname
     }));
   }
 
@@ -117,7 +118,8 @@ export class Calculador extends LitElement {
     const receta = {
       name: this.selected,
       quantity: this.quantity,
-      ingredientes: this.ingredients
+      ingredientes: this.ingredients,
+      dbname: this.dbname
     };
 
     const sessionStorageUser = JSON.parse(sessionStorage.getItem('user'));

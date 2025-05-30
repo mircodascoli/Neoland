@@ -35,6 +35,7 @@ export class MyParty extends LitElement {
     if (this._idSession) {
       await this.loadApiData();
     }
+  
   }
   
   async loadApiData() {
@@ -44,9 +45,16 @@ export class MyParty extends LitElement {
   
     this.apiData = apiData;
     console.log(this.apiData, "valore di apidata, alla fine della funzione e prima del  render");
+     
     this.requestUpdate()
+     this.loadBottlesFromShop()
   }
-async clearRecipe() {
+
+    async  loadBottlesFromShop() {
+    console.log('AAAAAAAH' + this.apiData.receta.ingredientes[0].name)
+  }
+
+  clearRecipe(){
     console.log('clear recipe event lauched')
   let userId = JSON.parse(sessionStorage.getItem('user'))._id
   console.log(userId)
@@ -58,7 +66,7 @@ async clearRecipe() {
   const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/delete/recipe`, 'DELETE', payload);
   console.log(apiData)
   alert('Recipe cleared!')
-/*   location.reload();  */
+ location.reload();  
 }
   render(){
     console.log(this.apiData, typeof this.apiData, "valore di apidata, nel render");
@@ -92,11 +100,11 @@ async clearRecipe() {
       <div class="grabth">
       <p>Grab your ingredients</p>
         </div>
-        <ul>
-          <li>${this.apiData.receta.ingredientes[0].name}</li>
-          <li>${this.apiData.receta.ingredientes[1].name}</li>
-          <li>${this.apiData.receta.ingredientes[2].name}</li>
-          <li>${this.apiData.receta.ingredientes[3].name}</li>
+     <ul>
+          <li> ${this.apiData.receta.ingredientes[0].dbname} </li>
+          <li> ${this.apiData.receta.ingredientes[1].dbname} </li>
+          <li> ${this.apiData.receta.ingredientes[2].dbname} </li>
+          <li> ${this.apiData.receta.ingredientes[3].dbname} </li>
         </ul>
         <div >
         </div>
