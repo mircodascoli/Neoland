@@ -18,8 +18,8 @@ export const db = {
         get: getBotellas,
         getInCart: getBotellaInCart,
         search: searchBotellas,
-        findByIds: findBotellasByIds
-       
+        findByIds: findBotellasByIds,
+       findByNames: findBotellasByNames
     }
 }
 
@@ -197,4 +197,11 @@ const result = await users.updateOne(
   } finally {
     await client.close();
   }
+}
+async function findBotellasByNames(filter, projection){
+  console.log('hey from display party in mongo DB')
+  const client = new MongoClient(URI);
+  const PartytimetDB = client.db('Partytime');
+  const botellasCollection = PartytimetDB.collection('Botellas');
+  return await botellasCollection.find(filter).project(projection).toArray();
 }

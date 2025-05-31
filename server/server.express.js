@@ -79,7 +79,7 @@ app.get('/read/users', async (req, res) =>  {
 
     res.json(await db.users.clearRecipe( req.body.userId))
       })  
-      
+
 
     // FILTER
 
@@ -88,6 +88,7 @@ app.get('/read/users', async (req, res) =>  {
       //recuerda añadir la projeccion para filtrar los ampos que devolvemos
          res.json(await db.botellas.search( { $text: { $search: req.body.name } },{}))
       })
+
     app.post('/busqueda/cart', async (req, res) => {
   try {
     const ids = req.body.ids;
@@ -99,7 +100,12 @@ app.get('/read/users', async (req, res) =>  {
     console.error('Error in express', error);
   }})
 
-
+   app.post('/busqueda/party', async (req, res) => {
+      console.log('estamos en busqueda party', req.body)
+      //recuerda añadir la projeccion para filtrar los ampos que devolvemos
+         res.json(await db.botellas.findByNames( { $text: { $search: req.body} },{}))
+      })
+   
          app.post('/push/to/cart', async (req, res) => {
       console.log('estamos para push to cart', req.body)
     
