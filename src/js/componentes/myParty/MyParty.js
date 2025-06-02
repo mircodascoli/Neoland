@@ -50,18 +50,17 @@ export class MyParty extends LitElement {
      this.loadBottlesFromShop()
   }
 
-    async  loadBottlesFromShop() {
-    console.log('eooooo');
-    let fourIngredients= `["${this.apiData.receta.ingredientes[0].dbname}","${this.apiData.receta.ingredientes[1].dbname}","${this.apiData.receta.ingredientes[2].dbname}","${this.apiData.receta.ingredientes[3].dbname}"]`
-    console.log(fourIngredients, 'var four ingredients') 
-    const keywords = fourIngredients.split(" "); // ["Apple", "laptop", "Lenovo", "phone"]
-    console.log(keywords, 'var keywords') 
-    const body = {keywords}
+   async loadBottlesFromShop() {
+  const ingredientes = this.apiData.receta.ingredientes;
+  const keywords = ingredientes.map(ing => ing.dbname); // array
+  const body = { keywords };
+   
     const payload = JSON.stringify(body);
+    console.log(payload, typeof payload, 'payload');
     const apiDataBottles = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda/party`, 'POST', payload);
   
     this.apiDataBottles = apiDataBottles;
-    console.log(this.apiData, "valore di apidata, alla fine della funzione e prima del  render");
+    console.log(this.apiDataBottles, "valore di apidatabottles")
      
     this.requestUpdate()
   }

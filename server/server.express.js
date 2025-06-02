@@ -100,11 +100,26 @@ app.get('/read/users', async (req, res) =>  {
     console.error('Error in express', error);
   }})
 
-   app.post('/busqueda/party', async (req, res) => {
-      console.log('estamos en busqueda party', req.body)
-      //recuerda añadir la projeccion para filtrar los ampos que devolvemos
-         res.json(await db.botellas.findByNames( { $text: { $search: req.body} },{}))
-      })
+app.post('/busqueda/party', async (req, res) => {
+  console.log('estamos en busqueda party', req.body);
+
+  const keywords = req.body.keywords;
+        console.log(keywords, typeof keywords, 'keywords in express');
+  if (!Array.isArray(keywords)) {
+    return res.status(400).json({ error: "Keywords should be an array of strings." });
+  }
+
+  try {
+    const result = await db.botellas.findByNames(
+      { name: { $in: keywords } }, 
+      {}
+    );
+    res.json(result);
+  } catch (error) {
+    console.error('DB error:', error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
    
          app.post('/push/to/cart', async (req, res) => {
       console.log('estamos para push to cart', req.body)
@@ -116,6 +131,7 @@ app.get('/read/users', async (req, res) =>  {
         console.log('estamos en busqueda', req.body)
         //recuerda añadir la projeccion para filtrar los ampos que devolvemos
            res.json(await db.users.search(req.body))
+           console.log(res.json)
         })
 
 

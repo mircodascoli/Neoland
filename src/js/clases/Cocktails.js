@@ -3,27 +3,26 @@ export const cocktails = {
       { name: "Gin", percent: 33, dbname: "tanqueray" },
       { name: "Sweet Vermouth", percent: 33, dbname: "cocchi" },
       { name: "Campari", percent: 33, dbname: "campari bitter" },
-      { name: "Water(recomended)", percent: 15, }
+      { name: "Water(recomended)", percent: 15, dbname: "water"}
       
-
     ],
     "Manhattan": [
       { name: "Whiskey", percent: 66, dbname: "templeton rye" },
       { name: "Sweet Vermouth", percent: 33, dbname: "cocchi" },
       { name: "Angostura", percent: 5, dbname: "angostura"},
-      { name: "Water(recomended)", percent: 15}
+      { name: "Water(recomended)", percent: 15, dbname: "water"}
     ],
     "Dry Martini": [
       { name: "Gin", percent: 70, dbname: "tanqueray"},
       { name: "Dry vermouth", percent: 10, dbname: "martini dry"},
-      { name: "Water(recomended)", percent: 15, },
-      { name: "Olive Brine for Dirty", percent: 5, },
+      { name: "Water(recomended)", percent: 15, dbname: "water"  },
+      { name: "Olive Brine for Dirty", percent: 5, dbname: "olive brine" },
     ],
     "Old Fashioned": [
       { name: "Bourbon whiskey", percent: 80, dbname: "woodford reserve"},
       { name: "Sugar syrup", percent: 5, dbname: "Sirope azucar"},
       { name: "Angostura bitters", percent: 0.1, dbname: "angostura"}, 
-      { name: "Water(recomended)", percent: 15,},
+      { name: "Water(recomended)", percent: 15, dbname: "water"},
     ],
     "Paloma": [
         { name: "Tequila", percent: 60, dbname: "tequila curado"},
