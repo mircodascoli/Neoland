@@ -111,23 +111,44 @@ export class MyParty extends LitElement {
       <div class="grabth">
       <p>Grab your ingredients</p>
         </div>
-     <ul>
-          <li> ${this.apiData.receta.ingredientes[0].dbname} </li>
-          <li> ${this.apiData.receta.ingredientes[1].dbname} </li>
-          <li> ${this.apiData.receta.ingredientes[2].dbname} </li>
-          <li> ${this.apiData.receta.ingredientes[3].dbname} </li>
+        ${this.apiDataBottles && this.apiDataBottles.length > 0 ? html`
+        <ul>
+       <li> 
+            <img src="../img/imgProductos/${this.apiDataBottles[0].name}.png" alt="${this.apiDataBottles[0].name}">
+            <h3 class="name-botella">${this.apiDataBottles[0].name}</h3> 
+            <p class="price">${this.apiDataBottles[0].price} &euro;</p> 
+            <button class="AddToCart">Add to cart</button>
+         </li>
+           <li> 
+            <img src="../img/imgProductos/${this.apiDataBottles[1].name}.png" alt="${this.apiDataBottles[1].name}">
+            <h3 class="name-botella">${this.apiDataBottles[1].name}</h3> 
+            <p class="price">${this.apiDataBottles[1].price} &euro;</p> 
+            <button class="AddToCart">Add to cart</button>
+         </li>
+           <li> 
+            <img src="../img/imgProductos/${this.apiDataBottles[2].name}.png" alt="${this.apiDataBottles[2].name}">
+            <h3 class="name-botella">${this.apiDataBottles[2].name}</h3> 
+            <p class="price">${this.apiDataBottles[2].price} &euro;</p> 
+            <button class="AddToCart">Add to cart</button>
+         </li>
+           <li> 
+            <img src="../img/imgProductos/${this.apiDataBottles[3].name}.png" alt="${this.apiDataBottles[3].name}">
+            <h3 class="name-botella">${this.apiDataBottles[3].name}</h3> 
+            <p class="price">${this.apiDataBottles[3].price} &euro;</p> 
+            <button class="AddToCart">Add to cart</button>
+         </li>
+          
         </ul>
         <div >
         </div>
       </div> 
+
         <div id="EraseOrUpdate">
         <button class="user-btn" id="erase"  @click="${this.clearRecipe}">Erase</button">
-  
         <button class="user-btn" id="update" type="submit">Update</button>
-     
-   </div>`
-          : html`<p>No Recipes Yet! start by <a href="/choosepoison.html">craft one</a></p>`}
-      
+      </div>`
+          : html`<p>No ingredients found</p>`}
+     ` : html`<p>No Recipes Yet! start by <a href="/choosepoison.html">craft one</a></p>`}
     `;
   }
 }
