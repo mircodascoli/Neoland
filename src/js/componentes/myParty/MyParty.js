@@ -112,33 +112,27 @@ export class MyParty extends LitElement {
       <p>Grab your ingredients</p>
         </div>
         ${this.apiDataBottles && this.apiDataBottles.length > 0 ? html`
-        <ul>
-       <li> 
-            <img src="../img/imgProductos/${this.apiDataBottles[0].name}.png" alt="${this.apiDataBottles[0].name}">
-            <h3 class="name-botella">${this.apiDataBottles[0].name}</h3> 
-            <p class="price">${this.apiDataBottles[0].price} &euro;</p> 
-            <button class="AddToCart">Add to cart</button>
-         </li>
-           <li> 
-            <img src="../img/imgProductos/${this.apiDataBottles[1].name}.png" alt="${this.apiDataBottles[1].name}">
-            <h3 class="name-botella">${this.apiDataBottles[1].name}</h3> 
-            <p class="price">${this.apiDataBottles[1].price} &euro;</p> 
-            <button class="AddToCart">Add to cart</button>
-         </li>
-           <li> 
-            <img src="../img/imgProductos/${this.apiDataBottles[2].name}.png" alt="${this.apiDataBottles[2].name}">
-            <h3 class="name-botella">${this.apiDataBottles[2].name}</h3> 
-            <p class="price">${this.apiDataBottles[2].price} &euro;</p> 
-            <button class="AddToCart">Add to cart</button>
-         </li>
-           <li> 
-            <img src="../img/imgProductos/${this.apiDataBottles[3].name}.png" alt="${this.apiDataBottles[3].name}">
-            <h3 class="name-botella">${this.apiDataBottles[3].name}</h3> 
-            <p class="price">${this.apiDataBottles[3].price} &euro;</p> 
-            <button class="AddToCart">Add to cart</button>
-         </li>
-          
-        </ul>
+    <ul>
+        ${this.apiDataBottles.map(
+          (bottle) => html`
+            <li>
+              <img
+                src="../img/imgProductos/${bottle.name}.png"
+                alt="${bottle.name}"
+              />
+              <h3 class="name-botella">${bottle.name}</h3>
+              <p class="price">${bottle.price} &euro;</p>
+              <button
+                class="AddToCart"
+                data-id="${bottle._id}"
+                @click="${this.addToCart}"
+              >
+                Add to cart
+              </button>
+            </li>
+          `
+        )}
+      </ul>
         <div >
         </div>
       </div> 
@@ -151,5 +145,23 @@ export class MyParty extends LitElement {
      ` : html`<p>No Recipes Yet! start by <a href="/choosepoison.html">craft one</a></p>`}
     `;
   }
+
+ async addToCart(event) {
+
+  const id = event.target.getAttribute('data-id');
+  console.log(id)
+  const idUserNum = JSON.parse(sessionStorage.getItem('user'))._id
+  const idBotellaNum = id
+  const body = {
+    idUser : idUserNum,
+    idBotella: idBotellaNum,
+  }
+  const payload = JSON.stringify(body);
+  console.log(payload)
+  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/push/to/cart`, 'POST', payload);
+  console.log(apiData)
+  alert('Added to your cart! ')
+}
+
 }
 customElements.define('my-party', MyParty);
