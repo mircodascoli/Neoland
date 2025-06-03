@@ -230,7 +230,8 @@ body{
   
 
    
-    #already{
+    #already,
+    #rejected{
     color: #d84315;
     background-color: #fff3e0;
     padding: 0.5em 1em;
@@ -241,7 +242,8 @@ body{
     margin: 0 auto;
 }
 
-#registered{
+#registered,
+#logged{
     color: #2e7d32;
     background-color: #e8f5e9;
     padding: 0.5em 1em;

@@ -79,7 +79,7 @@ function DomContentLoaded() {
       const activePopUps = document.querySelectorAll('.description.active');
       activePopUps.forEach((popUp) => closePopup(popUp));
     })
-    signInFormLit?.addEventListener('login-form-submit', (event) => {
+    signInFormLit?.addEventListener('signin-form-submit', (event) => {
     // Aquí decido qué hacer una vez lanzado el login
     console.log('signin-form-lit recogido desde el index.js', event?.detail)
     if (event?.detail?.text === 'User already exists') {
@@ -102,16 +102,18 @@ function DomContentLoaded() {
     // Aquí decido qué hacer una vez lanzado el login
     console.log('log-in-form-lit recogido desde el index.js', event?.detail)
     if (event?.detail?.text === null) {
-    console.log('ponemos el cartel de user inexistente')
-    // document.getElementById('already')?.classList.remove('hidden')
-    // setTimeout(() => {
-    //   document.getElementById('already')?.classList.add('hidden')
-    // }, 1500)
+    console.log('log correcto')
+     document.getElementById('logged')?.classList.remove('hidden')
+     setTimeout(() => {
+       document.getElementById('logged')?.classList.add('hidden')
+    }, 1500)
+   
     }else{
-      console.log('ponemos el cartel de user registrado')
-    document.getElementById('registered')?.classList.remove('hidden')
+      console.log('constrasena equivocada')	
+       console.log('BBBBb')
+    document.getElementById('rejected')?.classList.remove('hidden')
     setTimeout(() => {
-      document.getElementById('registered')?.classList.add('hidden')
+      document.getElementById('rejected')?.classList.add('hidden')
     }, 1500)
     }
     

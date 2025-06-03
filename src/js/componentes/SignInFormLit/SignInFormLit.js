@@ -60,13 +60,13 @@ export class SignInFormLit extends LitElement {
                          eventDetail = { text: 'User already exists',}
                         }
   
-      onFormSubmitEvent = new CustomEvent("login-form-submit", {
+      onFormSubmitEvent = new CustomEvent("signin-form-submit", {
         bubbles: true,
         detail: eventDetail
       })
     } else {
       console.error('No se han enviado datos')
-      onFormSubmitEvent = new CustomEvent("login-form-submit", {
+      onFormSubmitEvent = new CustomEvent("signin-form-submit", {
         bubbles: true,
         detail: {
           text: 'No se han enviado los datos del formulario'

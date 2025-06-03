@@ -48,9 +48,10 @@
                 flex-direction: column;
                 justify-content:space-evenly;
                 align-items: center;
-                height: 200px;
-                width: 170px;
+                height: auto;
+                width: 20%;
                 border: 1px solid lightgrey;
+                padding: 1%;
 
                 h3{
                     text-transform: capitalize;
