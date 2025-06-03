@@ -233,6 +233,12 @@ function onLogOut(event) {
  * If no data is found, returns an empty State object.
  */
 function getDataFromSessionStorage() {
+  const INITIAL_STATE = {
+    users: [],// PASO 1
+    botellas: [],
+    isLoading: false,// Podría usarse para controlar cuando estamos realizando un fetch
+    error: false,// Podría usarse para controlar cuando sucede un error
+  }
   const defaultValue = JSON.stringify(INITIAL_STATE)
   return JSON.parse(sessionStorage.getItem('user') || defaultValue)
 }
@@ -509,7 +515,7 @@ console.log(userId, idBotellaNum)
 
   const body = {
   idUser : userId,
-   idBotella: idBotellaNum, 
+  idBotella: idBotellaNum, 
  
 }
   const payload = JSON.stringify(body);
@@ -536,6 +542,7 @@ function clearCart(){
 function welcoming(){
   let pWelcome = document.getElementById('welcome')
   let userEmail = JSON.parse(sessionStorage.getItem('user')).email
+  pWelcome.classList.add('p-welcome')
   pWelcome.textContent = `Welcome, ${userEmail}`
 }
 /**

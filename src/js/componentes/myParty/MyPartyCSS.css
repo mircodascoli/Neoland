@@ -78,6 +78,25 @@
           }
 
     }
+    
+    #noRecipes{
+        color: #ffffff;
+        background-color: #e67e39;
+        padding: 0.5em 1em;
+        border-left: 4px solid #c05102;
+        border-radius: 6px;
+        font-weight: bold;
+        max-width:  400px;
+        margin: 0 auto;
+
+        a{
+            color:#201d1a;
+        }
+
+        a:hover{
+            text-decoration: underline;
+        }
+    }	
 }
 
   #logOutButton

@@ -74,7 +74,7 @@ export class MyParty extends LitElement {
   }
   const payload = JSON.stringify(body);
    console.log(payload)
-  const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/delete/recipe`, 'DELETE', payload);
+  const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/delete/recipe`, 'DELETE', payload);
   console.log(apiData)
   alert('Recipe cleared!')
  location.reload();  
@@ -142,7 +142,7 @@ export class MyParty extends LitElement {
         <button class="user-btn" id="update" type="submit">Update</button>
       </div>`
           : html`<p>No ingredients found</p>`}
-     ` : html`<p>No Recipes Yet! start by <a href="/choosepoison.html">craft one</a></p>`}
+     ` : html`<p id="noRecipes">Start <a href="/choosepoison.html">crafting</a> your first recipe</p>`}
     `;
   }
 
@@ -158,7 +158,7 @@ export class MyParty extends LitElement {
   }
   const payload = JSON.stringify(body);
   console.log(payload)
-  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/push/to/cart`, 'POST', payload);
+  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/push/to/cart`, 'POST', payload);
   console.log(apiData)
   alert('Added to your cart! ')
 }

@@ -134,7 +134,7 @@ app.post('/api/busqueda/party', async (req, res) => {
          res.json(await db.users.carting( req.body.idBotella, req.body.idUser))
       })
 
-      app.post('/buscar/usuario', async (req, res) => {
+      app.post('/api/buscar/usuario', async (req, res) => {
         console.log('estamos en busqueda', req.body)
         //recuerda añadir la projeccion para filtrar los ampos que devolvemos
            res.json(await db.users.search(req.body))
