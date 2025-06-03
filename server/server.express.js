@@ -17,12 +17,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // CREATE
 
-  app.post('/create/botellas', async (req, res) => {
+  app.post('/api/create/botellas', async (req, res) => {
     console.log('server reate botellas')
     res.json(await db.botellas.get())
   });
   
-  app.post('/create/users', async (req, res) => {
+  app.post('/api/create/users', async (req, res) => {
     // 1. Comprobar si ya existe el usuario, usando getUsers
     const userExists = await db.users.get({ email: req.body.email})
     console.log("hello from create users")
@@ -40,13 +40,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 
 // READ
-app.get('/read/users', async (req, res) =>  {
+app.get('/api/read/users', async (req, res) =>  {
       console.log('server read users')
       res.json(await db.users.get())
     });
 
 
-  app.get('/read/botellas', async (req, res) => {
+  app.get('/api/read/botellas', async (req, res) => {
    
       console.log('server read botellas')
       res.json(await db.botellas.get())
@@ -54,34 +54,34 @@ app.get('/read/users', async (req, res) =>  {
 
 
  // UPDATE     
- app.put('/update/users/:_id', async (req, res) => {
+ app.put('/api/update/users/:_id', async (req, res) => {
   res.json(await db.users.update(req.params._id, req.body))
   console.log('update', req.params._id, req.body)
 })
 
 // DELETE
 
- app.delete('/delete/user/', async (req, res) => {
+ app.delete('/api/delete/user/', async (req, res) => {
     console.log('server delete user', req.body, typeof req.body)
 
     res.json(await db.users.delete(req.body._id))
       })  
 
  
-  app.delete('/delete/from/cart', async (req, res) => {
+  app.delete('/api/delete/from/cart', async (req, res) => {
     console.log('server delete from cart')
     
     res.json(await db.users.DeleteFromCart( req.body.idBotella, req.body.idUser))
    
       })
 
-   app.delete('/delete/cart', async (req, res) => {
+   app.delete('/api/delete/cart', async (req, res) => {
     console.log('server delete cart',req.body.userId, typeof req.body.userId)
     
     res.json(await db.users.clearCart( req.body.userId))
       })  
 
-  app.delete('/delete/recipe', async (req, res) => {
+  app.delete('/api/delete/recipe', async (req, res) => {
     console.log('server delete recipe')
 
     res.json(await db.users.clearRecipe( req.body.userId))
@@ -90,13 +90,13 @@ app.get('/read/users', async (req, res) =>  {
 
     // FILTER
 
-    app.post('/busqueda', async (req, res) => {
+    app.post('/api/busqueda', async (req, res) => {
       console.log('estamos en busqueda', req.body)
       //recuerda añadir la projeccion para filtrar los ampos que devolvemos
          res.json(await db.botellas.search( { $text: { $search: req.body.name } },{}))
       })
 
-    app.post('/busqueda/cart', async (req, res) => {
+    app.post('/api/busqueda/cart', async (req, res) => {
   try {
     const ids = req.body.ids;
     console.log('Ricevuti questi ID:', ids);
@@ -107,7 +107,7 @@ app.get('/read/users', async (req, res) =>  {
     console.error('Error in express', error);
   }})
 
-app.post('/busqueda/party', async (req, res) => {
+app.post('/api/busqueda/party', async (req, res) => {
   console.log('estamos en busqueda party', req.body);
 
   const keywords = req.body.keywords;
@@ -128,7 +128,7 @@ app.post('/busqueda/party', async (req, res) => {
   }
 });
    
-         app.post('/push/to/cart', async (req, res) => {
+         app.post('/api/push/to/cart', async (req, res) => {
       console.log('estamos para push to cart', req.body)
     
          res.json(await db.users.carting( req.body.idBotella, req.body.idUser))
@@ -142,7 +142,7 @@ app.post('/busqueda/party', async (req, res) => {
         })
 
 
-   app.post('/login', async (req, res) => {
+   app.post('/api/login', async (req, res) => {
     console.log('estamos en login', req.body)
     const user = await db.users.login({ email:req.body.email, password:req.body.password})
     res.json(user)

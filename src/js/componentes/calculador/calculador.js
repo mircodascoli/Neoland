@@ -128,7 +128,7 @@ export class Calculador extends LitElement {
     const PAYLOAD = JSON.stringify(dataForUpdate);
 
     console.log("esta es PAYLOAD ", PAYLOAD);
-    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/update/users/${sessionStorageUserId}`, 'PUT', PAYLOAD);
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/update/users/${sessionStorageUserId}`, 'PUT', PAYLOAD);
     console.log("esta es apidata", apiData);
 
     alert('Saved!');

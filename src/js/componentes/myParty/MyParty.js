@@ -41,7 +41,7 @@ export class MyParty extends LitElement {
   async loadApiData() {
     console.log('Loading the data');
     const payload = JSON.stringify({ id: this._idSession });
-    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload);
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/buscar/usuario`, 'POST', payload);
   
     this.apiData = apiData;
     console.log(this.apiData, "valore di apidata, alla fine della funzione e prima del  render");
@@ -57,7 +57,7 @@ export class MyParty extends LitElement {
    
     const payload = JSON.stringify(body);
     console.log(payload, typeof payload, 'payload');
-    const apiDataBottles = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda/party`, 'POST', payload);
+    const apiDataBottles = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/busqueda/party`, 'POST', payload);
   
     this.apiDataBottles = apiDataBottles;
     console.log(this.apiDataBottles, "valore di apidatabottles")

@@ -118,15 +118,13 @@ function DomContentLoaded() {
     }
     
   })
-  checkLoggedIn()
+ /*  checkLoggedIn() */
   }
-function checkLoggedIn() {
-if (sessionStorage.getItem('user')!== null && location.pathname !== '/index.html'|| location.pathname !== '/login.html'|| location.pathname === '/signin.html') 
-  {
-location.href = './index.html'
-} 
-}
-
+/* function checkLoggedIn() {
+  if ((location.pathname !== '/index.html' && location.pathname !== '/login.html') || (location.pathname === '/signin.html' && sessionStorage.getItem('user') == null)) {
+    location.href = './index.html'
+  }
+} */
 
 function onLogOut(event) {
     event.preventDefault()
@@ -141,7 +139,7 @@ function onLogOut(event) {
       let userId = JSON.parse(sessionStorage.getItem('user'))._id
       console.log(userId, typeof userId)
       let payload = JSON.stringify({ _id: userId })
-      let apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/delete/user/`, 'DELETE', payload);
+      let apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/delete/user/`, 'DELETE', payload);
       console.log(apiData)
        sessionStorage.removeItem('user')  
       alert('Usuario borrado correctamente') 
@@ -303,7 +301,7 @@ async function displayProductos() {
  try { 
   const listaProductos = document.getElementById('listaProductos'); 
 
-    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/read/botellas`, 'GET');
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/read/botellas`, 'GET');
     
     console.log(apiData);
 
@@ -354,7 +352,7 @@ async function buscarProducto(event) {
     const newBotella = { name: valorBusqueda };
     const payload = JSON.stringify(newBotella);
 
-    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda`, 'POST', payload);
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/busqueda`, 'POST', payload);
 
     if (apiData.length === 0) {
       alert('Producto no encontrado');
@@ -418,7 +416,7 @@ try{
 }
   const payload = JSON.stringify(body);
    console.log(payload)
-  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/push/to/cart`, 'POST', payload);
+  const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/push/to/cart`, 'POST', payload);
   alert('Added to your cart!')
     console.log(apiData)
     location.href = './carrito.html';
@@ -437,7 +435,7 @@ catch (error) {
   try {
     const payload = JSON.stringify({ id: idUserNum });
     console.log(payload);
-    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/buscar/usuario`, 'POST', payload);
+    const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/buscar/usuario`, 'POST', payload);
    console.log(apiData);
     let idsInCart = apiData.cart;
     console.log(idsInCart);
@@ -458,7 +456,7 @@ catch (error) {
  
   const payloadCart = JSON.stringify({ ids: idsInCart });
   console.log(payloadCart);
-  const apiDataCart = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/busqueda/cart`, 'POST', payloadCart);
+  const apiDataCart = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/busqueda/cart`, 'POST', payloadCart);
      console.log(apiDataCart,typeof apiDataCart);
      if (apiDataCart.length === 0) {
   alert('No product found in DB');
@@ -516,7 +514,7 @@ console.log(userId, idBotellaNum)
 }
   const payload = JSON.stringify(body);
    console.log(payload)
-  const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/delete/from/cart`, 'DELETE', payload);
+  const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/delete/from/cart`, 'DELETE', payload);
   console.log(apiData)
 location.reload();
 
@@ -530,7 +528,7 @@ function clearCart(){
   }
   const payload = JSON.stringify(body);
    console.log(payload)
-  const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/delete/cart`, 'DELETE', payload);
+  const apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/delete/cart`, 'DELETE', payload);
   console.log(apiData)
   alert('Cart cleared!')
   location.reload(); 

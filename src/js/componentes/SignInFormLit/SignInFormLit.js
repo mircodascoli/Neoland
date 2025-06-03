@@ -51,7 +51,7 @@ export class SignInFormLit extends LitElement {
              if (signInData.email !== '' && signInData.password !== '') {
 
                 const payload = JSON.stringify(signInData)
-                const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/create/users`, 'POST', payload)
+                const apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/create/users`, 'POST', payload)
                 console.log(apiData)
                 let eventDetail = apiData
 
