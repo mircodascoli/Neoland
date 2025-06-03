@@ -129,30 +129,18 @@ function onLogOut(event) {
     sessionStorage.removeItem('user')
     location.href = './index.html'
   }
-/**
- * Handles the sign-out form submission, prevents the default form behavior,
- * removes the user data from USER_DB, removes the user session data from
- * session storage, and redirects to the home page.
- *
- * @param {Event} event - The event object associated with the form submission.
- */
-  function onSignOut(event) {
-    event.preventDefault()
-   
-    // Borro el usuario, si está identificado
+
+  function onSignOut() {
+   console.log('borrar usuario')
     if (sessionStorage.getItem('user') && confirm('¿Estás seguro de borrar tu usuario?')) {
-      let localStoredUser = sessionStorage.getItem('user')
-      if (localStoredUser === null) {
-        localStoredUser= ''
-       }
-       console.log('usuario antes de borrar', JSON.parse(localStoredUser))
-       store.user.delete(JSON.parse(localStoredUser))
-       console.log('usuario borrado', store.user.getAll())  
-      // updateUserDB()
-      // Eliminar la sesión del usuario
-      sessionStorage.removeItem('user')
-      alert('Usuario borrado correctamente')
-      location.href = './index.html'
+      let userId = JSON.parse(sessionStorage.getItem('user'))._id
+      console.log(userId, typeof userId)
+      let payload = JSON.stringify({ _id: userId })
+      let apiData = getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/delete/user/`, 'DELETE', payload);
+      console.log(apiData)
+       sessionStorage.removeItem('user')  
+      alert('Usuario borrado correctamente') 
+       location.href = './index.html' 
     }
 
   }

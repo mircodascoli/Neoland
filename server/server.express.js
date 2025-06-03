@@ -60,6 +60,13 @@ app.get('/read/users', async (req, res) =>  {
 })
 
 // DELETE
+
+ app.delete('/delete/user/', async (req, res) => {
+    console.log('server delete user', req.body, typeof req.body)
+
+    res.json(await db.users.delete(req.body._id))
+      })  
+
  
   app.delete('/delete/from/cart', async (req, res) => {
     console.log('server delete from cart')

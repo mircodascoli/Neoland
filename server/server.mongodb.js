@@ -10,6 +10,7 @@ export const db = {
         update: updateUsers,
         search: searchUsers,
         carting: AddIdBotellaToCart,
+        delete: deleteUsers,
         DeleteFromCart: DeleteFromCart,
         clearCart: clearCart,
         clearRecipe: clearRecipe
@@ -126,7 +127,15 @@ async function AddIdBotellaToCart(idBotella, idUser){
     console.log(returnValue)
     return returnValue
   }
-
+async function deleteUsers(id){
+    console.log('your account has been deleted from MONGOdb', id)
+    const client = new MongoClient(URI);
+    const PartytimeDB = client.db('Partytime');
+    const usersCollection = PartytimeDB.collection('users');
+    const returnValue = await usersCollection.deleteOne({ _id: new ObjectId(id) });
+    console.log(returnValue)
+    return returnValue
+  }
 
 
 async function DeleteFromCart(idBotella, idUser) {
