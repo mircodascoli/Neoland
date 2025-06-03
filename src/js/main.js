@@ -4,7 +4,7 @@
  
 import { simpleFetch } from './lib/simpleFetch.js'
 import { HttpError } from './clases/HttpError.js'
-import { store, INITIAL_STATE } from './store/redux.js'
+
 
 export const API_PORT = location.port ? `:${1337}` : ''
 const TIMEOUT = 10000
@@ -118,9 +118,14 @@ function DomContentLoaded() {
     }
     
   })
+  checkLoggedIn()
   }
-
-
+function checkLoggedIn() {
+if (sessionStorage.getItem('user')!== null && location.pathname !== '/index.html'|| location.pathname !== '/login.html'|| location.pathname === '/signin.html') 
+  {
+location.href = './index.html'
+} 
+}
 
 
 function onLogOut(event) {
