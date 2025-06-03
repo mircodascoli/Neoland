@@ -100,13 +100,13 @@ function DomContentLoaded() {
 
   LogInFormLit?.addEventListener('login-form-submit', (event) => {
     // Aquí decido qué hacer una vez lanzado el login
-    console.log('log-in-form-lit recogido desde el index.js', event?.detail)
-    if (event?.detail?.text === null) {
+    console.log('log-in-form-lit recogido desde el index.js eventdetail.text', event?.detail.text)
+    if (event?.detail?.text !== null) {
     console.log('log correcto')
      document.getElementById('logged')?.classList.remove('hidden')
      setTimeout(() => {
        document.getElementById('logged')?.classList.add('hidden')
-    }, 1500)
+    }, 500)
    
     }else{
       console.log('constrasena equivocada')	

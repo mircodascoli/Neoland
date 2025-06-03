@@ -53,6 +53,7 @@ export class LoginInFormLit extends LitElement {
       console.log(payload)
       let apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/login`, 'POST', payload)
       console.log(apiData)
+      let eventDetail = apiData
       if (apiData !== null) {
         // Guardamos los datos del usuario en la sesión
         let userPartyTime= JSON.stringify(apiData)
@@ -65,7 +66,7 @@ export class LoginInFormLit extends LitElement {
         }
       onFormSubmitEvent = new CustomEvent("login-form-submit", {
         bubbles: true,
-        detail: apiData
+        detail: eventDetail
       })
     } else {
       onFormSubmitEvent = new CustomEvent("login-form-submit", {
