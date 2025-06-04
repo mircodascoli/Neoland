@@ -99,33 +99,32 @@ function DomContentLoaded() {
   })
 
   LogInFormLit?.addEventListener('login-form-submit', (event) => {
-    // Aquí decido qué hacer una vez lanzado el login
-    console.log('log-in-form-lit recogido desde el index.js eventdetail.text', event?.detail.text)
-    if (event?.detail?.text !== null) {
-    console.log('log correcto')
-     document.getElementById('logged')?.classList.remove('hidden')
-     setTimeout(() => {
-       document.getElementById('logged')?.classList.add('hidden')
-    }, 500)
-   
-    }else{
-      console.log('constrasena equivocada')	
-       console.log('BBBBb')
-    document.getElementById('rejected')?.classList.remove('hidden')
-    setTimeout(() => {
-      document.getElementById('rejected')?.classList.add('hidden')
-    }, 1500)
-    }
-    
-  })
- /*  checkLoggedIn() */
-  }
-/* function checkLoggedIn() {
-  if ((location.pathname !== '/index.html' && location.pathname !== '/login.html') || (location.pathname === '/signin.html' && sessionStorage.getItem('user') == null)) {
-    location.href = './index.html'
-  }
-} */
+  const { success, data, error } = event?.detail || {};
 
+  if (success) {
+    console.log('✅ Login riuscito:', data);
+    document.getElementById('logged')?.classList.remove('hidden');
+    setTimeout(() => {
+      document.getElementById('logged')?.classList.add('hidden');
+    }, 500);
+  } else {
+    console.warn('❌ Login fallito:', error);
+    document.getElementById('rejected')?.classList.remove('hidden');
+    setTimeout(() => {
+      document.getElementById('rejected')?.classList.add('hidden');
+    }, 1500);
+  }
+})
+  checkLoggedIn() 
+  }
+function checkLoggedIn() {
+  const restrictedPages = ['/carrito.html', '/productos.html', '/choosepoison.html', '/calculadores.html', '/user.html'];
+  if (restrictedPages.includes(location.pathname) && sessionStorage.getItem('user') == null) {
+    location.href = './index.html'
+  } else {
+    sessionStorage.setItem('user', null)
+  }
+}
 function onLogOut(event) {
     event.preventDefault()
     // Eliminar la sesión del usuario

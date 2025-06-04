@@ -36,46 +36,61 @@ export class LoginInFormLit extends LitElement {
   }
 
   // Event listeners
-  async _onFormSubmit(e) {
-    e.preventDefault();
-    // Prevent autofill problems
-    const emailElement = this.renderRoot.querySelector('#emailLog')
-    const passwordElement = this.renderRoot.querySelector('#passwordLog')
-    const email = this.email || emailElement.value;
-    const password = this.password || passwordElement.value;
-    const loginData  = {
-      email,
-      password
-    }
-    let onFormSubmitEvent
-    if (loginData.email !== '' && loginData.password !== '') {
-     const payload = JSON.stringify(loginData)
-      console.log(payload)
-      let apiData = await getAPIData(`${location.protocol}//${location.hostname}${API_PORT}/api/login`, 'POST', payload)
-      console.log(apiData)
-      let eventDetail = apiData
-      if (apiData !== null) {
-        // Guardamos los datos del usuario en la sesión
-        let userPartyTime= JSON.stringify(apiData)
-        console.log('userpartytime',userPartyTime)
-        sessionStorage.setItem('user', userPartyTime)//userPartyTime)
-        document.body.classList.add('loading')
-        // Actualizo el interfaz
-        setTimeout(() => {
-           location.href = './user.html'}, 1000)
-        }
-      onFormSubmitEvent = new CustomEvent("login-form-submit", {
-        bubbles: true,
-        detail: eventDetail
-      })
-    } else {
-      onFormSubmitEvent = new CustomEvent("login-form-submit", {
-        bubbles: true,
-        detail: null
-      })
-    }
+ async _onFormSubmit(e) {
+  e.preventDefault();
 
-    this.dispatchEvent(onFormSubmitEvent);
+  const emailElement = this.renderRoot.querySelector('#emailLog');
+  const passwordElement = this.renderRoot.querySelector('#passwordLog');
+  const email = this.email || emailElement.value;
+  const password = this.password || passwordElement.value;
+
+  const loginData = { email, password };
+
+  let eventDetail = {
+    success: false,
+    data: null,
+    error: null
+  };
+
+  if (email !== '' && password !== '') {
+    try {
+      const payload = JSON.stringify(loginData);
+      const apiData = await getAPIData(
+        `${location.protocol}//${location.hostname}${API_PORT}/api/login`,
+        'POST',
+        payload
+      );
+
+      if (apiData) {
+        const userSession = JSON.stringify(apiData);
+        sessionStorage.setItem('user', userSession);
+        document.body.classList.add('loading');
+
+        eventDetail.success = true;
+        eventDetail.data = apiData;
+
+        setTimeout(() => {
+          location.href = './user.html';
+        }, 1000);
+      } else {
+        eventDetail.error = 'Login fallito: risposta API nulla';
+      }
+
+    } catch (error) {
+      console.error('Errore nella richiesta login:', error);
+      eventDetail.error = 'Errore di rete o API';
+    }
+  } else {
+    eventDetail.error = 'Email o password mancanti';
   }
+
+  const onFormSubmitEvent = new CustomEvent('login-form-submit', {
+    bubbles: true,
+    detail: eventDetail
+  });
+
+  this.dispatchEvent(onFormSubmitEvent);
+}
+
 }
 customElements.define('log-in-form-lit', LoginInFormLit);
