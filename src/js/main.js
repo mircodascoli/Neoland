@@ -119,9 +119,10 @@ function DomContentLoaded() {
   }
 function checkLoggedIn() {
   const restrictedPages = ['/carrito.html', '/productos.html', '/choosepoison.html', '/calculadores.html', '/user.html'];
+  const accessPages = ['/index.html', '/signin.html', '/login.html'];
   if (restrictedPages.includes(location.pathname) && sessionStorage.getItem('user') == null) {
     location.href = './index.html'
-  } else {
+  } else if (accessPages.includes(location.pathname) && sessionStorage.getItem('user') != null) {
     sessionStorage.setItem('user', null)
   }
 }
