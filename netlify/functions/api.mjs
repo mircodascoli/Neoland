@@ -1,27 +1,22 @@
-import express from 'express';
+import express, { Router }  from 'express';
 import bodyParser from 'body-parser';
 import { ObjectId, MongoClient } from 'mongodb';
-
-const app = express();
+import serverless from 'serverless-http';
 const port = process.env.PORT;
 
-// Static server
-app.use(express.static('src'));
-// for parsing application/json
-app.use(bodyParser.json());
-// for parsing application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }))
-
 const URI = process.env.MONGO_ATLAS;
+const api = express();
+const router = Router();
+
 
 // CREATE
 
-  app.post('/api/create/botellas', async (req, res) => {
+  router.post('/api/create/botellas', async (req, res) => {
     console.log('server reate botellas')
     res.json(await db.botellas.get())
   });
   
-  app.post('/api/create/users', async (req, res) => {
+  router.post('/api/create/users', async (req, res) => {
     // 1. Comprobar si ya existe el usuario, usando getUsers
     const userExists = await db.users.get({ email: req.body.email})
     console.log("hello from create users")
@@ -39,13 +34,13 @@ const URI = process.env.MONGO_ATLAS;
 
 
 // READ
-app.get('/api/read/users', async (req, res) =>  {
+router.get('/api/read/users', async (req, res) =>  {
       console.log('server read users')
       res.json(await db.users.get())
     });
 
 
-  app.get('/api/read/botellas', async (req, res) => {
+  router.get('/api/read/botellas', async (req, res) => {
    
       console.log('server read botellas')
       res.json(await db.botellas.get())
@@ -53,34 +48,34 @@ app.get('/api/read/users', async (req, res) =>  {
 
 
  // UPDATE     
- app.put('/api/update/users/:_id', async (req, res) => {
+ router.put('/api/update/users/:_id', async (req, res) => {
   res.json(await db.users.update(req.params._id, req.body))
   console.log('update', req.params._id, req.body)
 })
 
 // DELETE
 
- app.delete('/api/delete/user/', async (req, res) => {
+ router.delete('/api/delete/user/', async (req, res) => {
     console.log('server delete user', req.body, typeof req.body)
 
     res.json(await db.users.delete(req.body._id))
       })  
 
  
-  app.delete('/api/delete/from/cart', async (req, res) => {
+  router.delete('/api/delete/from/cart', async (req, res) => {
     console.log('server delete from cart')
     
     res.json(await db.users.DeleteFromCart( req.body.idBotella, req.body.idUser))
    
       })
 
-   app.delete('/api/delete/cart', async (req, res) => {
+   router.delete('/api/delete/cart', async (req, res) => {
     console.log('server delete cart',req.body.userId, typeof req.body.userId)
     
     res.json(await db.users.clearCart( req.body.userId))
       })  
 
-  app.delete('/api/delete/recipe', async (req, res) => {
+  router.delete('/api/delete/recipe', async (req, res) => {
     console.log('server delete recipe')
 
     res.json(await db.users.clearRecipe( req.body.userId))
@@ -89,13 +84,13 @@ app.get('/api/read/users', async (req, res) =>  {
 
     // FILTER
 
-    app.post('/api/busqueda', async (req, res) => {
+    router.post('/api/busqueda', async (req, res) => {
       console.log('estamos en busqueda', req.body)
       //recuerda añadir la projeccion para filtrar los ampos que devolvemos
          res.json(await db.botellas.search( { $text: { $search: req.body.name } },{}))
       })
 
-    app.post('/api/busqueda/cart', async (req, res) => {
+    router.post('/api/busqueda/cart', async (req, res) => {
   try {
     const ids = req.body.ids;
     console.log('Ricevuti questi ID:', ids);
@@ -106,7 +101,7 @@ app.get('/api/read/users', async (req, res) =>  {
     console.error('Error in express', error);
   }})
 
-app.post('/api/busqueda/party', async (req, res) => {
+router.post('/api/busqueda/party', async (req, res) => {
   console.log('estamos en busqueda party', req.body);
 
   const keywords = req.body.keywords;
@@ -127,13 +122,13 @@ app.post('/api/busqueda/party', async (req, res) => {
   }
 });
    
-         app.post('/api/push/to/cart', async (req, res) => {
+         router.post('/api/push/to/cart', async (req, res) => {
       console.log('estamos para push to cart', req.body)
     
          res.json(await db.users.carting( req.body.idBotella, req.body.idUser))
       })
 
-      app.post('/api/buscar/usuario', async (req, res) => {
+     router.post('/api/buscar/usuario', async (req, res) => {
         console.log('estamos en busqueda', req.body)
         //recuerda añadir la projeccion para filtrar los ampos que devolvemos
            res.json(await db.users.search(req.body))
@@ -141,19 +136,25 @@ app.post('/api/busqueda/party', async (req, res) => {
         })
 
 
-   app.post('/api/login', async (req, res) => {
+  router.post('/api/login', async (req, res) => {
     console.log('estamos en login', req.body)
     const user = await db.users.login({ email:req.body.email, password:req.body.password})
     res.json(user)
     
   })
 
-  app.listen(port, async () => {
+  router.listen(port, async () => {
     console.log(` listening on port ${port}`);
   })
   
 
+// for parsing application/json
+api.use(bodyParser.json())
+// for parsing application/x-www-form-urlencoded
+api.use(bodyParser.urlencoded({ extended: true }))
+api.use('/api/', router)
 
+export const handler = serverless(api);
 
 export const db = {
     users: {
