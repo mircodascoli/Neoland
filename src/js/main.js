@@ -33,13 +33,14 @@ function DomContentLoaded() {
     let signInFormLit = document.querySelector('signin-form-lit')
     let LogInFormLit = document.querySelector('log-in-form-lit')
     let bodyCarrito = document.getElementById('bodyCarrito') 
-  
+    let hamMenu= document.getElementById('hamMenu')
     formLogOut?.addEventListener('click', onLogOut)
     formSignout?.addEventListener('click', onSignOut)
     botonBuscar?.addEventListener('click', buscarProducto)
     craftButton?.addEventListener('click', redirectToCalculadores); 
     formBusqueda?.addEventListener('submit', buscarProducto)
     formBusqueda?.addEventListener('keyup', onInputKeyUp)
+     hamMenu?.addEventListener('click',openSideBar)
    /*  deleteButton?.addEventListener('click', deleteItemFromCart) */
     openPopUpLink.forEach((link) => {
       link.addEventListener('click', () => {
@@ -146,6 +147,13 @@ function onLogOut(event) {
        location.href = './index.html' 
     }
 
+  }
+  function openSideBar(){
+  console.log('lets open the menu')
+  let underlay = document.getElementById('underlay')
+  underlay.classList.remove('hidden')
+  let sideBar = document.querySelector('.sidebar')
+  sideBar.classList.add('active')
   }
   function openPopup(popUp, link) {
     let overlay = document.getElementById('overlay')
