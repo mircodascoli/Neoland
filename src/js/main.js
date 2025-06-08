@@ -34,6 +34,7 @@ function DomContentLoaded() {
     let LogInFormLit = document.querySelector('log-in-form-lit')
     let bodyCarrito = document.getElementById('bodyCarrito') 
     let hamMenu= document.getElementById('hamMenu')
+    let xButton = document.getElementById('xButton')
     formLogOut?.addEventListener('click', onLogOut)
     formSignout?.addEventListener('click', onSignOut)
     botonBuscar?.addEventListener('click', buscarProducto)
@@ -41,6 +42,7 @@ function DomContentLoaded() {
     formBusqueda?.addEventListener('submit', buscarProducto)
     formBusqueda?.addEventListener('keyup', onInputKeyUp)
      hamMenu?.addEventListener('click',openSideBar)
+     xButton ?.addEventListener('click',closeSideBar)
    /*  deleteButton?.addEventListener('click', deleteItemFromCart) */
     openPopUpLink.forEach((link) => {
       link.addEventListener('click', () => {
@@ -154,6 +156,14 @@ function onLogOut(event) {
   underlay.classList.remove('hidden')
   let sideBar = document.querySelector('.sidebar')
   sideBar.classList.add('active')
+  }
+
+  function closeSideBar(){
+    console.log('lets close the menu')
+    let underlay = document.getElementById('underlay')
+    underlay.classList.add('hidden')
+    let sideBar = document.querySelector('.sidebar')
+    sideBar.classList.remove('active')
   }
   function openPopup(popUp, link) {
     let overlay = document.getElementById('overlay')
