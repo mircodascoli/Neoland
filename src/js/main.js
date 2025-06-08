@@ -35,6 +35,7 @@ function DomContentLoaded() {
     let bodyCarrito = document.getElementById('bodyCarrito') 
     let hamMenu= document.getElementById('hamMenu')
     let xButton = document.getElementById('xButton')
+    let underlay = document.getElementById('underlay')
     formLogOut?.addEventListener('click', onLogOut)
     formSignout?.addEventListener('click', onSignOut)
     botonBuscar?.addEventListener('click', buscarProducto)
@@ -43,6 +44,7 @@ function DomContentLoaded() {
     formBusqueda?.addEventListener('keyup', onInputKeyUp)
      hamMenu?.addEventListener('click',openSideBar)
      xButton ?.addEventListener('click',closeSideBar)
+    
    /*  deleteButton?.addEventListener('click', deleteItemFromCart) */
     openPopUpLink.forEach((link) => {
       link.addEventListener('click', () => {
@@ -82,6 +84,8 @@ function DomContentLoaded() {
       const activePopUps = document.querySelectorAll('.description.active');
       activePopUps.forEach((popUp) => closePopup(popUp));
     })
+
+    underlay?.addEventListener('click', closeSideBar)
     signInFormLit?.addEventListener('signin-form-submit', (event) => {
     // Aquí decido qué hacer una vez lanzado el login
     console.log('signin-form-lit recogido desde el index.js', event?.detail)
