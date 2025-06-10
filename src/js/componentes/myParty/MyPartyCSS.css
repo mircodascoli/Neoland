@@ -4,10 +4,9 @@
     justify-content: center;
     align-items: center;
     row-gap: 20px;
-    width: 600px;
+    width: 80vw;
     margin: 0 auto;
-    border: 1px solid lightgrey;
-    border-radius: 10px;
+ 
 
 
     .tr, .thead{
@@ -52,7 +51,8 @@
                 width: 20%;
                 border: 1px solid lightgrey;
                 padding: 1%;
-
+                background-color: white;
+                
                 h3{
                     text-transform: capitalize;
                 }
@@ -97,6 +97,15 @@
             text-decoration: underline;
         }
     }	
+
+    #eraseOrUpdate{
+        margin-top:10px ;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        column-gap: 10px;
+    }
 }
 
   #logOutButton

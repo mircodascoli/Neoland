@@ -1,8 +1,12 @@
 .container-calculador{
-    margin: 0 auto;
-    padding: 10%;
+    width: 80vh;
     
   }
+
+  #clearBtnContainer{
+       
+}
+
 
   #inputscalculador{
     display: flex;
@@ -10,6 +14,15 @@
     justify-content: center;
     column-gap: 20px;
     padding: 5%;          
+}
+
+.total-ml{
+   color: white;
+   text-transform: uppercase;
+}
+
+.people{
+    height:20px;
 }
 
   #resultados{
@@ -26,12 +39,22 @@
     text-align: center;
     line-height: 40px;
    border: 1px solid black;
+   background-color: white;
 
     th{
         text-transform: uppercase;
     }
 
   
+}
+
+#seleccionador{
+    background-color: black;
+    color: white;
+    height: 30px;
+    border: 1px solid white;
+    border-radius: 5px;
+
 }
 
 .alert {

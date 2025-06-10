@@ -21,6 +21,12 @@ body{
     background-color: white;
 
 }
+
+main,
+footer,
+header{
+   width: 100vw;
+}
   
 .index-body{
         background-image: url('../css/img-css/background-index.png');
@@ -79,6 +85,7 @@ body{
         overflow-y: scroll;
     }
 
+ 
   
 
     .title{
@@ -123,16 +130,34 @@ body{
     background-repeat: no-repeat;
   }
 
+  #mainUser{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #logOutIcon,
+    #signOutIcon{
+        height: 15px;
+        width: auto;
+    }
+
+
+
   .main-choose,
   #mainCalculadores,
-  #mainProductos{
+  #mainProductos,
+  #mainCarrito,
+  #mainUser{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     row-gap: 20px;
     padding: 10%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1)),url(./img-css/background-desktop.png);
+    background-image: linear-gradient( rgb(224, 135, 56), rgba(0, 0, 0, 1));
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -153,11 +178,7 @@ body{
             background-color: rgb(224, 135, 56)
           }
 
-          &.container-calculador{
-            margin: 0 auto;
-            padding: 10%;
-            
-          }
+          
 
           #inputscalculador{
             display: flex;
@@ -213,7 +234,7 @@ body{
   
         }
 
-        .menu-icon{
+        #hamMenu{
             width: 50px;
             height: 50px;
             place-self: center;
@@ -264,7 +285,7 @@ body{
         }
        }
         
-       }
+       
     
 
 
@@ -300,11 +321,6 @@ body{
     margin: 0 auto;
 } 
 
-    
-
-  
-   
-
     &.loading {
         opacity: .5;
       }
@@ -314,8 +330,29 @@ body{
 #userArea{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content:center;
     gap: 10px;
+    height:250px;
+}
+
+#userArea{
+  width: 80%,
+}
+
+#btnUserContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+#btnsUser{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+ 
+    gap: 10px;
+}
 
      .index-buttons,
       .user-btn{
@@ -339,7 +376,7 @@ body{
         color: #fff;
         border: 2px solid #fff
     }
-}
+
 
 
 form{
@@ -376,7 +413,7 @@ form{
 
 h2{
     font-family: Boldonse, sans-serif;
-    color: #8ae30c;
+    color: rgb(224, 135, 56);
     text-transform: uppercase;
     font-size: 1.5em 
 }
@@ -424,6 +461,16 @@ a{
     }
 }
 
+#formBusqueda{
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 20px;
+    padding: 10%;
+}
+
   #listaProductos,
   #carrito,
   #listCocktails{
@@ -438,9 +485,10 @@ a{
                 flex-direction: column;
                 justify-content:space-evenly;
                 align-items: center;
-                height: 200px;
-                width: 170px;
+                height: 250px;
+                width: 200px;
                 border: 1px solid lightgrey;
+                border-radius: 5px;
                 background-color: white ;
 
                 h3{
@@ -460,6 +508,9 @@ a{
                     text-decoration: none;
                     border: 1px solid lightgrey;
                     border-radius: 7px;
+                    height: 40px;
+                    width: 100px;
+                    cursor: pointer;
                 }
             }
 
@@ -467,12 +518,14 @@ a{
                 border: 2px solid black
               }
 
-              .delete-button{
-                cursor: pointer;
-                align-self: flex-end;
-              }
     
         }
+
+           .delete-button{
+                cursor: pointer;
+                justify-self: flex-start;
+             
+              }
 
 #description{
     position: fixed;
@@ -493,15 +546,15 @@ a{
     .pop-up-head{
         display: flex;
         justify-content: space-between;
-        max-width: 100%;
-        width: 90%;
+        width: 100%;
 
-        button{
+      button{
             cursor: pointer;
             background: none;
             border: none;
-            size: 20px;
+            size: 40px;
             font-weight: bold;
+            color: black;
         }
     }
 
@@ -546,8 +599,10 @@ a{
 
 .p-welcome{
     color: black;
-    font-size: 2.5em;
+    font-size: calc(1em + 1vw);
+    font-weight: bold;
     text-shadow: gray 2px 2px 4px;
+    width: 80%;
 
     #userEmail{
         color: #333;

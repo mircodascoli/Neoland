@@ -115,7 +115,7 @@ export class MyParty extends LitElement {
     <ul>
         ${this.apiDataBottles.map(
           (bottle) => html`
-            <li>
+            <li class="botella-my-party">
               <img
                 src="../img/imgProductos/${bottle.name}.png"
                 alt="${bottle.name}"
@@ -137,7 +137,7 @@ export class MyParty extends LitElement {
         </div>
       </div> 
 
-        <div id="EraseOrUpdate">
+        <div id="eraseOrUpdate">
         <button class="user-btn" id="erase"  @click="${this.clearRecipe}">Erase</button">
         <button class="user-btn" id="update" type="submit">Update</button>
       </div>`

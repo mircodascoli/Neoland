@@ -1,6 +1,4 @@
  //@ts-no-check
-
-
  
 import { simpleFetch } from './lib/simpleFetch.js'
 import { HttpError } from './clases/HttpError.js'
@@ -11,55 +9,86 @@ const TIMEOUT = 10000
 
 window.addEventListener('DOMContentLoaded', DomContentLoaded)
 
+
 /**
- * Evento que se lanza cuando el contenido de la página ha sido cargado en memoria
- * y se puede acceder a él.
- * @listens DOMContentLoaded
+ * Function triggered when the DOM is fully loaded.
+ * It is responsible for initializing the event listeners for the following elements:
+ *   - logOutButton
+ *   - signOutButton
+ *   - openPopUpLink
+ *   - closePopUpButton
+ *   - formBusqueda
+ *   - botonBuscar
+ *   - overlay
+ *   - hamMenu
+ *   - xButton
+ *   - underlay
+ *   - deleteButton
+ *   - signInFormLit
+ *   - LogInFormLit
+ *
+ * It also triggers the loading of the products and calculators when the corresponding
+ * body elements are found.
+ *
+ * @listens logOutButton - click
+ * @listens signOutButton - click
+ * @listens openPopUpLink - click
+ * @listens closePopUpButton - click
+ * @listens formBusqueda - submit
+ * @listens formBusqueda - keyup
+ * @listens botonBuscar - click
+ * @listens overlay - click
+ * @listens hamMenu - click
+ * @listens xButton - click
+ * @listens underlay - click
+ * @listens deleteButton - click
+ * @listens signInFormLit - signin-form-submit
+ * @listens LogInFormLit - login-form-submit
  */
 function DomContentLoaded() {
   
    
-    let formLogOut = document.getElementById('logOutButton')
-    let formSignout = document.getElementById('signOutButton')
-    let openPopUpLink = document.querySelectorAll('[data-modal-target]')
-    let closePopUpButton = document.querySelectorAll('[data-close-button]')
-    let bodyCalculator = document.getElementById('body-calculadores')
-    let bodyProductos = document.getElementById('bodyProductos')
-    let bodyUser = document.getElementById('bodyUser')
-    let formBusqueda =  document.getElementById('form-busqueda')
-    let botonBuscar = document.getElementById('botonBuscar')
-    let overlay = document.getElementById('overlay') 
-    let craftButton = document.getElementById('craft-button');
-    let signInFormLit = document.querySelector('signin-form-lit')
-    let LogInFormLit = document.querySelector('log-in-form-lit')
-    let bodyCarrito = document.getElementById('bodyCarrito') 
-    let hamMenu= document.getElementById('hamMenu')
-    let xButton = document.getElementById('xButton')
-    let underlay = document.getElementById('underlay')
-    formLogOut?.addEventListener('click', onLogOut)
-    formSignout?.addEventListener('click', onSignOut)
-    botonBuscar?.addEventListener('click', buscarProducto)
-    craftButton?.addEventListener('click', redirectToCalculadores); 
-    formBusqueda?.addEventListener('submit', buscarProducto)
-    formBusqueda?.addEventListener('keyup', onInputKeyUp)
-     hamMenu?.addEventListener('click',openSideBar)
-     xButton ?.addEventListener('click',closeSideBar)
-    
-   /*  deleteButton?.addEventListener('click', deleteItemFromCart) */
-    openPopUpLink.forEach((link) => {
-      link.addEventListener('click', () => {
-        let popUp = document.querySelector(`${link.dataset.modalTarget}`);
-        openPopup(popUp, link);
-        console.log('pop up')
-      });
+  let formLogOut = document.getElementById('logOutButton')
+  let formSignout = document.getElementById('signOutButton')
+  let openPopUpLink = document.querySelectorAll('[data-modal-target]')
+  let closePopUpButton = document.querySelectorAll('[data-close-button]')
+  let bodyCalculator = document.getElementById('body-calculadores')
+  let bodyProductos = document.getElementById('bodyProductos')
+  let bodyUser = document.getElementById('bodyUser')
+  let formBusqueda =  document.getElementById('formBusqueda')
+  let botonBuscar = document.getElementById('botonBuscar')
+  let overlay = document.getElementById('overlay') 
+  let craftButton = document.getElementById('craft-button');
+  let signInFormLit = document.querySelector('signin-form-lit')
+  let LogInFormLit = document.querySelector('log-in-form-lit')
+  let bodyCarrito = document.getElementById('bodyCarrito') 
+  let hamMenu= document.getElementById('hamMenu')
+  let xButton = document.getElementById('xButton')
+  let underlay = document.getElementById('underlay')
+  let deleteButton = document.querySelector('.delete-button')
+
+  formLogOut?.addEventListener('click', onLogOut)
+  formSignout?.addEventListener('click', onSignOut)
+  botonBuscar?.addEventListener('click', buscarProducto)
+  craftButton?.addEventListener('click', redirectToCalculadores); 
+  formBusqueda?.addEventListener('submit', buscarProducto)
+  formBusqueda?.addEventListener('keyup', onInputKeyUp)
+  hamMenu?.addEventListener('click',openSideBar)
+  xButton ?.addEventListener('click',closeSideBar)   
+  deleteButton?.addEventListener('click', deleteItemFromCart) 
+  openPopUpLink.forEach((link) => {
+    link.addEventListener('click', () => {
+      let popUp = document.querySelector(`${link.dataset.modalTarget}`);
+      openPopup(popUp, link);
+      console.log('pop up')
     });
-  
-    closePopUpButton.forEach((button) => {
-      button.addEventListener('click', () => {
-        let popUp =button.closest('.description');
-        closePopup(popUp);
-      });
+  });
+  closePopUpButton.forEach((button) => {
+    button.addEventListener('click', () => {
+      let popUp =button.closest('.description');
+      closePopup(popUp);
     });
+  });
     
     if (bodyProductos != null){
       console.log('body encontrado, display productos') 
@@ -77,7 +106,6 @@ function DomContentLoaded() {
     if (bodyCarrito != null){
       console.log('body carritoencontrado, display carrito') 
      loadCartData()
-
     }
 
     overlay?.addEventListener('click', () => {
@@ -85,10 +113,8 @@ function DomContentLoaded() {
       activePopUps.forEach((popUp) => closePopup(popUp));
     })
 
-    underlay?.addEventListener('click', closeSideBar)
-    signInFormLit?.addEventListener('signin-form-submit', (event) => {
-    // Aquí decido qué hacer una vez lanzado el login
-    console.log('signin-form-lit recogido desde el index.js', event?.detail)
+  underlay?.addEventListener('click', closeSideBar)
+  signInFormLit?.addEventListener('signin-form-submit', (event) => {
     if (event?.detail?.text === 'User already exists') {
     console.log('ponemos el cartel de user existente')
     document.getElementById('already')?.classList.remove('hidden')
@@ -109,13 +135,13 @@ function DomContentLoaded() {
   const { success, data, error } = event?.detail || {};
 
   if (success) {
-    console.log('✅ Login riuscito:', data);
+    console.log('Login ok:', data);
     document.getElementById('logged')?.classList.remove('hidden');
     setTimeout(() => {
       document.getElementById('logged')?.classList.add('hidden');
     }, 500);
   } else {
-    console.warn('❌ Login fallito:', error);
+    console.warn('Login fail', error);
     document.getElementById('rejected')?.classList.remove('hidden');
     setTimeout(() => {
       document.getElementById('rejected')?.classList.add('hidden');
@@ -124,6 +150,8 @@ function DomContentLoaded() {
 })
   checkLoggedIn() 
   }
+
+
 function checkLoggedIn() {
   const restrictedPages = ['/carrito.html', '/productos.html', '/choosepoison.html', '/calculadores.html', '/user.html'];
   const accessPages = ['/index.html', '/signin.html', '/login.html'];
@@ -133,12 +161,27 @@ function checkLoggedIn() {
     sessionStorage.setItem('user', null)
   }
 }
+
+/**
+ * Handles the log out form submission, prevents the default form behavior,
+ * removes the user session data from session storage, and redirects to the home page.
+ *
+ * @param {Event} event - The event object associated with the form submission.
+ */
 function onLogOut(event) {
     event.preventDefault()
     // Eliminar la sesión del usuario
     sessionStorage.removeItem('user')
     location.href = './index.html'
   }
+
+/**
+ * Handles the sign out form submission, prevents the default form behavior,
+ * removes the user data from USER_DB, removes the user session data from session storage,
+ * and redirects to the home page.
+ *
+ * @return {void}
+ */
 
   function onSignOut() {
    console.log('borrar usuario')
@@ -154,34 +197,53 @@ function onLogOut(event) {
     }
 
   }
+/**
+ * Abre el menu  lateral
+ *
+ * @return {void}
+ */
   function openSideBar(){
   console.log('lets open the menu')
   let underlay = document.getElementById('underlay')
-  underlay.classList.remove('hidden')
+  underlay?.classList.remove('hidden')
   let sideBar = document.querySelector('.sidebar')
-  sideBar.classList.add('active')
+  sideBar?.classList.add('active')
   }
 
+/**
+ * Cierra el menu lateral
+ *
+ * @return {void}
+ */
   function closeSideBar(){
     console.log('lets close the menu')
     let underlay = document.getElementById('underlay')
-    underlay.classList.add('hidden')
+    underlay?.classList.add('hidden')
     let sideBar = document.querySelector('.sidebar')
-    sideBar.classList.remove('active')
+    sideBar?.classList.remove('active')
   }
+/**
+ * Abre el popup de la receta correspondiente al enlace clickado, cambia el texto
+ * del popup seg n el nombre de la receta y lo muestra
+ *
+ * @param {HTMLElement} popUp - El elemento HTML del popup
+ * @param {HTMLElement} link - El enlace clickado
+ *
+ * @return {void}
+ */
   function openPopup(popUp, link) {
     let overlay = document.getElementById('overlay')
     if (popUp == null) return
     popUp.classList.add('active')
-    overlay.classList.add('active')
+    overlay?.classList.add('active')
  
     let titlePop = document.getElementById('pop-up-name');
     let bodyText = document.getElementById('pop-up-text');
-    let h3 = link.querySelector('h3');
+    let heading = link.querySelector('h3');
    
-    titlePop.innerText = h3.innerText;
+    titlePop.innerText = heading.innerText;
     // apri il popup
-    overlay.classList.add('active');
+    overlay?.classList.add('active');
     popUp.classList.add('active');
     // cambiar ficha de la receta en el pop up a partir de el nombre
     switch (titlePop.innerText.toLowerCase()) {
@@ -217,6 +279,10 @@ function onLogOut(event) {
    
       }
 
+/**
+ * Store the selected cocktail in session storage and redirect the user to
+ * calculadores.html
+ */
      function redirectToCalculadores() {
       let titlePop = document.getElementById('pop-up-name');
       let valueToStore = titlePop.textContent || titlePop.value;
@@ -228,6 +294,12 @@ function onLogOut(event) {
 
      }
 
+/**
+ * Retrieves the previously selected cocktail from session storage and sets it as the
+ * `choice` property of the `calculador-component` web component.
+ *
+ * @returns {void}
+ */
      function autoSelectOption() {
       const chosenOption = sessionStorage.getItem('choice');
       if (!chosenOption) return;
@@ -239,20 +311,32 @@ function onLogOut(event) {
         component.choice = chosenOption;  
       }
     }
+/**
+ * Cierra el popup y su overlay
+ * @param {HTMLElement} popUp - El popup a cerrar
+ * @returns {void}
+ */
   function closePopup(popUp) {
      console.log(`the popup ${popUp} should close`)
      let overlay = document.getElementById('overlay')
     if (popUp == null) return
     console.log(popUp.classList)
     popUp.classList.remove('active')
-    overlay.classList.remove('active')
+    overlay?.classList.remove('active')
   }
 
+
 /**
- * Retrieves the shopping list data from session storage.
+ * Retrieves the user data from session storage and returns it as an object.
  *
- * @returns {State} Saved state.
- * If no data is found, returns an empty State object.
+ * If no data is found, returns the default state, which is an object with the following
+ * properties:
+ * @property {User[]} users - An array of User objects.
+ * @property {Botella[]} botellas - An array of Botella objects.
+ * @property {boolean} isLoading - A boolean indicating if a fetch is being performed.
+ * @property {boolean} error - A boolean indicating if an error occurred.
+ *
+ * @returns {object} The user data, or the default state if no data is found.
  */
 function getDataFromSessionStorage() {
   const INITIAL_STATE = {
@@ -364,13 +448,20 @@ async function displayProductos() {
   } 
 }
 
+/**
+ * Busca un producto en la API y los muestra en la página.
+ *
+ * @param {Event} event - El evento submit del formulario de búsqueda.
+ *
+ * @throws {Error} - Si la petición a la API falla.
+ */
 async function buscarProducto(event) {
   event.preventDefault();
 
   try {
     const listaProductos = document.getElementById('listaProductos');
     const InputBusqueda = document.getElementById('busqueda');
-    const valorBusqueda = InputBusqueda.value.trim(); // rimuove spazi iniziali/finali
+    const valorBusqueda = InputBusqueda?.value.trim(); // rimuove spazi iniziali/finali
 
     if (valorBusqueda === '') {
       alert('Debes ingresar un nombre de producto');
@@ -410,7 +501,7 @@ async function buscarProducto(event) {
       });
 
       producto.appendChild(button);
-      listaProductos.appendChild(producto);
+      listaProductos?.appendChild(producto);
     });
 
   } catch (error) {
@@ -419,18 +510,33 @@ async function buscarProducto(event) {
 }
 
 
+/**
+ * Gestisce l'evento keyup del campo di ricerca.
+ * Se il campo di ricerca  vuoto, cancella tutti i prodotti
+ * e li ricrea con la funzione displayProductos.
+ *
+ * @param {KeyboardEvent} event - L'evento keyup.
+ */
 function onInputKeyUp(event) {// Keyup: mirar teclas pulsadas
   console.log(event.key)
    const listaProductos = document.getElementById('listaProductos');
    
   let formBusqueda  = document.getElementById('busqueda')
-  if(formBusqueda.value  === ''){
-    while (listaProductos.firstChild) {
+  if(formBusqueda?.value  === ''){
+    while (listaProductos?.firstChild) {
       listaProductos.removeChild(listaProductos.firstChild)
     }
     displayProductos()
   }
 }
+
+/**
+ * Adds a specified bottle to the user's cart by sending a POST request to the API.
+ *
+ * @param {string} id - The ID of the bottle to be added to the cart.
+ *
+ * @throws {Error} - If an error occurs during the API request.
+ */
 
 async function addToCart(id){
 try{
@@ -455,6 +561,13 @@ catch (error) {
 }
 
 }
+/**
+ * Recupera le informazioni delle bottiglie presenti nel carrello dell'utente,
+ * chiamando l'API con il metodo POST.
+ *
+ * @throws {Error} - Se si verifica un errore durante la richiesta API.
+ */
+
  async function loadCartData() {
 
   const idUserNum = JSON.parse(sessionStorage.getItem('user'))._id
@@ -477,6 +590,13 @@ catch (error) {
 }
 
 
+/**
+ * Recupera le informazioni delle bottiglie presenti nel carrello dell'utente.
+ *
+ * @param {string[]} idsInCart - Array di ID delle bottiglie presenti nel carrello.
+ *
+ * @returns {Promise<void>}
+ */
   async function getbottlesFromShop(idsInCart) {
   console.log('up next getting this bottles from shop',idsInCart);
 
@@ -498,9 +618,9 @@ apiDataCart.forEach((botella) => {
         <img src="../img/imgProductos/${botella.name}.png" alt="${botella.name}">
         <h3>${botella.name}</h3>
         <p class="price">${botella.price} &euro;</p>
-       
+        <a href="./external.html"><button>BUY</button></a>
       `;
-     cartList.appendChild(producto)
+     cartList?.appendChild(producto)
      const button = document.createElement('button');
       button.textContent = 'X';
       button.classList.add('delete-button');
@@ -518,10 +638,10 @@ apiDataCart.forEach((botella) => {
 })
 
     let ClearCartButton = document.createElement('button');
-    let mainCarrito = document.querySelector('.main-carrito')
+    let clearBtnContainer = document.querySelector('#clearBtnContainer')
     ClearCartButton.textContent = 'Clear Cart';
-    ClearCartButton.classList.add('Clear');
-     mainCarrito.appendChild(ClearCartButton);
+    ClearCartButton.classList.add('clear');
+     clearBtnContainer?.appendChild(ClearCartButton);
     ClearCartButton.addEventListener('click', () => {
       clearCart();
     })
@@ -530,6 +650,13 @@ apiDataCart.forEach((botella) => {
      }
 }
  
+/**
+ * Deletes a specified bottle from the user's cart by sending a DELETE request to the API.
+ *
+ * @param {string} idBotellaNum - The ID of the bottle to be deleted from the cart.
+ *
+ * @throws {Error} - If an error occurs during the API request.
+ */
 function deleteItemFromCart(idBotellaNum){
   console.log('delete from crt event lauched')
 let userId = JSON.parse(sessionStorage.getItem('user'))._id
@@ -547,6 +674,12 @@ console.log(userId, idBotellaNum)
 location.reload();
 
 }
+/**
+ * Deletes all the items from the user's cart by sending a DELETE request to the API.
+ *
+ * @throws {Error} - If an error occurs during the API request.
+ */
+
 function clearCart(){
   console.log('clear cart event lauched')
   let userId = JSON.parse(sessionStorage.getItem('user'))._id
@@ -561,11 +694,17 @@ function clearCart(){
   alert('Cart cleared!')
   location.reload(); 
 }
+/**
+ * Prints a welcome message to the user, displaying their email address.
+ *
+ * @returns {void}
+ */
 function welcoming(){
   let pWelcome = document.getElementById('welcome')
   let userEmail = JSON.parse(sessionStorage.getItem('user')).email
-  pWelcome.classList.add('p-welcome')
-  pWelcome.textContent = `Welcome, ${userEmail}`
+  pWelcome?.classList.add('p-welcome')
+  pWelcome.textContent= `Welcome,
+  ${userEmail}`
 }
 /**
  * Retrieves the value from the specified input element.
